@@ -11,7 +11,7 @@ def main_page():
 
 @app.route("/list")
 def get_list():
-    question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADER]
+    question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADERS]
     question_data = data_manager.import_data('questions')
     return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
@@ -23,17 +23,16 @@ def get_list():
 # @app.route("/question/<question_id>/vote_up and /question/<question_id>/vote_down")
 # def get_question(question_id=None):
 #     return render_template("index.html", question_id=question_id)
-#
-#
+
+
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
     if request.method == 'POST':
-        form = request.form
-        data_manager.add_question(form)
+        data_manager.add_question(request.form)
         return redirect('/')
     return render_template('add_question.html')
-#
-#
+
+
 # @app.route("/answer/<answer_id>/delete ")
 # # @app.route("/answer/<answer_id>/vote_up and /answer/<answer_id>/vote_down ")
 # def get_answer(answer_id=None):
