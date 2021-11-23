@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 import data_manager
 
 app = Flask(__name__)
@@ -12,11 +12,11 @@ def main_page():
 @app.route("/list")
 def get_list():
     question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADER]
-    question_data = data_manager.import_questions()
+    question_data = data_manager.import_data('questions')
     return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
 
-# @app.route("/question/<question_id>")
+# @app.route("/question/<question_id>")questions
 # @app.route("/question/<question_id>/new-answer")
 # @app.route("/question/<question_id>/delete")
 # @app.route("/question/<question_id>/edit")
@@ -25,9 +25,13 @@ def get_list():
 #     return render_template("index.html", question_id=question_id)
 #
 #
-# @app.route("/add-question")
-# def add_question():
-#     return "Add_question"
+@app.route("/add-question", methods=['POST', 'GET'])
+def add_question():
+    if request.method == 'POST':
+        form = request.form
+        data_manager.add_question(form)
+        redirect('/')
+    return render_template('add_question.html')
 #
 #
 # @app.route("/answer/<answer_id>/delete ")
