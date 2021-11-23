@@ -10,7 +10,8 @@ def main_page():
 
 @app.route("/list")
 def get_list():
-    return "List"
+    forum_data = connection.import_questions
+    return render_template("list.html", forum_data=forum_data)
 
 
 @app.route("/question/<question_id>")
