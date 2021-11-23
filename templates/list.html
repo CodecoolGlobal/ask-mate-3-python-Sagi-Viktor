@@ -6,8 +6,9 @@
     <style>
         a, h1 {
             background-color: darkgreen;
-            color: black;
+            color: lightgray;
             font-family: monospace;
+            background-image: url("../static/abstract.jpg")
         }
         html, body {
             height: 100%;
@@ -25,19 +26,21 @@
              border: 1px solid black;
              box-shadow: 0 0 10px darkgreen;
              background-color: green;
-             color: black;
+             color: lightgray;
              text-align: center;
              border-radius: 5px;
              font-family: monospace;
+             background-image: url("../static/abstract.jpg")
          }
          th {
              background-color: darkgreen;
-             color: black;
+             color: lightgray;
              margin: 50px;
              padding: 10px;
              outline: none !important;
              border-width: 1px;
              box-shadow: 0 0 10px black;
+         }
     </style>
 </head>
 <body>
@@ -54,7 +57,7 @@
     <thead>
         <tr>
             {% for header in question_headers %}
-                <th style="text-align:middle">{{ header }}</th>
+                <th style="text-align:center">{{ header }}</th>
             {% endfor %}
         </tr>
     </thead>
