@@ -1,5 +1,7 @@
 from flask import Flask, render_template
 
+import connection
+
 app = Flask(__name__)
 
 
