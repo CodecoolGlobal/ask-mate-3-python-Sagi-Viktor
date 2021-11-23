@@ -11,7 +11,8 @@ def main_page():
 
 @app.route("/list")
 def get_list():
-    question_headers = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+    question_headers = [word.capitalize() for word in data_manager.QUESTION_HEADER]
+
     return render_template('list.html', question_headers=question_headers)
 
 
