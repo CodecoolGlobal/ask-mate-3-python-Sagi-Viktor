@@ -53,12 +53,39 @@ def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you
     export_questions(data)
 
 
+def question_sorter(sort_by, orientation='asc'):
+    """ Main logic for sorting questions.
+        ARGUMENTS: Arg1 == the HEADER name for sort |
+        Arg2 == (optional) 'desc' if descending form needed
+    """
+    data = import_data('questions')
+    return data
 
 
+def sort_by_title(data):
+    pass
 
+
+def sort_by_time(data):
+    pass
+
+
+def sort_by_message(data):
+    pass
+
+
+def sort_by_views(data):
+    pass
+
+
+def sort_by_votes(data):
+    pass
+
+def get_descend():
+    pass
 
 
 
 if __name__ == '__main__':
     # print(import_questions())
-    add_question('a')
+    add_question()
