@@ -24,7 +24,10 @@ def generate_id(last_id):
 
 
 def add_question(foo):
-    print(foo)
+    """ New Question main logic
+        Argument: New questions raw (form)data.
+        Return questions data with the new question appended """
+    # print(foo)
     return None
 
 

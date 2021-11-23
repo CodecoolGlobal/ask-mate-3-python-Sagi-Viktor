@@ -30,7 +30,7 @@ def add_question():
     if request.method == 'POST':
         form = request.form
         data_manager.add_question(form)
-        redirect('/')
+        return redirect('/')
     return render_template('add_question.html')
 #
 #
