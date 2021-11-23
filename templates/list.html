@@ -18,12 +18,22 @@
     <thead>
         <tr>
             {% for header in question_headers %}
-            <th style="text-align:middle">{{ header.replace('_', ' ').capitalize() }}</th>
+                <th style="text-align:middle">{{ header }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-
+        {% for item in question_data %}
+        <tr>
+            {% for data in item %}
+                {% if data == 'title' %}
+                    <td><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
+                {% else %}
+                    <td>{{ item[data] }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
     </tbody>
 </table>
 <br>

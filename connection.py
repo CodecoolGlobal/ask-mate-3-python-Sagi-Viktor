@@ -13,8 +13,9 @@ def export_data(data, fieldnames, file):
 
 def import_data(file):
     data = []
-    with open(file, 'r', newline='') as file:
-        reader = csv.DictReader(file)
+    with open(file) as csvfile:
+        reader = csv.DictReader(csvfile)
         for row in reader:
-            data.append(row)
+            new = dict(row)
+            data.append(new)
     return data

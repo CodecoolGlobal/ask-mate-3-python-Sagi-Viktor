@@ -11,9 +11,9 @@ def main_page():
 
 @app.route("/list")
 def get_list():
-    question_headers = [word.capitalize() for word in data_manager.QUESTION_HEADER]
-
-    return render_template('list.html', question_headers=question_headers)
+    question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADER]
+    question_data = data_manager.import_questions()
+    return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
 
 # @app.route("/question/<question_id>")
