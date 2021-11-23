@@ -18,7 +18,7 @@
     <thead>
         <tr>
             {% for header in question_headers %}
-            <th style="text-align:middle">{{ header }}</th>
+            <th style="text-align:middle">{{ header.replace('_', ' ').capitalize() }}</th>
             {% endfor %}
         </tr>
     </thead>
