@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question list</title>
+</head>
+<body>
+<h1 align="middle">QUESTIONS</h1>
+<br>
+<table border="1" align="middle">
+    <thead>
+        <tr>
+            {% for header in question_headers %}
+            <th style="text-align:left">{{ header }}</th>
+            {% endfor %}
+            <th></th>
+        </tr>
+    </thead>
+    
+</table>
+</body>
+</html>
