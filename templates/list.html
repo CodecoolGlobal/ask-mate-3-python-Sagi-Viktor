@@ -8,16 +8,25 @@
 <h1 align="middle">QUESTIONS</h1>
 <br>
 <table border="1">
+    <col width="50">
+    <col width="200">
+    <col width="150">
+    <col width="100">
+    <col width="150">
+    <col width="350">
+    <col width="150">
     <thead>
         <tr>
             {% for header in question_headers %}
-            <th style="text-align:left">{{ header }}</th>
+            <th style="text-align:middle">{{ header }}</th>
             {% endfor %}
-            <th></th>
         </tr>
     </thead>
-    
+    <tbody>
+
+    </tbody>
 </table>
+<br>
 <div>
     <a href="http://127.0.0.1:5000/">Back to the Main Page</a>
 </div>
