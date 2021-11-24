@@ -27,7 +27,6 @@
             margin-block-end: 0.83em;
             margin-inline-start: 8em;
             margin-inline-end: 8em;
-            width: -10px;
         }
         body {
             vertical-align: middle;
@@ -89,17 +88,13 @@
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
-<<<<<<< HEAD
                     <td><a class="title_link" href={{ "/question/" + item['id'] }} >{{ item[data] }}</a></td>
-=======
-                    <td align="center"><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
->>>>>>> 92945e0807cb180f552cfbf60f926f3cb59798e7
                 {% else %}
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}
             {% endfor %}
-            <td><a href="/question/{{item['id']}}/edit">Edit</a></td>
-            <td><a href="/question/{{item['id']}}/delete">Delete</a></td>
+            <td><a class="title_link" href="/question/{{item['id']}}/edit">Edit</a></td>
+            <td><a class="title_link" href="/question/{{item['id']}}/delete">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>
