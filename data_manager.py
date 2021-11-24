@@ -53,9 +53,12 @@ def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you
     print(new_question)
     export_questions(data)
 
+
 def get_current_question(question_id):
     data = import_data('questions')
-    current_question = data[int(question_id)]
+    for item in data:
+        if item['id'] == str(question_id):
+            current_question = data.index(item)
     return current_question
 
 def submit_edited_question(updated_question,id):
