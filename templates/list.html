@@ -139,10 +139,10 @@
                 {% if data == 'title' %}
                     <td align="center"><a class="title_link" href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
                 {% elif data == 'voting' %}
-                    <td align="center"><a href="{{ "/question/" + item['id'] + "/vote_up" }}"
-                                          style="text-decoration: none; color: deepskyblue">+</a></td>
-                    <td align="center"><a href="{{ "/question/" + item['id'] + "/vote_down" }}"
-                                          style="text-decoration: none; color: deepskyblue">-</a></td>
+                    <td align="center"><a class="title_link" href="{{ "/question/" + item['id'] + "/vote_up" }}"
+                                          style="text-decoration: none; color: whitesmoke">+</a></td>
+                    <td align="center"><a class="title_link" href="{{ "/question/" + item['id'] + "/vote_down" }}"
+                                          style="text-decoration: none; color: whitesmoke">-</a></td>
                 {% else %}
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}
