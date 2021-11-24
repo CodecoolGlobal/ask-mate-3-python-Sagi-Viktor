@@ -36,7 +36,7 @@ def edit_question(question_id):
 
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
-    if request.method == 'POST':
+    if request.method == "POST":
         data_manager.add_question(request.form)
         return redirect('/')
     return render_template('add_question.html')
