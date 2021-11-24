@@ -53,6 +53,18 @@ def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you
     print(new_question)
     export_questions(data)
 
+def get_current_question(question_id):
+    data = import_data('questions')
+    current_question = data[int(question_id)]
+    return current_question
+
+def submit_edited_question(updated_question,id):
+    id = int(id)
+    data = import_data('questions')
+    for key,value in updated_question.items():
+        data[id][key]=value
+    export_questions(data)
+
 
 def question_sorter(sort_by, orientation='asc'):
     """ Main logic for sorting questions.

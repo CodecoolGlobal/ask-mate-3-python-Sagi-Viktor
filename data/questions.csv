@@ -9,15 +9,7 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 jquery
 booklet
 app.js (bundled file with webpack, including jquery)",images/image1.png
-3,1493015432,1364,57,Wordpress loading multiple jQuery Versions,"bela vaygoooooooooooooooook
-
-I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
-
-BUT in my theme i also using jquery via webpack so the loading order is now following:
-
-jquery
-booklet
-app.js (bundled file with webpack, including jquery)",
+3,1493015432,1364,57,Wordpress loading multiple jQuery Versions,adsdad nagyon kiraly a cucc,
 4,1637692656,0,0,Igen hello bello yellow.,Hello?,
 5,1637743303,0,0,Ne ijedj meg Add question add hozzá mindig egy üres sort ha add-question route-ra lép, nem rossz a list.html,
 6,1637744130,0,0,Kérdés,Roland,
