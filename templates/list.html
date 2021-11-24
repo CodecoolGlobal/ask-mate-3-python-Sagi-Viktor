@@ -5,9 +5,12 @@
     <title>Question list</title>
     <style>
         .title_link {
-            background-color: darkgreen;
+            background-color: green;
             color: lightgray;
             font-family: monospace;
+            border-radius: 10px;
+            border-color: lightgrey;
+            box-shadow: 0 0 10px lightgray;
         }
         .links {
             background-color: darkgreen;
@@ -27,6 +30,9 @@
             margin-block-end: 0.83em;
             margin-inline-start: 8em;
             margin-inline-end: 8em;
+            border-radius: 5px;
+            border-color: lightgrey;
+            box-shadow: 0 0 10px lightgray;
         }
         body {
             vertical-align: middle;
@@ -64,7 +70,8 @@
     </style>
 </head>
 <body>
-<h1 align="right">QUESTIONS</h1>
+<br>
+<h1 style="width: 5.5em; margin: auto;">QUESTIONS</h1>
 <br>
 <h2 style="width: 5em">Options:</h2>
 <ul>
@@ -91,7 +98,7 @@
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
-                    <td><a class="title_link" href={{ "/question/" + item['id'] }} >{{ item[data] }}</a></td>
+                    <td><a class="title_link" href={{ "/question/" + item['id'] }} ><strong>{{ item[data] }}</strong></a></td>
                 {% else %}
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}

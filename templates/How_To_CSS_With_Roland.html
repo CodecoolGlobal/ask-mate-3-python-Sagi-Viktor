@@ -13,8 +13,10 @@
             border: 10px solid black;
             margin: 20px;
         }
-        html { border: 10px solid red; }
-
+        .center {
+            margin: auto;
+        }
+        html { border: 10px solid red; text-align: center; }
         {#
         //HOW TO CSS WITH ROLAND//
 
@@ -28,16 +30,20 @@
 
         //MOST USED PROPERTIES:
         WIDTH - A CONTENT MÉRETÉT VÁLTOZTATJA - SZÉLESSÉG
-        TEXT-ALIGN - CONTENT-et rakja középre a dobozban, nem a dobozt magát
+
+        //Item rendezés
+        text-align: center; - CONTENT-et rakja középre a dobozban, nem a dobozt magát
+        margin: auto; - Középre helyezi az egész dobozt
 
         //TIPS:
         HTML + BORDER -  Nem tudsz MARGIN-t színezni, de a HTML szélét mint "szegély" úgy igen
         HTML + BACKGROUND - Érdemes itt beállítani a hátteret
+
         #}
 
     </style>
 </head>
 <body>
-    <h1>Cheese</h1>
+    <h1 class="center">Cheese</h1>
 </body>
 </html>
