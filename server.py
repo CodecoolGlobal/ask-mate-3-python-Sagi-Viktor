@@ -28,7 +28,16 @@ def new_question(question_id):
 
 
 # @app.route("/question/<question_id>/delete")
-# @app.route("/question/<question_id>/edit")
+@app.route("/question/<question_id>/edit",methods=["GET","POST"])
+def edit_question(question_id):
+    current_question = data_manager.get_current_question(question_id)
+    if request.method=="POST":
+        data_manager.submit_edited_question(request.form,current_question["id"])
+        return redirect("/")
+    return render_template("edit_question.html",question_id=question_id, current_question=current_question)
+
+
+
 # @app.route("/question/<question_id>/vote_up and /question/<question_id>/vote_down")
 # def get_question(question_id=None):
 #     return render_template("index.html", question_id=question_id)
@@ -36,7 +45,7 @@ def new_question(question_id):
 
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
-    if request.method == 'POST':
+    if request.method == "POST":
         data_manager.add_question(request.form)
         return redirect('/')
     return render_template('add_question.html')

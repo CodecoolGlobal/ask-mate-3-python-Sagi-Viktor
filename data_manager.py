@@ -22,10 +22,7 @@ def import_data(file):
     return csv.import_data(f'{DIRNAME}/data/{file}.csv')
 
 
-
-
-def generate_id(data):
-    last_id = data[-1].get('id')
+def generate_id(last_id):
     return int(last_id) + 1
 
 
@@ -33,13 +30,14 @@ def get_unix_time():
     return round(time.time())
 
 
-def add_question(form):
+def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you?')])
     """ New Question main logic.
         Argument: New questions raw (form)data.
         Return: No return, questions data with the new question and the parameters are appended.
     """
+    new_question = {}
     data = import_data('questions')
-    id = generate_id(data)
+    id = generate_id(data[-1].get('id'))
     submission_time = get_unix_time()
     view_number = 0
     vote_number = 0
@@ -47,34 +45,12 @@ def add_question(form):
     title = form.get('title')
     image = form.get('image')
     parameters = [id, submission_time, view_number, vote_number, message, title, image]
-    merge_dict_data(data, parameters)
+    for index, header in enumerate(QUESTION_HEADERS):
+        new_question.update({header: parameters[index]})
 
-
-def add_answer(form, question_id):
-    """ New Answer main logic.
-        Argument: New Answer raw (form)data.
-        Return: No return, answer data with the new answer and the parameters are appended.
-    """
-    data = import_data('answers')
-    id = generate_id(data)
-    submission_time = get_unix_time()
-    vote_number = 0
-    message = form.get('message')
-    image = form.get('image')
-    parameters = [id, submission_time, vote_number, question_id, message, image]
-    merge_dict_data(data, parameters)
-
-
-def merge_dict_data(data, parameters):
-    """ Merge new_data and overwrite database.
-    """
-    new = {}
-    for index, header in enumerate(ANSWER_HEADERS):
-        new.update({header: parameters[index]})
-    data.append(new)
+    data.append(new_question)
+    print(new_question)
     export_questions(data)
-
-
 
 
 def question_sorter(sort_by, orientation='asc'):
@@ -105,14 +81,11 @@ def sort_by_views(data):
 def sort_by_votes(data):
     pass
 
-
 def get_descend():
     pass
 
 
 
-
 if __name__ == '__main__':
     # print(import_questions())
-    # add_question()
-    pass
+    add_question()
