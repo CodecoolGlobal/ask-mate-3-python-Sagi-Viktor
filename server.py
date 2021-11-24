@@ -35,7 +35,6 @@ def new_question(question_id):
     return render_template('add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
-<<<<<<< HEAD
 
 @app.route("/question/<question_id>/delete", methods=["DELETE"])
 def delete_question(question_id):
@@ -45,15 +44,14 @@ def delete_question(question_id):
 
 
 
-=======
->>>>>>> 2386e77c48d564eaf1236cbe1f40b361a9198a15
 @app.route("/question/<question_id>/edit",methods=["GET","POST"])
 def edit_question(question_id):
     current_question = data_manager.get_current_question(int(question_id))
+    question_data = data_manager.import_data('questions')
     if request.method=="POST":
-        data_manager.submit_edited_question(request.form,current_question["id"])
+        data_manager.submit_edited_question(request.form,current_question)
         return redirect("/")
-    return render_template("edit_question.html",question_id=question_id, current_question=current_question)
+    return render_template("edit_question.html",question_id=question_id, current_question=current_question,question_data=question_data)
 
 
 @app.route("/question/<question_id>/vote_up")
@@ -63,18 +61,11 @@ def question_vote_up(question_id=None):
     return redirect('/list')
 
 
-<<<<<<< HEAD
-
-# @app.route("/question/<question_id>/vote_up and /question/<question_id>/vote_down")
-# def get_question(question_id=None):
-#     return render_template("index.html", question_id=question_id)
-=======
 @app.route("/question/<question_id>/vote_down")
 def question_vote_down(question_id=None):
     question_id = question_id
     data_manager.question_voting(question_id, '-')
     return redirect('/list')
->>>>>>> 2386e77c48d564eaf1236cbe1f40b361a9198a15
 
 
 @app.route("/add-question", methods=['POST', 'GET'])
