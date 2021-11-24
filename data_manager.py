@@ -4,14 +4,14 @@ import time
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
 def export_answers(data, file='data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
 
-def export_questions(data, file='data/questions.csv'):
+def export_questions(data, file=f'{DIRNAME}/data/questions.csv'):
     csv.export_data(data, QUESTION_HEADERS, file)
 
 
@@ -23,7 +23,8 @@ def import_data(file):
     return data
 
 
-def generate_id(last_id):
+def generate_id(data):
+    last_id = data[-1].get('id')
     return int(last_id) + 1
 
 
@@ -31,27 +32,48 @@ def get_unix_time():
     return round(time.time())
 
 
-def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you?')])
+def add_question(form):
     """ New Question main logic.
         Argument: New questions raw (form)data.
         Return: No return, questions data with the new question and the parameters are appended.
     """
-    new_question = {}
     data = import_data('questions')
-    id = generate_id(data[-1].get('id'))
+    id = generate_id(data)
     submission_time = get_unix_time()
     view_number = 0
     vote_number = 0
     message = form.get('message')
     title = form.get('title')
     image = form.get('image')
-    parameters = [id, submission_time, view_number, vote_number, message, title, image]
-    for index, header in enumerate(QUESTION_HEADERS):
-        new_question.update({header: parameters[index]})
+    voting = 0
+    parameters = [id, submission_time, view_number, vote_number, title, message, voting, image]
+    export_questions(merge_dict_data(data, parameters, QUESTION_HEADERS))
 
-    data.append(new_question)
-    print(new_question)
-    export_questions(data)
+
+def add_answer(form, question_id):
+    """ New Answer main logic.
+        Argument: New Answer raw (form)data.
+        Return: No return, answer data with the new answer and the parameters are appended.
+    """
+    data = import_data('answers')
+    id = generate_id(data)
+    submission_time = get_unix_time()
+    vote_number = 0
+    message = form.get('message')
+    image = form.get('image')
+    parameters = [id, submission_time, vote_number, question_id, message, image]
+    export_answers(merge_dict_data(data, parameters, ANSWER_HEADERS))
+
+
+def merge_dict_data(data, parameters, header):
+    """ Merge new_data and overwrite database.
+    """
+    new = {}
+    for index, header in enumerate(header):
+        new.update({header: parameters[index]})
+    data.append(new)
+    return data
+
 
 
 def get_current_question(question_id):
@@ -61,12 +83,36 @@ def get_current_question(question_id):
             current_question = data.index(item)
     return current_question
 
-def submit_edited_question(updated_question,id):
+
+def submit_edited_question(updated_question, id):
     id = int(id)
     data = import_data('questions')
     for key,value in updated_question.items():
         data[id][key]=value
     export_questions(data)
+
+
+def question_voting(question_id, operation):
+    question_data = import_data('questions')
+    new_data = {}
+    for item in question_data:
+        if item['id'] == question_id:
+            place = question_data.index(item)
+            old_number = item['vote_number']
+            new_data['id'] = item['id']
+            new_data['submission_time'] = item['submission_time']
+            new_data['view_number'] = item['view_number']
+            if operation == '+':
+                new_data['vote_number'] = str(int(old_number) + 1)
+            else:
+                new_data['vote_number'] = str(int(old_number) - 1)
+            new_data['title'] = item['title']
+            new_data['message'] = item['message']
+            new_data['voting'] = item['voting']
+            new_data['image'] = item['image']
+            question_data.remove(item)
+            question_data.insert(place, new_data)
+            export_questions(question_data)
 
 
 def question_sorter(sort_by, orientation='asc'):
@@ -97,11 +143,12 @@ def sort_by_views(data):
 def sort_by_votes(data):
     pass
 
+
 def get_descend():
     pass
 
 
-
 if __name__ == '__main__':
+    pass
     # print(import_questions())
-    add_question()
+    # add_question()

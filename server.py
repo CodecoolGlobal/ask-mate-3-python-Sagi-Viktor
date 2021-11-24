@@ -16,23 +16,26 @@ def get_list():
     return render_template('list.html', question_headers=question_headers, question_data=question_data,data_length=len(question_data))
 
 
-@app.route("/question/<question_id>")
-def display_question(question_id=None):
+@app.route("/question/<question_id>", methods=['POST', 'GET'])
+def display_question(question_id):
     question_data = data_manager.import_data('questions')
     answer_data = data_manager.import_data('answers')
-    return render_template('display_question.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
-
-
-
-
-@app.route("/question/<question_id>/new-answer")
-def new_question(question_id):
     if request.method == 'POST':
-        data_manager.add_answer(request.form)
-        return redirect('/')
-    return render_template('add_answer.html')
+        return redirect(f'/question/{question_id}/new-answer')
+    return render_template('display_and_add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
+@app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
+def new_question(question_id):
+    question_data = data_manager.import_data('questions')
+    answer_data = data_manager.import_data('answers')
+    if request.method == 'POST':
+        data_manager.add_answer(request.form, question_id)
+        return redirect(f'/question/{question_id}')
+    return render_template('add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
+
+
+<<<<<<< HEAD
 
 @app.route("/question/<question_id>/delete", methods=["DELETE"])
 def delete_question(question_id):
@@ -42,6 +45,8 @@ def delete_question(question_id):
 
 
 
+=======
+>>>>>>> 2386e77c48d564eaf1236cbe1f40b361a9198a15
 @app.route("/question/<question_id>/edit",methods=["GET","POST"])
 def edit_question(question_id):
     current_question = data_manager.get_current_question(int(question_id))
@@ -51,18 +56,34 @@ def edit_question(question_id):
     return render_template("edit_question.html",question_id=question_id, current_question=current_question)
 
 
+@app.route("/question/<question_id>/vote_up")
+def question_vote_up(question_id=None):
+    question_id = question_id
+    data_manager.question_voting(question_id, '+')
+    return redirect('/list')
 
+
+<<<<<<< HEAD
 
 # @app.route("/question/<question_id>/vote_up and /question/<question_id>/vote_down")
 # def get_question(question_id=None):
 #     return render_template("index.html", question_id=question_id)
+=======
+@app.route("/question/<question_id>/vote_down")
+def question_vote_down(question_id=None):
+    question_id = question_id
+    data_manager.question_voting(question_id, '-')
+    return redirect('/list')
+>>>>>>> 2386e77c48d564eaf1236cbe1f40b361a9198a15
 
 
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
     if request.method == "POST":
         data_manager.add_question(request.form)
-        return redirect('/')
+        data = data_manager.import_data('questions')
+        question_id = data[-1]['id']
+        return redirect(f'/question/{question_id}')
     return render_template('add_question.html')
 
 

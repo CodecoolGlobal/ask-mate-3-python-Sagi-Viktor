@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nice forum | add question</title>
-</head>
-<body>
-    <h1>Add question page</h1>
-    <p>This shuld be the child of the /display</p>
-</body>
-</html>
+{% extends "display_question.html" %}
+{% block add_answer %}
+<form action="/question/{{ question_id }}/new-answer" method="POST">
+    <textarea name="message" rows="5" cols="100" placeholder="Enter your Answer Here ..."></textarea>
+    <br>
+    <input type="submit" value="Send your answer !!!">
+</form>
+    <br>
+{% endblock %}
