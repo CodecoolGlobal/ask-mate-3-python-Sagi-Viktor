@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>very nice forum | Add new question</title>
+    <title>{%block head_title%}very nice forum | Add new question{%endblock%}</title>
 </head>
 <body>
-    <h1>ADD QUESTION</h1>
-    <form action="/add-question" method="post">
-        <input type="text" name="title" placeholder="Enter The Title"><br>
-        <textarea name="message" rows="5" cols="50" placeholder="Enter The Question Here..."></textarea><br>
-        <input type="submit" value="Share your question with the world!">
+    <h1>{%block h1%}ADD QUESTION{%endblock%}</h1>
+    <form {%block form%}action="/add-question"{%endblock%} method="post">
+        <input type="text" name="title" {%block title%}placeholder="Enter The Title"{%endblock%}><br>
+        <textarea name="message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea><br>
+        <input type="submit" {%block submit%}value="Share your question with the world!"{%endblock%}>
     </form>
 </body>
 </html>
+

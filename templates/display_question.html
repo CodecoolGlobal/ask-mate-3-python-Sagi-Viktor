@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display_question</title>
+</head>
+<body>
+{% for item in question_data %}
+    {% if question_id == item['id'] %}
+        <h1 align="center">{{ item['message'] }}</h1>
+    {% endif %}
+{% endfor %}
+<br>
+<br>
+<table border="1">
+    <col width="1800">
+    <thead>
+        <th align="center">Answers</th>
+    </thead>
+    <tbody>
+        {% for item in answer_data %}
+            {% if question_id == item['question_id'] %}
+                <tr>
+                    <td align="center">{{ item['message'] }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+<br>
+<div>
+    <a href="/list">Back to questions</a>
+</div>
+</body>
+</html>

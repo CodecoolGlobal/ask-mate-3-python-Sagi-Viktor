@@ -70,11 +70,11 @@
 </ul>
 <table border="1">
     <col width="50">
-    <col width="200">
-    <col width="150">
+    <col width="140">
     <col width="100">
-    <col width="150">
+    <col width="100">
     <col width="350">
+    <col width="700">
     <col width="150">
     <thead>
         <tr>
@@ -85,14 +85,21 @@
     </thead>
     <tbody>
         {% for item in question_data %}
+            
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
+<<<<<<< HEAD
                     <td><a class="title_link" href={{ "/question/" + item['id'] }} >{{ item[data] }}</a></td>
+=======
+                    <td align="center"><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
+>>>>>>> 92945e0807cb180f552cfbf60f926f3cb59798e7
                 {% else %}
-                    <td>{{ item[data] }}</td>
+                    <td align="center">{{ item[data] }}</td>
                 {% endif %}
             {% endfor %}
+            <td><a href="/question/{{item['id']}}/edit">Edit</a></td>
+            <td><a href="/question/{{item['id']}}/delete">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>

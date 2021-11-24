@@ -19,7 +19,8 @@ def import_data(file):
     """ Argument should be 'questions' or 'answers'.
         Import Dictionaries in a list, dictionary keys are the ..._HEADERS.
     """
-    return csv.import_data(f'{DIRNAME}/data/{file}.csv')
+    data = csv.import_data(f'{DIRNAME}/data/{file}.csv')
+    return data
 
 
 def generate_id(last_id):
@@ -50,6 +51,18 @@ def add_question(form):  # argumnet: ImmutableMultiDict([('message', 'How are yo
 
     data.append(new_question)
     print(new_question)
+    export_questions(data)
+
+def get_current_question(question_id):
+    data = import_data('questions')
+    current_question = data[int(question_id)]
+    return current_question
+
+def submit_edited_question(updated_question,id):
+    id = int(id)
+    data = import_data('questions')
+    for key,value in updated_question.items():
+        data[id][key]=value
     export_questions(data)
 
 
