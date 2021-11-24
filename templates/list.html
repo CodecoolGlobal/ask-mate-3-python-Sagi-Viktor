@@ -52,7 +52,7 @@
     <col width="100">
     <col width="100">
     <col width="350">
-    <col width="1000">
+    <col width="700">
     <col width="150">
     <thead>
         <tr>
@@ -72,7 +72,7 @@
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}
             {% endfor %}
-            <td><a>bela</a></td>
+            <td><a href="/question/{{item['id']}}/delete">Delete</a></td>
         </tr>
         {% endfor %}
     </tbody>
