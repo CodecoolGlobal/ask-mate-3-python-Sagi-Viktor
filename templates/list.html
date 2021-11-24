@@ -116,23 +116,33 @@
     <col width="140">
     <col width="100">
     <col width="100">
-    <col width="350">
-    <col width="700">
+    <col width="200">
+    <col width="1000">
+    <col width="75">
+    <col width="75">
     <col width="150">
     <thead>
         <tr>
             {% for header in question_headers %}
-                <th style="text-align:center">{{ header }}</th>
+                {% if header == 'Voting' %}
+                    <th colspan="2">{{ header }}</th>
+                {% else %}
+                    <th style="text-align:center">{{ header }}</th>
+                {% endif %}
             {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for item in question_data %}
-            
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
-                    <td><a class="title_link" href={{ "/question/" + item['id'] }} ><strong>{{ item[data] }}</strong></a></td>
+                    <td align="center"><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
+                {% elif data == 'voting' %}
+                    <td align="center"><a href="{{ "/question/" + item['id'] + "/vote_up" }}"
+                                          style="text-decoration: none; color: deepskyblue">+</a></td>
+                    <td align="center"><a href="{{ "/question/" + item['id'] + "/vote_down" }}"
+                                          style="text-decoration: none; color: deepskyblue">-</a></td>
                 {% else %}
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}

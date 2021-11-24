@@ -4,14 +4,14 @@ import time
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
 def export_answers(data, file='data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
 
-def export_questions(data, file='data/questions.csv'):
+def export_questions(data, file=f'{DIRNAME}/data/questions.csv'):
     csv.export_data(data, QUESTION_HEADERS, file)
 
 
@@ -64,6 +64,29 @@ def submit_edited_question(updated_question,id):
     for key,value in updated_question.items():
         data[id][key]=value
     export_questions(data)
+
+
+def question_voting(question_id, operation):
+    question_data = import_data('questions')
+    new_data = {}
+    for item in question_data:
+        if item['id'] == question_id:
+            place = question_data.index(item)
+            old_number = item['vote_number']
+            new_data['id'] = item['id']
+            new_data['submission_time'] = item['submission_time']
+            new_data['view_number'] = item['view_number']
+            if operation == '+':
+                new_data['vote_number'] = str(int(old_number) + 1)
+            else:
+                new_data['vote_number'] = str(int(old_number) - 1)
+            new_data['title'] = item['title']
+            new_data['message'] = item['message']
+            new_data['voting'] = item['voting']
+            new_data['image'] = item['image']
+            question_data.remove(item)
+            question_data.insert(place, new_data)
+            export_questions(question_data)
 
 
 def question_sorter(sort_by, orientation='asc'):
