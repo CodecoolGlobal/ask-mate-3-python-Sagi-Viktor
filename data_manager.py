@@ -19,7 +19,8 @@ def import_data(file):
     """ Argument should be 'questions' or 'answers'.
         Import Dictionaries in a list, dictionary keys are the ..._HEADERS.
     """
-    return csv.import_data(f'{DIRNAME}/data/{file}.csv')
+    data = csv.import_data(f'{DIRNAME}/data/{file}.csv')
+    return data
 
 
 def generate_id(last_id):
