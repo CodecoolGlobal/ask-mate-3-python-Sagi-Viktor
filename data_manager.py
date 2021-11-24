@@ -4,7 +4,7 @@ import time
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
+QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
 
 def get_display_question_task(form, question_id):
@@ -17,7 +17,6 @@ def get_display_question_task(form, question_id):
         return f"/question/{question_id}/delete"
     elif form == 'delete':
         return f"/question/{question_id}/edit"
-
 
 
 def export_answers(data, file='data/answers.csv'):
@@ -50,7 +49,6 @@ def add_question(form):
         Argument: New questions raw (form)data.
         Return: No return, questions data with the new question and the parameters are appended.
     """
-    new_question = {}
     data = import_data('questions')
     id = generate_id(data)
     submission_time = get_unix_time()
@@ -60,7 +58,7 @@ def add_question(form):
     title = form.get('title')
     image = form.get('image')
     parameters = [id, submission_time, view_number, vote_number, message, title, image]
-    merge_dict_data(data, parameters)
+    export_questions(merge_dict_data(data, parameters, QUESTION_HEADERS))
 
 
 def add_answer(form, question_id):
@@ -75,18 +73,17 @@ def add_answer(form, question_id):
     message = form.get('message')
     image = form.get('image')
     parameters = [id, submission_time, vote_number, question_id, message, image]
-    merge_dict_data(data, parameters)
+    export_answers(merge_dict_data(data, parameters, ANSWER_HEADERS))
 
 
-def merge_dict_data(data, parameters):
+def merge_dict_data(data, parameters, header):
     """ Merge new_data and overwrite database.
     """
     new = {}
-    for index, header in enumerate(ANSWER_HEADERS):
+    for index, header in enumerate(header):
         new.update({header: parameters[index]})
     data.append(new)
-    export_questions(data)
-
+    return data
 
 
 def get_current_question(question_id):
@@ -94,7 +91,8 @@ def get_current_question(question_id):
     current_question = data[int(question_id)]
     return current_question
 
-def submit_edited_question(updated_question,id):
+
+def submit_edited_question(updated_question, id):
     id = int(id)
     data = import_data('questions')
     for key,value in updated_question.items():

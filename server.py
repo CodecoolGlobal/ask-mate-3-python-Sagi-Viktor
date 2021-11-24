@@ -28,9 +28,9 @@ def display_question(question_id):
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
 def new_question(question_id):
     if request.method == 'POST':
-        data_manager.add_answer(request.form)
+        data_manager.add_answer(request.form, question_id)
         return redirect(f'/question/{question_id}')
-    return render_template('add_answer.html')
+    return render_template('add_answer.html', question_id=question_id)
 
 
 @app.route("/question/<question_id>/edit",methods=["GET","POST"])

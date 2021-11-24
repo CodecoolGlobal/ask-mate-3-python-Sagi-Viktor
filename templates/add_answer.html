@@ -1,8 +1,8 @@
 {% extends "display_question.html" %}
 {% block add_answer %}
 <body>
-<form action="/">
-    <textarea name="acceptance_criteria" rows="5" cols="40" placeholder="Enter your Answer Here ..."></textarea>
+<form action="/question/{{ question_id }}/new-answer" method="POST">
+    <textarea name="message" rows="5" cols="40" placeholder="Enter your Answer Here ..."></textarea>
     <input type="submit" value="Enter">
 </form>
 </body>
