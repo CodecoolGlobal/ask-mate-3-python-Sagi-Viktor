@@ -27,18 +27,11 @@
         {% endfor %}
     </tbody>
 </table>
-<form action='{{url_for('display_question', question_id=question_id)}}' method="post">
-    <select>
-        <option>delete</option>
-        <option>edit</option>
-        <option>add_answer</option>
-    </select>
-    <input type="submit" value="Enter" name="question_id">
-</form>
-<br>
+<br><br>
+{% block add_answer_button %}
+{% endblock %}
 {% block add_answer %}
 {% endblock %}
-<br>
 <div>
     <a href="/list">Back to questions</a>
 </div>

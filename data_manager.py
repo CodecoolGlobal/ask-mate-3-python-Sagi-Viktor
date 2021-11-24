@@ -7,18 +7,6 @@ ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'messag
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
-def get_display_question_task(form, question_id):
-    print(f"{question_id} question id in data_manger")
-    print(form)
-    if form == 'add_answer':
-        abc = f"/question/{question_id}/new-answer"
-        return abc
-    elif form == 'edit':
-        return f"/question/{question_id}/delete"
-    elif form == 'delete':
-        return f"/question/{question_id}/edit"
-
-
 def export_answers(data, file='data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
