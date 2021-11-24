@@ -30,7 +30,7 @@ def get_unix_time():
     return round(time.time())
 
 
-def add_question(form): # argumnet: ImmutableMultiDict([('message', 'How are you?')])
+def add_question(form):  # argumnet: ImmutableMultiDict([('message', 'How are you?')])
     """ New Question main logic.
         Argument: New questions raw (form)data.
         Return: No return, questions data with the new question and the parameters are appended.
@@ -81,11 +81,12 @@ def sort_by_views(data):
 def sort_by_votes(data):
     pass
 
+
 def get_descend():
     pass
 
 
-
 if __name__ == '__main__':
+    pass
     # print(import_questions())
-    add_question()
+    # add_question()

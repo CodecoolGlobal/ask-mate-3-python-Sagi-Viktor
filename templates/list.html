@@ -4,34 +4,52 @@
     <meta charset="UTF-8">
     <title>Question list</title>
     <style>
-        a, h1 {
+        .title_link {
             background-color: darkgreen;
             color: lightgray;
             font-family: monospace;
-            background-image: url("../static/abstract.jpg")
         }
-        html, body {
-            height: 100%;
-            }
-        html {
-            display: table;
-            margin: auto;
+        .links {
+            background-color: darkgreen;
+            color: lightgray;
+            font-family: monospace;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 14em;
+            margin-inline-end: 14em;
+        }
+        h1, h2 {
+            background-color: darkgreen;
+            color: lightgray;
+            font-family: monospace;
+            background-image: url("../static/abstract.jpg");
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 8em;
+            margin-inline-end: 8em;
+            width: -10px;
         }
         body {
-            display: table-cell;
             vertical-align: middle;
-            background-image: url("../static/hacker.jpg")
+            background-image: url("../static/hacker.jpg");
+            margin: auto;
+            height: 100%;
         }
         table, th, td {
-             border: 1px solid black;
-             box-shadow: 0 0 10px darkgreen;
-             background-color: green;
-             color: lightgray;
-             text-align: center;
-             border-radius: 5px;
-             font-family: monospace;
-             background-image: url("../static/abstract.jpg")
+            border: 1px solid black;
+            box-shadow: 0 0 10px darkgreen;
+            background-color: green;
+            color: lightgray;
+            text-align: center;
+            border-radius: 5px;
+            font-family: monospace;
+            background-image: url("../static/abstract.jpg")
          }
+        table {
+            width: 70em;
+            margin-left: auto;
+            margin-right: auto;
+}
          th {
              background-color: darkgreen;
              color: lightgray;
@@ -46,6 +64,10 @@
 <body>
 <h1 align="right">QUESTIONS</h1>
 <br>
+<h2 style="width: 5em">Options:</h2>
+<ul>
+    <li><a class="links" href="/add-question">Add_Question</a></li>
+</ul>
 <table border="1">
     <col width="50">
     <col width="200">
@@ -66,7 +88,7 @@
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
-                    <td><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
+                    <td><a class="title_link" href={{ "/question/" + item['id'] }} >{{ item[data] }}</a></td>
                 {% else %}
                     <td>{{ item[data] }}</td>
                 {% endif %}
@@ -77,7 +99,7 @@
 </table>
 <br>
 <div>
-    <a href="/">Back to the Main Page</a>
+    <a class= "links" href="/">Back to the Main Page</a>
 </div>
 </body>
 </html>
