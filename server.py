@@ -21,7 +21,7 @@ def display_question(question_id):
     question_data = data_manager.import_data('questions')
     answer_data = data_manager.import_data('answers')
     if request.method == 'POST':
-        return redirect('/question/' + question_id + '/new-answer')
+        return redirect(f'/question/{question_id}/new-answer')
     return render_template('display_and_add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
@@ -62,7 +62,9 @@ def question_vote_down(question_id=None):
 def add_question():
     if request.method == "POST":
         data_manager.add_question(request.form)
-        return redirect('/')
+        data = data_manager.import_data('questions')
+        question_id = data[-1]['id']
+        return redirect(f'/question/{question_id}')
     return render_template('add_question.html')
 
 
