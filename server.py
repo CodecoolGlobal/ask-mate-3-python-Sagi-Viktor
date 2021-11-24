@@ -16,8 +16,23 @@ def get_list():
     return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
 
-# @app.route("/question/<question_id>")questions
-# @app.route("/question/<question_id>/new-answer")
+@app.route("/question/<question_id>")
+def display_question(question_id=None):
+    question_data = data_manager.import_data('questions')
+    answer_data = data_manager.import_data('answers')
+    return render_template('display_question.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
+
+
+
+
+@app.route("/question/<question_id>/new-answer")
+def new_question(question_id):
+    if request.method == 'POST':
+        data_manager.add_answer(request.form)
+        return redirect('/')
+    return render_template('add_answer.html')
+
+
 # @app.route("/question/<question_id>/delete")
 @app.route("/question/<question_id>/edit",methods=["GET","POST"])
 def edit_question(question_id):

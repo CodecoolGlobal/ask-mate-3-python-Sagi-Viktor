@@ -8,6 +8,7 @@ BUT in my theme i also using jquery via webpack so the loading order is now foll
 
 jquery
 booklet
+<<<<<<< HEAD
 app.js (bundled file with webpack, including jquery)",images/image1.png
 3,1493015432,1364,57,Wordpress loading multiple jQuery Versions,"bela vaygoooooooooooooooook
 
@@ -23,3 +24,10 @@ app.js (bundled file with webpack, including jquery)",
 6,1637744130,0,0,Kérdés,Roland,
 8,1637744521,0,0,Kérdés 2,Roland2,
 9,1637744680,0,0,Kérdés 3,Roland3,
+=======
+app.js (bundled file with webpack, including jquery)",images/image1.png
+3,1493015432,1364,57,Drawing canvas with an image picked with Cordova Camera Plugin,"I'm getting an image from device and drawing a canvas with filters using Pixi JS. It works all well using computer to get an image. But when I'm on IOS, it throws errors such as cross origin issue, or that I'm trying to use an unknown format.
+
+This is the code I'm using to draw the image (that works on web/desktop but not cordova built ios app)",
+4,1637692656,0,0,Igen hello bello yellow.,Hello?,
+>>>>>>> 3a4b6b5ff7dab868062df8a74cbe2ae4b08a1219

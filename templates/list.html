@@ -48,11 +48,11 @@
 <br>
 <table border="1">
     <col width="50">
-    <col width="200">
-    <col width="150">
+    <col width="140">
     <col width="100">
-    <col width="150">
+    <col width="100">
     <col width="350">
+    <col width="1000">
     <col width="150">
     <thead>
         <tr>
@@ -63,14 +63,16 @@
     </thead>
     <tbody>
         {% for item in question_data %}
+            
         <tr>
             {% for data in item %}
                 {% if data == 'title' %}
-                    <td><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
+                    <td align="center"><a href={{ "/question/" + item['id'] }}>{{ item[data] }}</a></td>
                 {% else %}
-                    <td>{{ item[data] }}</td>
+                    <td align="center">{{ item[data] }}</td>
                 {% endif %}
             {% endfor %}
+            <td><a>bela</a></td>
         </tr>
         {% endfor %}
     </tbody>
