@@ -4,7 +4,7 @@ import time
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
 def get_display_question_task(form, question_id):
@@ -57,7 +57,8 @@ def add_question(form):
     message = form.get('message')
     title = form.get('title')
     image = form.get('image')
-    parameters = [id, submission_time, view_number, vote_number, message, title, image]
+    voting = 0
+    parameters = [id, submission_time, view_number, vote_number, title, message, voting, image]
     export_questions(merge_dict_data(data, parameters, QUESTION_HEADERS))
 
 
