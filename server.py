@@ -17,7 +17,16 @@ def get_list():
 
 
 # @app.route("/question/<question_id>")questions
-# @app.route("/question/<question_id>/new-answer")
+
+
+@app.route("/question/<question_id>/new-answer")
+def new_question(question_id):
+    if request.method == 'POST':
+        data_manager.add_answer(request.form)
+        return redirect('/')
+    return render_template('add_answer.html')
+
+
 # @app.route("/question/<question_id>/delete")
 # @app.route("/question/<question_id>/edit")
 # @app.route("/question/<question_id>/vote_up and /question/<question_id>/vote_down")
