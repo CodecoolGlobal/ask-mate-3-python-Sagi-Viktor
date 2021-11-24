@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Nice forum | add question</title>
-</head>
+{% extends "display_question.html" %}
+{% block add_answer %}
 <body>
-    <h1>Add question page</h1>
-    <p>This shuld be the child of the /display</p>
+<form action="/">
+    <textarea name="acceptance_criteria" rows="5" cols="40" placeholder="Enter your Answer Here ..."></textarea>
+    <input type="submit" value="Enter">
+</form>
 </body>
-</html>
+{% endblock %}

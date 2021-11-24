@@ -16,18 +16,20 @@ def get_list():
     return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
 
-@app.route("/question/<question_id>")
-def display_question(question_id=None):
+@app.route("/question/<question_id>", methods=['POST', 'GET'])
+def display_question(question_id):
     question_data = data_manager.import_data('questions')
     answer_data = data_manager.import_data('answers')
+    if request.method == 'POST':
+        return redirect('/question/' + question_id + '/new-answer')
     return render_template('display_question.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
-@app.route("/question/<question_id>/new-answer")
+@app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
 def new_question(question_id):
     if request.method == 'POST':
         data_manager.add_answer(request.form)
-        return redirect('/')
+        return redirect(f'/question/{question_id}')
     return render_template('add_answer.html')
 
 
