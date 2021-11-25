@@ -2,6 +2,9 @@
 {% block add_answer_button %}
     <form action='{{url_for('display_question', question_id=question_id)}}' method="post">
         <input type="submit" value="Add new answer" name="question_id">
+    </form><br>
+    <form action="/question/{{question_id}}/edit" method="get">
+        <input type="submit" value="Edit question">
     </form>
     <br><br><br><br><br><br>
 {% endblock %}

@@ -1,11 +1,6 @@
 id,submission_time,view_number,vote_number,title,message,voting,image
-<<<<<<< HEAD
-1,1493368154,29,7,How to make lists in Python?,"I am totally new to this, any hints?",,
-=======
-1,1493368154,29,9,How to make lists in Python?,I am python,,
->>>>>>> 62abc2348635e32de615808c45784565c641a971
-2,1493068124,15,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
-
+1,1493368154,29,9,How to make lists in Python?,ads,,
+2,1493068124,15,9,hosszu szoveg,"bocs ezt most kitroltem
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
 
 BUT in my theme i also using jquery via webpack so the loading order is now following:
@@ -21,18 +16,9 @@ This is the code I'm using to draw the image (that works on web/desktop but not 
 6,1637773328,0,0,title,message,0,
 7,1637777017,0,0,my question,"test question
 ",0,
-<<<<<<< HEAD
-8,1637832833,0,0,ws,ws,0,
-9,1637832866,0,0,4,r,0,
-10,1637833289,0,0,Sanyi,Sanyi,0,
-11,1637833648,0,0,Roland,Kép,0,
-12,1637834787,0,0,Pista,KIsta,0,
-13,1637834819,0,0,Pista,KIsta,0,
-=======
 8,1637777418,0,0,asd,asdasd,0,
 9,1637831869,0,0,axx,yxvyxv,0,
 10,1637831910,0,0,axx,yxvyxv,0,
 11,1637831933,0,0,képes,vagy nem lépes,0,
 12,1637837305,0,0,a,aa,0,
 13,1637840904,0,0,AFPÉ,OHASFJPA,0,
->>>>>>> 62abc2348635e32de615808c45784565c641a971
