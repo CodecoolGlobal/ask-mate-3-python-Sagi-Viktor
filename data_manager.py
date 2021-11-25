@@ -133,10 +133,22 @@ def answer_voting(answer_id, operation):
             new_data['voting'] = item['voting']
             new_data['image'] = item['image']
             answer_data.remove(item)
-            print(answer_data)
             answer_data.insert(place, new_data)
-            print(answer_data)
             export_answers(answer_data)
+
+
+def view_counter(question_id, question_data):
+    for item in question_data:
+        if question_id == item['id']:
+            place = question_data.index(item)
+            item['view_number'] = str(int(item['view_number']) + 1)
+            new_item = item
+            question_data.remove(item)
+            question_data.insert(place, new_item)
+            export_questions(question_data)
+
+
+
 
 
 def question_sorter(sort_by, orientation='asc'):
