@@ -13,7 +13,7 @@ def main_page():
 def get_list():
     question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADERS]
     question_data = data_manager.import_data('questions')
-    return render_template('list.html', question_headers=question_headers, question_data=question_data,data_length=len(question_data))
+    return render_template('list.html', question_headers=question_headers, question_data=question_data)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
@@ -35,23 +35,13 @@ def new_question(question_id):
     return render_template('add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
-
-@app.route("/question/<question_id>/delete", methods=["DELETE"])
-def delete_question(question_id):
-    current_question = data_manager.get_current_question(int(question_id))
-
-    return render_template("delete_question.html")
-
-
-
 @app.route("/question/<question_id>/edit",methods=["GET","POST"])
 def edit_question(question_id):
-    current_question = data_manager.get_current_question(int(question_id))
-    question_data = data_manager.import_data('questions')
+    current_question = data_manager.get_current_question(question_id)
     if request.method=="POST":
-        data_manager.submit_edited_question(request.form,current_question)
+        data_manager.submit_edited_question(request.form,current_question["id"])
         return redirect("/")
-    return render_template("edit_question.html",question_id=question_id, current_question=current_question,question_data=question_data)
+    return render_template("edit_question.html",question_id=question_id, current_question=current_question)
 
 
 @app.route("/question/<question_id>/vote_up")
