@@ -7,7 +7,7 @@ ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'messag
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
-def export_answers(data, file='data/answers.csv'):
+def export_answers(data, file=f'{DIRNAME}/data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
 
@@ -75,9 +75,12 @@ def merge_dict_data(data, parameters, header):
     return data
 
 
+
 def get_current_question(question_id):
     data = import_data('questions')
-    current_question = data[int(question_id)]
+    for item in data:
+        if item['id'] == str(question_id):
+            current_question = data.index(item)
     return current_question
 
 

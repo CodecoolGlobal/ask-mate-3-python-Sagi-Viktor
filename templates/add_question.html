@@ -7,9 +7,20 @@
 <body>
     <h1>{%block h1%}ADD QUESTION{%endblock%}</h1>
     <form {%block form%}action="/add-question"{%endblock%} method="post">
-        <input type="text" name="title" {%block title%}placeholder="Enter The Title"{%endblock%}><br>
-        <textarea name="message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea><br>
+        <label>
+            <input type="text" name="title" {%block title%}placeholder="Enter The Title"{%endblock%}>
+        </label><br>
+        <label>
+            <textarea name="message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea>
+        </label><br>
         <input type="submit" {%block submit%}value="Share your question with the world!"{%endblock%}>
+        <form action="/add-question" method="post" enctype="multipart/form-data">
+            <br>
+            <fieldset style="width:67%">
+                <input type="file" name="picture" id="picture" />
+            </fieldset>
+            <br>
+        </form>
     </form>
 </body>
 </html>
