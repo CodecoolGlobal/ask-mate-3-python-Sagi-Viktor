@@ -3,7 +3,7 @@ import os
 import time
 
 DIRNAME = os.path.dirname(__file__)
-ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
@@ -61,7 +61,8 @@ def add_answer(form, question_id):
     vote_number = 0
     message = form.get('message')
     image = form.get('image')
-    parameters = [id, submission_time, vote_number, question_id, message, image]
+    voting = 0
+    parameters = [id, submission_time, vote_number, question_id, message, voting, image]
     export_answers(merge_dict_data(data, parameters, ANSWER_HEADERS))
 
 
