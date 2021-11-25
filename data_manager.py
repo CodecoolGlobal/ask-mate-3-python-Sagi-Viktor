@@ -20,7 +20,6 @@ def import_data(file):
         Import Dictionaries in a list, dictionary keys are the ..._HEADERS.
     """
     data = csv.import_data(f'{DIRNAME}/data/{file}.csv')
-    # data = question_sorter(data, 'asc')
     return data
 
 
@@ -91,6 +90,7 @@ def submit_edited_question(updated_question, id):
     for key, value in updated_question.items():
         data[id][key] = value
     export_questions(data)
+
 
 def delete_question(id):
     id = int(id)
@@ -164,43 +164,13 @@ def question_sorter(sort_by, orientation='asc'):
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
     """
-    # data = import_data('questions')
-    # data = sort_by_title()
-    return data
-
-
-def sort_by_title(data):
-    base = data[0]['title']
-    result = data
-    lenght = len(data)
-    for item in range(lenght-1):
-        for place in range(0, lenght - item - 1):
-            if data[item]['title'] > data[item+1]['title']:
-                result[item]['title'], result[item+1]['title'] = result[item+1]['title'], result[item]['title']
-    return result
-
-
-def sort_by_time(data):
-    pass
-
-
-def sort_by_message(data):
-    pass
-
-
-def sort_by_views(data):
-    pass
-
-
-def sort_by_votes(data):
-    pass
-
-
-def get_descend():
-    pass
+    data = import_data('questions')
+    return sorted(data, key=lambda i: i[sort_by]) if orientation == 'asc' else sorted(data, key=lambda i: i[sort_by], reverse=True)
 
 
 if __name__ == '__main__':
     pass
     # print(import_questions())
     # add_question()
+    # print(question_sorter('view_number'))
+    pass
