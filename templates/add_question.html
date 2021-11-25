@@ -13,13 +13,6 @@
         <label>
             <textarea name="message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea>
         </label><br>
-        <form action="/add-question" method="post" enctype="multipart/form-data">
-            <br>
-            <fieldset style="width:67%">
-                <input type="file" name="picture" id="picture" />
-            </fieldset>
-            <br>
-        </form>
         <input type="submit" {%block submit%}value="Share your question with the world!"{%endblock%}>
     </form>
 </body>
