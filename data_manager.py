@@ -3,11 +3,11 @@ import os
 import time
 
 DIRNAME = os.path.dirname(__file__)
-ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
-def export_answers(data, file='data/answers.csv'):
+def export_answers(data, file=f'{DIRNAME}/data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
 
@@ -75,7 +75,6 @@ def merge_dict_data(data, parameters, header):
     return data
 
 
-
 def get_current_question(question_id):
     data = import_data('questions')
     for item in data:
@@ -113,6 +112,30 @@ def question_voting(question_id, operation):
             question_data.remove(item)
             question_data.insert(place, new_data)
             export_questions(question_data)
+
+
+def answer_voting(answer_id, operation):
+    answer_data = import_data('answers')
+    new_data = {}
+    for item in answer_data:
+        if item['id'] == answer_id:
+            place = answer_data.index(item)
+            old_number = item['vote_number']
+            new_data['id'] = item['id']
+            new_data['submission_time'] = item['submission_time']
+            if operation == '+':
+                new_data['vote_number'] = str(int(old_number) + 1)
+            else:
+                new_data['vote_number'] = str(int(old_number) - 1)
+            new_data['question_id'] = item['question_id']
+            new_data['message'] = item['message']
+            new_data['voting'] = item['voting']
+            new_data['image'] = item['image']
+            answer_data.remove(item)
+            print(answer_data)
+            answer_data.insert(place, new_data)
+            print(answer_data)
+            export_answers(answer_data)
 
 
 def question_sorter(sort_by, orientation='asc'):

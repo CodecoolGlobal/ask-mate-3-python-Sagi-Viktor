@@ -13,15 +13,23 @@
 <br>
 <br>
 <table border="1">
-    <col width="1800">
+    <col width="150">
+    <col width="1500">
+    <col width="75">
+    <col width="75">
     <thead>
+        <th align="center">Votes</th>
         <th align="center">Answers</th>
+        <th align="center" colspan="2">Vote</th>
     </thead>
     <tbody>
         {% for item in answer_data %}
             {% if question_id == item['question_id'] %}
                 <tr>
+                    <td align="center">{{ item['vote_number'] }}</td>
                     <td align="center">{{ item['message'] }}</td>
+                    <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_up" }}">+</a></td>
+                    <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_down" }}">-</a></td>
                 </tr>
             {% endif %}
         {% endfor %}
