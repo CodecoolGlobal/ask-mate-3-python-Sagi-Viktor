@@ -1,5 +1,5 @@
 id,submission_time,view_number,vote_number,title,message,voting,image
-1,1493368154,29,7,How to make lists in Python?,"I am totally new to this, any hints?",,
+1,1493368154,29,9,How to make lists in Python?,I am ,,
 2,1493068124,15,9,Wordpress loading multiple jQuery Versions,"I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet();
 
 I could easy managing the loading order with wp_enqueue_script so first I load jquery then I load booklet so everything is fine.
@@ -21,3 +21,5 @@ This is the code I'm using to draw the image (that works on web/desktop but not 
 9,1637831869,0,0,axx,yxvyxv,0,
 10,1637831910,0,0,axx,yxvyxv,0,
 11,1637831933,0,0,képes,vagy nem lépes,0,
+12,1637837305,0,0,a,aa,0,
+13,1637840904,0,0,AFPÉ,OHASFJPA,0,

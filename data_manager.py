@@ -76,7 +76,6 @@ def merge_dict_data(data, parameters, header):
     return data
 
 
-
 def get_current_question(question_id):
     data = import_data('questions')
     for item in data:
@@ -87,9 +86,11 @@ def get_current_question(question_id):
 
 def submit_edited_question(updated_question, id):
     id = int(id)
+    print(id)
+    print(type(id))
     data = import_data('questions')
-    for key,value in updated_question.items():
-        data[id][key]=value
+    for key, value in updated_question.items():
+        data[id][key] = value
     export_questions(data)
 
 
