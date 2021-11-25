@@ -91,6 +91,13 @@ def submit_edited_question(updated_question, id):
         data[id][key] = value
     export_questions(data)
 
+def delete_question(id):
+    id = int(id)
+    data = import_data('questions')
+    current_question = get_current_question(id)
+    data.pop(current_question)
+    export_questions(data)
+
 
 def question_voting(question_id, operation):
     question_data = import_data('questions')

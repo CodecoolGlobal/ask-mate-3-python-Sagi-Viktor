@@ -37,11 +37,11 @@ def new_question(question_id):
     return render_template('source/html/add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
-@app.route("/question/<question_id>/delete", methods=["DELETE"])
+@app.route("/question/<question_id>/delete")
 def delete_question(question_id):
-    current_question = data_manager.get_current_question(int(question_id))
-
-    return render_template("source/html/delete_question.html")
+    data_manager.delete_question(question_id)
+    return redirect('/list')
+    
 
 
 @app.route("/question/<question_id>/edit",methods=["GET", "POST"])
