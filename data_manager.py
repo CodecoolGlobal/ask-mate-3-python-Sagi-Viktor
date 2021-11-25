@@ -61,7 +61,8 @@ def add_answer(form, question_id):
     vote_number = 0
     message = form.get('message')
     image = form.get('image')
-    parameters = [id, submission_time, vote_number, question_id, message, image]
+    voting = 0
+    parameters = [id, submission_time, vote_number, question_id, message, voting, image]
     export_answers(merge_dict_data(data, parameters, ANSWER_HEADERS))
 
 
