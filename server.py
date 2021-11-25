@@ -18,6 +18,7 @@ def get_list():
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
 def display_question(question_id):
+    question_id = question_id
     question_data = data_manager.import_data('questions')
     answer_data = data_manager.import_data('answers')
     if request.method == 'POST':
@@ -35,6 +36,7 @@ def new_question(question_id):
     return render_template('add_answer.html', question_id=question_id, question_data=question_data, answer_data=answer_data)
 
 
+<<<<<<< HEAD
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
     current_question = data_manager.get_current_question(question_id)
@@ -42,6 +44,23 @@ def edit_question(question_id):
         data_manager.submit_edited_question(request.form, current_question["id"])
         return redirect("/")
     return render_template("edit_question.html", question_id=question_id, current_question=current_question)
+=======
+@app.route("/question/<question_id>/delete", methods=["DELETE"])
+def delete_question(question_id):
+    current_question = data_manager.get_current_question(int(question_id))
+
+    return render_template("delete_question.html")
+
+
+@app.route("/question/<question_id>/edit",methods=["GET", "POST"])
+def edit_question(question_id):
+    current_question = data_manager.get_current_question(question_id)
+    question_data = data_manager.import_data('questions')
+    if request.method == "POST":
+        data_manager.submit_edited_question(request.form, current_question)
+        return redirect(f"/question/{question_id}")
+    return render_template("edit_question.html", question_id=question_id, current_question=current_question, question_data=question_data)
+>>>>>>> 62abc2348635e32de615808c45784565c641a971
 
 
 @app.route("/question/<question_id>/vote_up")
@@ -55,6 +74,20 @@ def question_vote_up(question_id=None):
 def question_vote_down(question_id=None):
     question_id = question_id
     data_manager.question_voting(question_id, '-')
+    return redirect('/list')
+
+
+@app.route("/answer/<answer_id>/vote_up", methods=['GET', 'POST'])
+def answer_vote_up(answer_id=None):
+    answer_id = answer_id
+    data_manager.answer_voting(answer_id, '+')
+    return redirect('/list')
+
+
+@app.route("/answer/<answer_id>/vote_down")
+def answer_vote_down(answer_id=None):
+    answer_id = answer_id
+    data_manager.answer_voting(answer_id, '-')
     return redirect('/list')
 
 
