@@ -20,6 +20,7 @@ def get_list():
 def display_question(question_id):
     question_id = question_id
     question_data = data_manager.import_data('questions')
+    data_manager.view_counter(question_id, question_data)
     answer_data = data_manager.import_data('answers')
     current_question = data_manager.get_current_question(question_id)
     if request.method == 'POST':
