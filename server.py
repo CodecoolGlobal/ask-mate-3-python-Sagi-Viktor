@@ -42,7 +42,6 @@ def new_question(question_id):
 def delete_question(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')
-    
 
 
 @app.route("/question/<question_id>/edit",methods=["GET", "POST"])

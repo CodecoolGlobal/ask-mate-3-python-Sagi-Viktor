@@ -20,6 +20,7 @@ def import_data(file):
         Import Dictionaries in a list, dictionary keys are the ..._HEADERS.
     """
     data = csv.import_data(f'{DIRNAME}/data/{file}.csv')
+    # data = question_sorter(data, 'asc')
     return data
 
 
@@ -163,12 +164,20 @@ def question_sorter(sort_by, orientation='asc'):
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
     """
-    data = import_data('questions')
+    # data = import_data('questions')
+    # data = sort_by_title()
     return data
 
 
 def sort_by_title(data):
-    pass
+    base = data[0]['title']
+    result = data
+    lenght = len(data)
+    for item in range(lenght-1):
+        for place in range(0, lenght - item - 1):
+            if data[item]['title'] > data[item+1]['title']:
+                result[item]['title'], result[item+1]['title'] = result[item+1]['title'], result[item]['title']
+    return result
 
 
 def sort_by_time(data):
