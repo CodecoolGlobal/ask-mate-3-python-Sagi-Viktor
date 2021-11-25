@@ -1,6 +1,8 @@
 import connection as csv
 import os
 import time
+from operator import itemgetter
+# import operator
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
@@ -156,20 +158,20 @@ def view_counter(question_id, question_data):
             export_questions(question_data)
 
 
-
-
-
 def question_sorter(sort_by, orientation='asc'):
     """ Main logic for sorting questions.
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
     """
+    print(f"sort_by = {sort_by}")
     data = import_data('questions')
-    return sorted(data, key=lambda i: i[sort_by]) if orientation == 'asc' else sorted(data, key=lambda i: i[sort_by], reverse=True)
+    # return sorted(data, key=lambda i: i[sort_by]) if orientation == 'asc' else sorted(data, key=lambda i: i[sort_by], reverse=True)
+    # foo = data.sort(key=operator.itemgetter(sort_by))
+    foo = sorted(data, key=itemgetter(sort_by))
+    return foo
 
 
 if __name__ == '__main__':
-    pass
     # print(import_questions())
     # add_question()
     # print(question_sorter('view_number'))
