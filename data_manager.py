@@ -7,7 +7,7 @@ ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'messag
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
 
 
-def export_answers(data, file='data/answers.csv'):
+def export_answers(data, file=f'{DIRNAME}/data/answers.csv'):
     csv.export_data(data, ANSWER_HEADERS, file)
 
 
