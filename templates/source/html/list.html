@@ -1,127 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Question list</title>#}
-{#    <style>#}
-{#        .title_link {#}
-{#            background-color: green;#}
-{#            color: lightgray;#}
-{#            font-family: monospace;#}
-{#            border-radius: 10px;#}
-{#            border-color: lightgrey;#}
-{#            box-shadow: 0 0 10px lightgray;#}
-{#        }#}
-{#        .links {#}
-{#            background-color: darkgreen;#}
-{#            color: lightgray;#}
-{#            font-family: monospace;#}
-{#            margin-block-start: 0.83em;#}
-{#            margin-block-end: 0.83em;#}
-{#            margin-inline-start: 14em;#}
-{#            margin-inline-end: 14em;#}
-{#        }#}
-{#        h1, h2 {#}
-{#            background-color: darkgreen;#}
-{#            color: lightgray;#}
-{#            font-family: monospace;#}
-{#            background-image: url("../../../static/source/abstract.jpg");#}
-{#            margin-block-start: 0.83em;#}
-{#            margin-block-end: 0.83em;#}
-{#            margin-inline-start: 8em;#}
-{#            margin-inline-end: 8em;#}
-{#            border-radius: 5px;#}
-{#            border-color: lightgrey;#}
-{#            box-shadow: 0 0 10px lightgray;#}
-{#        }#}
-{#        body {#}
-{#            vertical-align: middle;#}
-{#            margin: auto;#}
-{#            height: 100%;#}
-{#        }#}
-{#        html {#}
-{#            border: darkgreen;#}
-{#            background-image: url("../../../static/source/hacker.jpg");#}
-{#        }#}
-{#        table, th, td {#}
-{#            border: 1px solid black;#}
-{#            box-shadow: 0 0 10px darkgreen;#}
-{#            background-color: green;#}
-{#            color: lightgray;#}
-{#            border-radius: 5px;#}
-{#            font-family: monospace;#}
-{#            background-image: url("../../../static/source/abstract.jpg")#}
-{#         }#}
-{#        table {#}
-{#            width: 95%;#}
-{#            margin-left: auto;#}
-{#            margin-right: auto;#}
-{#}#}
-{#         th {#}
-{#             background-color: darkgreen;#}
-{#             color: lightgray;#}
-{#             margin: 50px;#}
-{#             padding: 10px;#}
-{#             outline: none !important;#}
-{#             border-width: 1px;#}
-{#             box-shadow: 0 0 10px black;#}
-{#         }#}
-{#         .topnav {#}
-{#            overflow: hidden;#}
-{#            background-color: black;#}
-{#            font-family: sans-serif;#}
-{#            font-weight: bold;#}
-{#        }#}
-{#        .topnav a {#}
-{#            float : left;#}
-{#            color : white;#}
-{#            text-align : center;#}
-{#            padding : 14px 16px;#}
-{#            text-decoration: none;#}
-{#            font-size: 17px;#}
-{#        }#}
-{#        .topnav a:hover{#}
-{#            background-color: white;#}
-{#            color: darkgreen;#}
-{#        }#}
-{#        .topnav a.active {#}
-{#            background-image: url("../../../static/source/abstract.jpg");#}
-{#            color: #ddd;#}
-{#        }#}
-{#        .topnav a.active2 { background-color: white; color: black }#}
-{#    </style>#}
-{#</head>#}
-{#<body>#}
-{#<div class = "topnav">#}
-{#    <img src = "../../../static/source/hacker_logo.jpg" style="width:6%; height:6%">#}
-{#    <a class = "active">Options</a>#}
-{#    <a href="/add-question">Add Question</a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a class = "active">Others</a>#}
-{#    <a href = "https://www.google.com">Home</a>#}
-{#    <a href = "https://telex.hu/">News</a>#}
-{#    <a href = "https://codecool.com/hu/kapcsolat/">Contact</a>#}
-{#    <a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a></a>#}
-{#    <a class="active2" href = "#">Log in</a>#}
-{#    <a></a>#}
-{#</div>#}
-{#<br>#}
-{#<h1 style="width: 10em; margin: auto; text-align: center">FORUM LOOP</h1>#}
-{#<br>#}
-{#<h2 style="width: 6em">Questions:</h2>#}
+<head>
+    <meta charset="UTF-8">
+    <title>Question list</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../../../static/source/css/navbar_style.css">
+    <link rel="stylesheet" href="../../../static/source/css/list_style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a class="logo" href="/"><img style="width:25%; height:25%" src="../../../static/source/images/logo.png" alt="logo"></a>
+        <nav>
+            <ul class="nav__links">
+                <li><a href = "https://www.google.com">Home</a></li>
+                <li><a href = "https://telex.hu/">News</a></li>
+                <li><a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a></li>
+            </ul>
+        </nav>
+        <a class="cta" href = "https://codecool.com/hu/kapcsolat/">Contact</a>
+        <p class="menu cta">Menu</p>
+    </header>
+    <div class="overlay">
+        <a class="close">&times;</a>
+        <div class="overlay__content">
+            <a href = "https://www.google.com">Home</a>
+            <a href = "https://telex.hu/">News</a>
+            <a href = "https://codecool.com/hu/kapcsolat/">Contact</a>
+            <a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a>
+        </div>
+    </div>
+    <script type="text/javascript" src="../../../static/source/js/mobile.js"></script>
+
+<br>
+<h2 style="width: 6em; border: 2px solid whitesmoke;">Questions:</h2>
+<br>
+<a class="links" href="/add-question">Add Question</a>
 <form action="/list" method="POST">
-    <label>Sort by:</label>
-    <select onchange="this.form.submit()" name="status" id="cars">
+    <label></label>
+    <select onchange="this.form.submit()" name="status" id="cars" class="links">
         <option value="submission_time">submission time</option>
         <option value="message">message</option>
         <option value="title">title</option>

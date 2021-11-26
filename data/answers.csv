@@ -2,7 +2,7 @@ id,submission_time,vote_number,question_id,message,voting,image
 1,1493398154,4,1,You need to use brackets: my_list = [],,
 2,1493088154,35,1,Look it up in the Python docs,,
 3,1637831975,0,1,Valami,0,
-4,1637833674,0,11,Nincs kép,0,
+4,1637833674,1,11,Nincs kép,0,
 5,1637834794,0,12,What,0,
 6,1637842182,0,13,,0,
 7,1637842191,2,13,"ez egy valasz
