@@ -163,16 +163,10 @@ def question_sorter(sort_by, orientation='asc'):
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
     """
-    print(f"sort_by = {sort_by}")
     data = import_data('questions')
-    # return sorted(data, key=lambda i: i[sort_by]) if orientation == 'asc' else sorted(data, key=lambda i: i[sort_by], reverse=True)
-    # foo = data.sort(key=operator.itemgetter(sort_by))
     foo = sorted(data, key=itemgetter(sort_by))
     return foo
 
 
 if __name__ == '__main__':
-    # print(import_questions())
-    # add_question()
-    # print(question_sorter('view_number'))
     pass

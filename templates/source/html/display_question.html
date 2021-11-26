@@ -7,7 +7,8 @@
 <body>
 {% for item in question_data %}
     {% if question_id == item['id'] %}
-        <h1 align="center">{{ item['message'] }}</h1>
+        <h1 align="center">{{ item['title'] }}</h1>
+        <p align="center">{{ item['message'] }}</p>
     {% endif %}
 {% endfor %}
 <br>
