@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display_question</title>
+</head>
+<body>
+{% for item in question_data %}
+    {% if question_id == item['id'] %}
+        <h1 align="center">{{ item['title'] }}</h1>
+        <p align="center">{{ item['message'] }}</p>
+    {% endif %}
+{% endfor %}
+<br>
+<br>
+<table border="1">
+    <col width="150">
+    <col width="1500">
+    <col width="75">
+    <col width="75">
+    <thead>
+        <th align="center">Votes</th>
+        <th align="center">Answers</th>
+        <th align="center" colspan="2">Vote</th>
+    </thead>
+    <tbody>
+        {% for item in answer_data %}
+            {% if question_id == item['question_id'] %}
+                <tr>
+                    <td align="center">{{ item['vote_number'] }}</td>
+                    <td align="center">{{ item['message'] }}</td>
+                    <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_up" }}">+</a></td>
+                    <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_down" }}">-</a></td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+{% block add_answer_button %}
+{% endblock %}
+{% block add_answer %}
+{% endblock %}
+<div>
+    <a href="/list">Back to questions</a>
+</div>
+</body>
+</html>

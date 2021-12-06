@@ -1,0 +1,9 @@
+{%extends "source/html/add_question.html" %}
+    {%block head_title%}Edit question{%endblock%}
+        {%block h1%}EDIT QUESTION{%endblock%}
+        {%block form%}action="/question/{{question_id}}/edit"{%endblock%}
+
+        {%block title%}value="{{question_data[current_question]["title"]}}"{%endblock%}
+        {%block message%}>{{question_data[current_question]["message"]}}{%endblock%}
+        {%block submit%}value="submit edited question"{%endblock%}
+
