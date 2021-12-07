@@ -1,5 +1,7 @@
+import os
 from flask import Flask, render_template, request, redirect
 import data_manager
+import util
 
 app = Flask(__name__)
 
@@ -22,14 +24,12 @@ def get_list():
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
 def display_question(question_id):
     question_id = question_id
-    question_data = data_manager.import_data('questions')
-    data_manager.view_counter(question_id, question_data)
-    answer_data = data_manager.import_data('answers')
-    current_question = data_manager.get_current_question(question_id)
+    current_question = data_manager.get_question(question_id)
+    answer_data = data_manager.get_answer_list()
     if request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
-    return render_template('source/html/display_and_add_answer.html', question_id=question_id,
-                           question_data=question_data, answer_data=answer_data, current_question=current_question)
+    return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
+                           answer_data=answer_data, current_question=current_question)
 
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
@@ -91,10 +91,15 @@ def answer_vote_down(answer_id=None):
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
     if request.method == "POST":
-        data_manager.add_question(request.form)
-        data = data_manager.import_data('questions')
-        question_id = data[-1]['id']
-        return redirect(f'/question/{question_id}')
+        question_id = util.generate_id('question')
+        submission_time = util.generate_submission_time()
+        view_number = 0
+        vote_number = 0
+        title = request.form.get('question-title')
+        message = request.form.get('question-message')
+        image = ''
+        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
+        data_manager.add_question(question_data)
     return render_template('source/html/add_question.html')
 
 
