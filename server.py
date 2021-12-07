@@ -9,11 +9,14 @@ def main_page():
     return render_template("source/html/index.html")
 
 
-@app.route("/list")
+@app.route("/list", methods=['POST', 'GET'])
 def get_list():
     question_data = data_manager.get_question_list()
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
-    return render_template('list.html', question_data=question_data, question_headers=question_headers)
+    sorting = request.form.get('status')
+    if sorting:
+        question_data = data_manager.question_sorter(sorting)
+    return render_template('source/html/list.html', question_data=question_data, question_headers=question_headers)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
