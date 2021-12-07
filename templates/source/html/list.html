@@ -68,18 +68,15 @@
     <col width="100">
     <col width="200">
     <col width="1000">
-    <col width="75">
-    <col width="75">
     <col width="150">
+    <col width="75">
+    <col width="75">
     <thead>
         <tr>
             {% for header in question_headers %}
-                {% if header == 'Voting' %}
-                    <th colspan="2">{{ header }}</th>
-                {% else %}
-                    <th style="text-align:center">{{ header }}</th>
-                {% endif %}
+                <th style="text-align:center">{{ header }}</th>
             {% endfor %}
+            <th colspan="2">Vote</th>
         </tr>
     </thead>
     <tbody>
@@ -88,17 +85,14 @@
             {% for data in item %}
                 {% if data == 'title' %}
                     <td align="center"><a class="title_link" href= "/question/{{item['id']}}">{{ item[data] }}</a></td>
-                {% elif data == 'message' %}
-                    <td style="justify-content: center">{{ item['message'] }}</td>
-                {% elif data == 'voting' %}
-                    <td align="center"><a class="title_link" href="{{ "/question/" + item['id'] + "/vote_up" }}"
-                                          style="text-decoration: none; color: whitesmoke">+</a></td>
-                    <td align="center"><a class="title_link" href="{{ "/question/" + item['id'] + "/vote_down" }}"
-                                          style="text-decoration: none; color: whitesmoke">-</a></td>
                 {% else %}
                     <td align="center">{{ item[data] }}</td>
                 {% endif %}
             {% endfor %}
+            <td align="center"><a class="title_link" href="/question/{{ item['id'] }}/vote_up"
+                                          style="text-decoration: none; color: whitesmoke">+</a></td>
+            <td align="center"><a class="title_link" href="/question/{{ item['id'] }}/vote_down"
+                                          style="text-decoration: none; color: whitesmoke">-</a></td>
         </tr>
         {% endfor %}
     </tbody>

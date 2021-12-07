@@ -1,4 +1,3 @@
-import os
 from flask import Flask, render_template, request, redirect
 import data_manager
 import util
@@ -33,14 +32,36 @@ def display_question(question_id):
 
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
-def new_question(question_id):
-    question_data = data_manager.import_data('questions')
-    answer_data = data_manager.import_data('answers')
+def add_answer(question_id):
+    question_data = data_manager.get_question_list()
+    answer_data = data_manager.get_answer_list
+    question_id = question_id
     if request.method == 'POST':
-        data_manager.add_answer(request.form)
+        answer_id = util.generate_id('answer')
+        submission_time = util.generate_submission_time()
+        vote_number = 0
+        message = request.form.get('message')
+        image = request.form.get('image')
+        answer_data = [answer_id, submission_time, vote_number, question_id, message, image]
+        data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
     return render_template('source/html/add_answer.html', question_id=question_id, question_data=question_data,
                            answer_data=answer_data)
+
+
+@app.route("/add-question", methods=['POST', 'GET'])
+def add_question():
+    if request.method == "POST":
+        question_id = util.generate_id('question')
+        submission_time = util.generate_submission_time()
+        view_number = 0
+        vote_number = 0
+        title = request.form.get('question-title')
+        message = request.form.get('question-message')
+        image = ''
+        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
+        data_manager.add_question(question_data)
+    return render_template('source/html/add_question.html')
 
 
 @app.route("/question/<question_id>/delete")
@@ -63,44 +84,29 @@ def edit_question(question_id):
 @app.route("/question/<question_id>/vote_up")
 def question_vote_up(question_id=None):
     question_id = question_id
-    data_manager.question_voting(question_id, '+')
+    data_manager.vote_up_question(question_id)
     return redirect('/list')
 
 
 @app.route("/question/<question_id>/vote_down")
 def question_vote_down(question_id=None):
     question_id = question_id
-    data_manager.question_voting(question_id, '-')
+    data_manager.vote_down_question(question_id)
     return redirect('/list')
-
-
-@app.route("/answer/<answer_id>/vote_up", methods=['GET', 'POST'])
-def answer_vote_up(answer_id=None):
-    answer_id = answer_id
-    data_manager.answer_voting(answer_id, '+')
-    return redirect('/list')
-
-
-@app.route("/answer/<answer_id>/vote_down")
-def answer_vote_down(answer_id=None):
-    answer_id = answer_id
-    data_manager.answer_voting(answer_id, '-')
-    return redirect('/list')
-
-
-@app.route("/add-question", methods=['POST', 'GET'])
-def add_question():
-    if request.method == "POST":
-        question_id = util.generate_id('question')
-        submission_time = util.generate_submission_time()
-        view_number = 0
-        vote_number = 0
-        title = request.form.get('question-title')
-        message = request.form.get('question-message')
-        image = ''
-        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
-        data_manager.add_question(question_data)
-    return render_template('source/html/add_question.html')
+#
+#
+# @app.route("/answer/<answer_id>/vote_up", methods=['GET', 'POST'])
+# def answer_vote_up(answer_id=None):
+#     answer_id = answer_id
+#     data_manager.answer_voting(answer_id, '+')
+#     return redirect('/list')
+#
+#
+# @app.route("/answer/<answer_id>/vote_down")
+# def answer_vote_down(answer_id=None):
+#     answer_id = answer_id
+#     data_manager.answer_voting(answer_id, '-')
+#     return redirect('/list')
 
 
 if __name__ == "__main__":
