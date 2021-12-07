@@ -32,6 +32,16 @@ def get_question(cursor, question_id):
 
 
 @connect_database.connection_handler
+def get_question_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT question_id
+                    FROM answer
+                    WHERE id = '{answer_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
 def get_answer_list(cursor):
     cursor.execute(f"""
                     SELECT *
@@ -126,72 +136,6 @@ def delete_question(cursor, user_id):
     cursor.execute(query)
 
 
-def question_voting(question_id, operation):
-    question_data = import_data('questions')
-    new_data = {}
-    for item in question_data:
-        if item['id'] == question_id:
-            place = question_data.index(item)
-            old_number = item['vote_number']
-            new_data['id'] = item['id']
-            new_data['submission_time'] = item['submission_time']
-            new_data['view_number'] = item['view_number']
-            if operation == '+':
-                new_data['vote_number'] = str(int(old_number) + 1)
-            else:
-                new_data['vote_number'] = str(int(old_number) - 1)
-            new_data['title'] = item['title']
-            new_data['message'] = item['message']
-            new_data['voting'] = item['voting']
-            new_data['image'] = item['image']
-            question_data.remove(item)
-            question_data.insert(place, new_data)
-            export_questions(question_data)
-
-
-def answer_voting(answer_id, operation):
-    answer_data = import_data('answers')
-    new_data = {}
-    for item in answer_data:
-        if item['id'] == answer_id:
-            place = answer_data.index(item)
-            old_number = item['vote_number']
-            new_data['id'] = item['id']
-            new_data['submission_time'] = item['submission_time']
-            if operation == '+':
-                new_data['vote_number'] = str(int(old_number) + 1)
-            else:
-                new_data['vote_number'] = str(int(old_number) - 1)
-            new_data['question_id'] = item['question_id']
-            new_data['message'] = item['message']
-            new_data['voting'] = item['voting']
-            new_data['image'] = item['image']
-            answer_data.remove(item)
-            answer_data.insert(place, new_data)
-            export_answers(answer_data)
-
-
-def view_counter(question_id, question_data):
-    for item in question_data:
-        if question_id == item['id']:
-            place = question_data.index(item)
-            item['view_number'] = str(int(item['view_number']) + 1)
-            new_item = item
-            question_data.remove(item)
-            question_data.insert(place, new_item)
-            export_questions(question_data)
-
-
-def question_sorter(sort_by, orientation='asc'):
-    """ Main logic for sorting questions.
-        ARGUMENTS: Arg1 == the HEADER name for sort |
-        Arg2 == (optional) 'desc' if descending form needed
-    """
-    data = import_data('questions')
-    foo = sorted(data, key=itemgetter(sort_by))
-    return foo
-
-
 @connect_database.connection_handler
 def delete_answer(cursor,id):
     query = f"""
@@ -199,19 +143,3 @@ def delete_answer(cursor,id):
             WHERE id = {id}
             """
     cursor.execute(query, {'id':id})
-
-
-if __name__ == '__main__':
-    # print(generate_id('question'))
-    pass
-
-# def view_counter(question_id, question_data):
-#     for item in question_data:
-#         if question_id == item['id']:
-#             place = question_data.index(item)
-#             item['view_number'] = str(int(item['view_number']) + 1)
-#             new_item = item
-#             question_data.remove(item)
-#             question_data.insert(place, new_item)
-#             export_questions(question_data)
-
