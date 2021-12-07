@@ -30,6 +30,8 @@ def import_data(file):
 
 @connect_database.connection_handler
 def generate_id(cursor, database):
+    """ Generates the id (last id + 1)
+        Argument is the db name 'answer' or 'question'"""
     query = f"""
         SELECT id FROM {database}
         ORDER BY id DESC
@@ -81,7 +83,6 @@ def add_answer(form):
         Argument: New Answer raw (form)data.
         Return: No return, answer data with the new answer and the parameters are appended.
     """
-    data = import_data('answers')
     id = generate_id('answer')
     submission_time = get_time()
     vote_number = 0
