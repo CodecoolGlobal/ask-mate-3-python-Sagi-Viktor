@@ -1,54 +1,4 @@
-import connection as csv
-import os
-import time
-import datetime
-from operator import itemgetter
-from psycopg2 import sql
-from psycopg2.extras import RealDictCursor
 import connect_database
-
-
-DIRNAME = os.path.dirname(__file__)
-ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
-QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
-
-
-def export_answers(data, file=f'{DIRNAME}/data/answers.csv'):
-    csv.export_data(data, ANSWER_HEADERS, file)
-
-
-def export_questions(data, file=f'{DIRNAME}/data/questions.csv'):
-    csv.export_data(data, QUESTION_HEADERS, file)
-
-
-def import_data(file):
-    """ Argument should be 'questions' or 'answers'.
-        Import Dictionaries in a list, dictionary keys are the ..._HEADERS.
-    """
-    data = csv.import_data(f'{DIRNAME}/data/{file}.csv')
-    return data
-
-
-@connect_database.connection_handler
-def generate_id(cursor, database):
-    """ Generates the id (last id + 1)
-        Argument is the db name 'answer' or 'question'"""
-    query = f"""
-        SELECT id FROM {database}
-        ORDER BY id DESC
-        LIMIT 1
-        """
-    cursor.execute(query, {'database': database})
-    last_id = cursor.fetchall()
-    return last_id[0].get('id') + 1
-
-
-def get_time():
-    """ Output format : 2021-12-31 23:59:59
-    """
-    timestamp = round(time.time())
-    value = datetime.datetime.fromtimestamp(timestamp)
-    return f"{value:%Y-%m-%d %H:%M:%S}"
 
 
 @connect_database.connection_handler
@@ -92,10 +42,6 @@ def get_answer_list(cursor):
 
 @connect_database.connection_handler
 def add_question(cursor, question_data):
-    """ New Question main logic.
-        Argument: New questions raw (form)data.
-        Return: No return, questions data with the new question and the parameters are appended.
-    """
     cursor.execute(f"""
                     INSERT INTO question
                     (id, submission_time, view_number, vote_number, title, message, image)
@@ -110,36 +56,55 @@ def add_question(cursor, question_data):
                     """)
 
 
-def add_answer(form):
-    """ New Answer main logic.
-        Argument: New Answer raw (form)data.
-        Return: No return, answer data with the new answer and the parameters are appended.
-    """
-    id = generate_id('answer')
-    submission_time = get_time()
-    vote_number = 0
-    message = form.get('message')
-    image = form.get('image')
-    voting = 0
-    image = ''
-    question_id = 1
-    add_answer_process({'id': id, 'submission_time': submission_time, 'vote_number': vote_number,
-                        'question_id': question_id, 'message': message, 'voting': voting, 'image': image})
+@connect_database.connection_handler
+def vote_up_question(cursor, question_id):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET vote_number = vote_number + 1
+                    WHERE id = '{question_id}'
+                    """)
 
 
 @connect_database.connection_handler
-def add_answer_process(cursor, parameters):
-    query = f"""
-        INSERT INTO answer (id, submission_time, vote_number, question_id, message, image)
+def vote_down_question(cursor, question_id):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET vote_number = vote_number - 1
+                    WHERE id = '{question_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def vote_up_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    UPDATE answer
+                    SET vote_number = vote_number + 1
+                    WHERE id = '{answer_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def vote_down_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    UPDATE answer
+                    SET vote_number = vote_number - 1
+                    WHERE id = '{answer_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def add_answer(cursor, answer_data):
+    cursor.execute(f"""
+        INSERT INTO answer
+        (id, submission_time, vote_number, question_id, message, image)
         VALUES (
-                '{parameters['id']}',
-                '{parameters['submission_time']}',
-                '{parameters['vote_number']}',
-                '{parameters['question_id']}',
-                '{parameters['message']}',
-                '{parameters['image']}')
-        """
-    cursor.execute(query, parameters)
+                '{answer_data[0]}',
+                '{answer_data[1]}',
+                '{answer_data[2]}',
+                '{answer_data[3]}',
+                '{answer_data[4]}',
+                '{answer_data[5]}')
+        """)
 
 
 def merge_dict_data(data, parameters, header):
@@ -150,31 +115,6 @@ def merge_dict_data(data, parameters, header):
         new.update({header: parameters[index]})
     data.append(new)
     return data
-
-
-def get_current_question(question_id):
-    data = import_data('questions')
-    for item in data:
-        if item['id'] == str(question_id):
-            current_question = data.index(item)
-            return current_question
-
-
-def submit_edited_question(updated_question, id):
-    id = int(id)
-    data = import_data('questions')
-    for key, value in updated_question.items():
-        data[id][key] = value
-    export_questions(data)
-
-
-
-# def delete_question(id):
-#     id = int(id)
-#     data = import_data('questions')
-#     current_question = get_current_question(id)
-#     data.pop(current_question)
-#     export_questions(data)
 
 
 @connect_database.connection_handler
@@ -264,4 +204,14 @@ def delete_answer(cursor,id):
 if __name__ == '__main__':
     # print(generate_id('question'))
     pass
+
+# def view_counter(question_id, question_data):
+#     for item in question_data:
+#         if question_id == item['id']:
+#             place = question_data.index(item)
+#             item['view_number'] = str(int(item['view_number']) + 1)
+#             new_item = item
+#             question_data.remove(item)
+#             question_data.insert(place, new_item)
+#             export_questions(question_data)
 
