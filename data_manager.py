@@ -117,16 +117,6 @@ def add_answer(cursor, answer_data):
         """)
 
 
-def merge_dict_data(data, parameters, header):
-    """ Merge new_data and overwrite database.
-    """
-    new = {}
-    for index, header in enumerate(header):
-        new.update({header: parameters[index]})
-    data.append(new)
-    return data
-
-
 @connect_database.connection_handler
 def delete_question(cursor, user_id):
     query = f"""
