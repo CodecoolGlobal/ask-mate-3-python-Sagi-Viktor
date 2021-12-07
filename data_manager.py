@@ -235,7 +235,8 @@ def question_sorter(sort_by, orientation='asc'):
 def delete_answer(cursor,id):
     query = f"""
             DELETE FROM answer
-            WHERE id = {id}"""
+            WHERE id = {id}
+            """
     cursor.execute(query, {'id':id})
 
 
