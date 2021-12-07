@@ -65,6 +65,24 @@ def vote_down_question(cursor, question_id):
 
 
 @connect_database.connection_handler
+def vote_up_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    UPDATE answer
+                    SET vote_number = vote_number + 1
+                    WHERE id = '{answer_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def vote_down_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    UPDATE answer
+                    SET vote_number = vote_number - 1
+                    WHERE id = '{answer_id}'
+                    """)
+
+
+@connect_database.connection_handler
 def add_answer(cursor, answer_data):
     cursor.execute(f"""
         INSERT INTO answer
@@ -107,13 +125,3 @@ def delete_question(cursor, user_id):
 #             question_data.remove(item)
 #             question_data.insert(place, new_item)
 #             export_questions(question_data)
-#
-#
-# def question_sorter(sort_by, orientation='asc'):
-#     """ Main logic for sorting questions.
-#         ARGUMENTS: Arg1 == the HEADER name for sort |
-#         Arg2 == (optional) 'desc' if descending form needed
-#     """
-#     data = import_data('questions')
-#     foo = sorted(data, key=itemgetter(sort_by))
-#     return foo
