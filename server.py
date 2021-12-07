@@ -37,7 +37,7 @@ def new_question(question_id):
     question_data = data_manager.import_data('questions')
     answer_data = data_manager.import_data('answers')
     if request.method == 'POST':
-        data_manager.add_answer(request.form, question_id)
+        data_manager.add_answer(request.form)
         return redirect(f'/question/{question_id}')
     return render_template('source/html/add_answer.html', question_id=question_id, question_data=question_data,
                            answer_data=answer_data)
