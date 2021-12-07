@@ -6,8 +6,8 @@
     <form action="/question/{{question_id}}/edit" method="get">
         <input type="submit" value="Edit question">
     </form><br>
-    <form action="/question/{{question_id}}/delete" method="DELETE">
-        <input type="submit" value="Delete question">
+    <form action="/question/{{question_id}}/delete" method="POST">
+        <input type="submit" value="Delete question" name="delete">
     </form>
     <br><br><br><br><br><br>
 {% endblock %}

@@ -17,7 +17,7 @@
     <col width="150">
     <col width="1500">
     <col width="75">
-    <col width="75">
+    <col width="75">detail page.
     <thead>
         <th align="center">Votes</th>
         <th align="center">Answers</th>
@@ -31,6 +31,7 @@
                     <td align="center">{{ item['message'] }}</td>
                     <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_up" }}">+</a></td>
                     <td align="center"><a href="{{ "/answer/" + item['id'] + "/vote_down" }}">-</a></td>
+                    <td align="center"><a href="{{ "/answer/" + item['id'] + "/delete" }}">Delete</a></td>
                 </tr>
             {% endif %}
         {% endfor %}

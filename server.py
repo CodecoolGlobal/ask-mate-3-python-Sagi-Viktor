@@ -98,6 +98,11 @@ def add_question():
     return render_template('source/html/add_question.html')
 
 
+@app.route("/answer/<answer_id>/delete")
+def delete_answer(answer_id):
+    data_manager.delete_answer(answer_id)
+    return redirect('/list')
+
 if __name__ == "__main__":
     app.run(port=5000,
             debug=True)

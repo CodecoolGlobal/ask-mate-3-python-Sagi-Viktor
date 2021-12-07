@@ -190,3 +190,9 @@ def question_sorter(cursor,sort):
     cursor.execute(query, {'sort':sort})
     return cursor.fetchall()
 
+@connect_database.connection_handler
+def delete_answer(cursor,id):
+    query = f"""
+            DELETE FROM answer
+            WHERE id = {id}"""
+    cursor.execute(query, {'id':id})
