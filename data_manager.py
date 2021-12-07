@@ -21,7 +21,7 @@ def get_answer_list(cursor):
     return cursor.fetchall()
 
 
-
+@connect_database.connection_handler
 def get_question(cursor, question_id):
     cursor.execute(f"""
                     SELECT *
