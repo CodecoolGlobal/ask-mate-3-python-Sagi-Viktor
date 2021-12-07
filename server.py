@@ -9,16 +9,11 @@ def main_page():
     return render_template("source/html/index.html")
 
 
-@app.route("/list", methods=['POST', 'GET'])
+@app.route("/list")
 def get_list():
-    question_headers = [word.replace('_', ' ').capitalize() for word in data_manager.QUESTION_HEADERS]
-    question_data = data_manager.import_data('questions')
-    if request.method == 'POST':
-        print(request.form)
-        question_data = data_manager.question_sorter(request.form['status'])
-        # return redirect("/")
-    return render_template('source/html/list.html', question_headers=question_headers, question_data=question_data,
-                           sorted_by=data_manager.QUESTION_HEADERS)
+    question_data = data_manager.get_question_list()
+    question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
+    return render_template('list.html', question_data=question_data, question_headers=question_headers)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])

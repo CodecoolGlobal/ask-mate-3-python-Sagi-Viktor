@@ -2,7 +2,9 @@ import connection as csv
 import os
 import time
 from operator import itemgetter
-# import operator
+from psycopg2 import sql
+from psycopg2.extras import RealDictCursor
+import connect_database
 
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
@@ -32,6 +34,16 @@ def generate_id(data):
 
 def get_unix_time():
     return round(time.time())
+
+
+@connect_database.connection_handler
+def get_question_list(cursor):
+    cursor.execute("""
+                    SELECT id, submission_time, view_number, vote_number, title, message, image
+                    FROM question
+                    ORDER BY id
+                    """)
+    return cursor.fetchall()
 
 
 def add_question(form):
@@ -166,7 +178,3 @@ def question_sorter(sort_by, orientation='asc'):
     data = import_data('questions')
     foo = sorted(data, key=itemgetter(sort_by))
     return foo
-
-
-if __name__ == '__main__':
-    pass
