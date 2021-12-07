@@ -170,11 +170,23 @@ def view_counter(question_id, question_data):
             export_questions(question_data)
 
 
-def question_sorter(sort_by, orientation='asc'):
+#def question_sorter(sort_by, orientation='asc'):
     """ Main logic for sorting questions.
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
     """
-    data = import_data('questions')
-    foo = sorted(data, key=itemgetter(sort_by))
-    return foo
+    #data = import_data('questions')
+    #foo = sorted(data, key=itemgetter(sort_by))
+    #return foo
+
+
+@connect_database.connection_handler
+def question_sorter(cursor,sort):
+    query = f"""
+                SELECT id, submission_time, view_number, vote_number, title, message, image
+                FROM question
+                ORDER BY {sort} DESC
+                """
+    cursor.execute(query, {'sort':sort})
+    return cursor.fetchall()
+
