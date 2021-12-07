@@ -53,8 +53,8 @@ def get_time():
 
 @connect_database.connection_handler
 def get_question_list(cursor):
-    cursor.execute("""
-                    SELECT id, submission_time, view_number, vote_number, title, message, image
+    cursor.execute(f"""
+                    SELECT *
                     FROM question
                     ORDER BY id
                     """)
@@ -71,22 +71,43 @@ def get_answer_list(cursor):
     return cursor.fetchall()
 
 
-def add_question(form):
+
+def get_question(cursor, question_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM question
+                    WHERE id = '{question_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_answer_list(cursor):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM answer
+                    ORDER BY id""")
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def add_question(cursor, question_data):
     """ New Question main logic.
         Argument: New questions raw (form)data.
         Return: No return, questions data with the new question and the parameters are appended.
     """
-    data = import_data('questions')
-    id = generate_id(data)
-    submission_time = get_unix_time()
-    view_number = 0
-    vote_number = 0
-    message = form.get('message')
-    title = form.get('title')
-    image = form.get('image')
-    voting = 0
-    parameters = [id, submission_time, view_number, vote_number, title, message, voting, image]
-    export_questions(merge_dict_data(data, parameters, QUESTION_HEADERS))
+    cursor.execute(f"""
+                    INSERT INTO question
+                    (id, submission_time, view_number, vote_number, title, message, image)
+                    VALUES (
+                    '{question_data[0]}',
+                    '{question_data[1]}',
+                    '{question_data[2]}',
+                    '{question_data[3]}',
+                    '{question_data[4]}',
+                    '{question_data[5]}',
+                    '{question_data[6]}')
+                    """)
 
 
 def add_answer(form):
