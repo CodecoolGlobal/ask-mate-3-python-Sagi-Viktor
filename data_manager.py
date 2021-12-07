@@ -1,6 +1,7 @@
 import connection as csv
 import os
 import time
+import datetime
 from operator import itemgetter
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
@@ -28,13 +29,26 @@ def import_data(file):
     return data
 
 
-def generate_id(data):
-    last_id = data[-1].get('id')
-    return int(last_id) + 1
+@connect_database.connection_handler
+def generate_id(cursor, database):
+    """ Generates the id (last id + 1)
+        Argument is the db name 'answer' or 'question'"""
+    query = f"""
+        SELECT id FROM {database}
+        ORDER BY id DESC
+        LIMIT 1
+        """
+    cursor.execute(query, {'database': database})
+    last_id = cursor.fetchall()
+    return last_id[0].get('id') + 1
 
 
-def get_unix_time():
-    return round(time.time())
+def get_time():
+    """ Output format : 2021-12-31 23:59:59
+    """
+    timestamp = round(time.time())
+    value = datetime.datetime.fromtimestamp(timestamp)
+    return f"{value:%Y-%m-%d %H:%M:%S}"
 
 
 @connect_database.connection_handler
@@ -65,20 +79,36 @@ def add_question(form):
     export_questions(merge_dict_data(data, parameters, QUESTION_HEADERS))
 
 
-def add_answer(form, question_id):
+def add_answer(form):
     """ New Answer main logic.
         Argument: New Answer raw (form)data.
         Return: No return, answer data with the new answer and the parameters are appended.
     """
-    data = import_data('answers')
-    id = generate_id(data)
-    submission_time = get_unix_time()
+    id = generate_id('answer')
+    submission_time = get_time()
     vote_number = 0
     message = form.get('message')
     image = form.get('image')
     voting = 0
-    parameters = [id, submission_time, vote_number, question_id, message, voting, image]
-    export_answers(merge_dict_data(data, parameters, ANSWER_HEADERS))
+    image = ''
+    question_id = 1
+    add_answer_process({'id': id, 'submission_time': submission_time, 'vote_number': vote_number,
+                        'question_id': question_id, 'message': message, 'voting': voting, 'image': image})
+
+
+@connect_database.connection_handler
+def add_answer_process(cursor, parameters):
+    query = f"""
+        INSERT INTO answer (id, submission_time, vote_number, question_id, message, image)
+        VALUES (
+                '{parameters['id']}',
+                '{parameters['submission_time']}',
+                '{parameters['vote_number']}',
+                '{parameters['question_id']}',
+                '{parameters['message']}',
+                '{parameters['image']}')
+        """
+    cursor.execute(query, parameters)
 
 
 def merge_dict_data(data, parameters, header):
@@ -189,3 +219,8 @@ def question_sorter(sort_by, orientation='asc'):
     data = import_data('questions')
     foo = sorted(data, key=itemgetter(sort_by))
     return foo
+
+
+if __name__ == '__main__':
+    # print(generate_id('question'))
+    pass
