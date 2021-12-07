@@ -6,6 +6,7 @@ from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
 import connect_database
 
+
 DIRNAME = os.path.dirname(__file__)
 ANSWER_HEADERS = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'voting', 'image']
 QUESTION_HEADERS = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'voting', 'image']
@@ -106,12 +107,22 @@ def submit_edited_question(updated_question, id):
     export_questions(data)
 
 
-def delete_question(id):
-    id = int(id)
-    data = import_data('questions')
-    current_question = get_current_question(id)
-    data.pop(current_question)
-    export_questions(data)
+
+# def delete_question(id):
+#     id = int(id)
+#     data = import_data('questions')
+#     current_question = get_current_question(id)
+#     data.pop(current_question)
+#     export_questions(data)
+
+
+@connect_database.connection_handler
+def delete_question(cursor, user_id):
+    query = f"""
+    DELETE FROM question
+    WHERE id ={user_id}
+    """
+    cursor.execute(query)
 
 
 def question_voting(question_id, operation):
