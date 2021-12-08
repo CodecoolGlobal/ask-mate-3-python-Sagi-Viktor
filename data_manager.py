@@ -161,7 +161,7 @@ def add_answer(cursor, answer_data):
 def delete_question(cursor, question_id):
     cursor.execute(f"""
                     DELETE FROM question
-                    WHERE id ={user_id}
+                    WHERE id ={question_id}
                     """)
 
 
@@ -186,6 +186,14 @@ def delete_comments_by_question_id(cursor, question_id):
     cursor.execute(f"""
                     DELETE FROM comment
                     WHERE question_id = '{question_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def delete_comments_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    DELETE FROM comment
+                    WHERE answer_id = '{answer_id}'
                     """)
 
 

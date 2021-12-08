@@ -29,7 +29,8 @@ def display_question(question_id):
     data_manager.view_counter(question_id)
     current_question = data_manager.get_question(question_id)
     answer_data = data_manager.get_answer_list_by_question_id(question_id)
-    nr_of_comments = util.get_answer_ids(answer_data)
+    answer_ids = util.get_answer_ids(answer_data)
+    nr_of_comments = util.get_comments_by_answer_ids(answer_ids)
     comment_data = data_manager.get_comments_question_id(question_id)
     question_comment = request.form.get('add_comment_to_question')
     if question_comment:
@@ -81,12 +82,7 @@ def add_question():
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
-    question_id = question_id
-    print(question_id)
-    data_manager.delete_question_tag(question_id)
-    data_manager.delete_comments_by_question_id(question_id)
-    data_manager.delete_answer_by_question_id(question_id)
-    data_manager.delete_question(question_id)
+    util.delete_question(question_id)
     return redirect('/list')
 
 
