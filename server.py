@@ -123,6 +123,13 @@ def delete_answer(answer_id):
     return redirect(f'/question/{question_id}')
 
 
+@app.route("/search")
+def search_in_question():
+    searched_phrase = request.args.get('q')
+    results = data_manager.search_engine(searched_phrase)
+    return render_template('search_results.html', results=results)
+
+
 if __name__ == "__main__":
     app.run(port=5000,
             debug=True)

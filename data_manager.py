@@ -134,6 +134,7 @@ def delete_answer(cursor,id):
             """
     cursor.execute(query, {'id':id})
 
+
 @connect_database.connection_handler
 def sort_question_asc(cursor,sort_by):
     cursor.execute(f"""
@@ -142,6 +143,7 @@ def sort_question_asc(cursor,sort_by):
                     ORDER BY {sort_by} ASC""")
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
 def sort_question_desc(cursor,sort_by):
     cursor.execute(f"""
@@ -149,3 +151,31 @@ def sort_question_desc(cursor,sort_by):
                     FROM question
                     ORDER BY {sort_by} DESC""")
     return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def search_engine(cursor, phrase):
+    answers = search_answers(phrase)
+    questions = search_questions(phrase)
+
+    return results
+
+
+@connect_database.connection_handler
+def search_answers(cursor, phrase):
+    query = """
+        
+        """
+    cursor.execute(query, )
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def search_questions(cursor, phrase):
+    query = """
+
+        """
+    cursor.execute(query, )
+    return cursor.fetchall()
+
+
