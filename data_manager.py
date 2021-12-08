@@ -121,7 +121,7 @@ def add_answer(cursor, answer_data):
 def delete_question(cursor, user_id):
     cursor.execute(f"""
                     DELETE FROM question
-                    WHERE id ={user_id}
+                    WHERE id = '{user_id}'
                     """)
 
 
