@@ -61,17 +61,13 @@
                 <tr>
                     <td align="center">{{ item['submission_time'] }}</td>
                     <td align="center">{{ item['message'] }}</td>
-                    <td align="center"><a href="/comments/{{item['id']}}/delete" onclick="delete_func()">Delete</a></td>
+                    <td align="center"><a href="/comments/{{item['id']}}/delete",
+                    onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table><br>
-    <script>
-        function delete_func() {
-        confirm("Are you sure you want to Delete comment? "+
-            "btw. Doesn't matter what you click, it will get deleted anyway;)!");
-        }
-    </script>
+
 
     <form action='/question/{{question_id}}/new-comment' method="get">
         <input type="submit" value="Add new comment" name="comment_to_question">
