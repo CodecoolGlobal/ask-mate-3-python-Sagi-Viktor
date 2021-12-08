@@ -161,29 +161,46 @@ def display_question_detail(cursor, question_id):
     return cursor.fetchall()
 
 
-@connect_database.connection_handler
-def search_engine(cursor, phrase):
+def search_engine(phrase):
     answers = search_answers(phrase)
     questions = search_questions(phrase)
-
-    return results
+    return [questions, answers]
 
 
 @connect_database.connection_handler
 def search_answers(cursor, phrase):
     query = """
-        
+        SELECT id, submission_time, question_id, message FROM answer
+        WHERE message LIKE %(phrase)s
         """
-    cursor.execute(query, )
+    cursor.execute(query, {'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
 
 @connect_database.connection_handler
 def search_questions(cursor, phrase):
     query = """
-
-        """
-    cursor.execute(query, )
+            SELECT id, submission_time, title, message FROM question
+            WHERE title LIKE %(phrase)s
+                OR message LIKE %(phrase)s
+            """
+    cursor.execute(query, {'phrase': f"%{phrase}%", 'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
+
+# @ connect_database.connection_handler
+# def get_question_by_id(cursor, question_id):
+#     query = """
+#         SELECT id, submission_time, title FROM question
+#         WHERE id = %s
+#         """
+#     cursor.execute(query, (question_id,))
+#     print(cursor.fetchall())
+#     return cursor.fetchall()
+#
+#
+# def get_questions_for_answers(answers):
+#
+#
+#     return answers
 

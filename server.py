@@ -13,6 +13,7 @@ def main_page():
 @app.route("/list", methods=['POST', 'GET'])
 def get_list():
     question_data = data_manager.get_question_list()
+    print(f"ser.py print::::: {question_data}")
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
@@ -134,7 +135,7 @@ def add_comment_to_question(question_id):
 def search_in_question():
     searched_phrase = request.args.get('q')
     results = data_manager.search_engine(searched_phrase)
-    return render_template('search_results.html', results=results)
+    return render_template('/source/html/search_results.html', results=results)
 
 
 if __name__ == "__main__":
