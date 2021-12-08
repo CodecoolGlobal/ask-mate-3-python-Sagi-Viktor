@@ -39,15 +39,24 @@
 <h2 style="width: 6em; border: 2px solid whitesmoke;">Questions:</h2>
 <br>
 <a class="links" href="/add-question">Add Question</a>
-<form action="/list" method="POST">
-    <label></label>
-    <select onchange='this.form.submit()' name='status' id="cars" class="links">
-        <option value='submission_time'>submission time</option>
-        <option value='message'>message</option>
-        <option value='title'>title</option>
-        <option value='view_number'>views</option>
-        <option value='vote_number'>votes</option>
+<form action="/list">
+    <select onchange='this.form.submit()' name='status_asc' id="cars" class="links">
+        <option value='submission_time'>submission time(asc)</option>
+        <option value='message'>message(asc)</option>
+        <option value='title'>title(asc)</option>
+        <option value='view_number'>views(asc)</option>
+        <option value='vote_number'>votes(asc)</option>
+    </select><br>
+</form>
+    <form action="/list">
+    <select onchange='this.form.submit()' name='status_desc' id="cars" class="links">
+        <option value='submission_time'>submission time(desc)</option>
+        <option value='message'>message(desc)</option>
+        <option value='title'>title(desc)</option>
+        <option value='view_number'>views(desc)</option>
+        <option value='vote_number'>votes(desc)</option>
     </select>
+    </form>
 
 {#    <select onchange="this.form.submit()" id="status" name="status">#}
 {#        {% for status in sorted_by %}#}

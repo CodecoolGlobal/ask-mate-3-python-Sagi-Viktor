@@ -133,3 +133,19 @@ def delete_answer(cursor,id):
             WHERE id = {id}
             """
     cursor.execute(query, {'id':id})
+
+@connect_database.connection_handler
+def sort_question_asc(cursor,sort_by):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM question
+                    ORDER BY {sort_by} ASC""")
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def sort_question_desc(cursor,sort_by):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM question
+                    ORDER BY {sort_by} DESC""")
+    return cursor.fetchall()

@@ -14,9 +14,12 @@ def main_page():
 def get_list():
     question_data = data_manager.get_question_list()
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
-    sorting = request.form.get('status')
-    if sorting:
-        question_data = util.question_sorter(sorting)
+    sorting_asc = request.args.get('status_asc')
+    sorting_desc = request.args.get('status_desc')
+    if sorting_asc:
+        question_data = data_manager.sort_question_asc(sorting_asc)
+    elif sorting_desc:
+        question_data = data_manager.sort_question_desc(sorting_desc)
     return render_template('source/html/list.html', question_data=question_data, question_headers=question_headers)
 
 
@@ -114,8 +117,10 @@ def answer_vote_down(answer_id):
 
 @app.route("/answer/<answer_id>/delete")
 def delete_answer(answer_id):
+    question_id_dict = data_manager.get_question_id(answer_id)
+    question_id = str([item['question_id'] for item in question_id_dict][0])
     data_manager.delete_answer(answer_id)
-    return redirect('/list')
+    return redirect(f'/question/{question_id}')
 
 
 if __name__ == "__main__":
