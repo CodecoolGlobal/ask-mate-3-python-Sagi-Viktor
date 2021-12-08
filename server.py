@@ -36,7 +36,6 @@ def display_question(question_id):
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
         comment_data = data_manager.display_question_detail(question_id)
-    if request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
     return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
                            answer_data=answer_data, current_question=current_question, comment_data=comment_data)
