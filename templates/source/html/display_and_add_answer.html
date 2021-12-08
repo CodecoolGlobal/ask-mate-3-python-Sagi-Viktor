@@ -58,11 +58,11 @@
         </thead>
         <tbody>
             {% for item in comment_data %}
-            <tr>
-                {% for data in item %}
-                    <td align="center">{{ item[data] }}</td>
-                {% endfor %}
-            </tr>
+                <tr>
+                    <td align="center">{{ item['submission_time'] }}</td>
+                    <td align="center">{{ item['message'] }}</td>
+                    <td align="center"><a href="/comments/{{item['id']}}/delete">Delete</a></td>
+                </tr>
             {% endfor %}
         </tbody>
     </table><br>

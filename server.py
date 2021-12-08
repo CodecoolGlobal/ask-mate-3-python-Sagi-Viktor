@@ -27,7 +27,7 @@ def get_list():
 def display_question(question_id):
     current_question = data_manager.get_question(question_id)
     answer_data = data_manager.get_answer_list()
-    comment_data = data_manager.display_question_detail(question_id)
+    comment_data = data_manager.get_question_detail(question_id)
     question_comment = request.form.get('add_comment_to_question')
     if question_comment:
         submission_time = util.generate_submission_time()
@@ -134,7 +134,12 @@ def add_comment_to_question(question_id):
     comment_data = data_manager.display_question_detail(question_id)
     return render_template("source/html/add_comment_to_question.html" ,question_id=question_id,comment_data=comment_data)
 
-
+@app.route("/comments/<comment_id>/delete")
+def delete_question_comment(comment_id):
+    question_id_dict = data_manager.get_question_id_by_comment(comment_id)
+    question_id = str([item['question_id'] for item in question_id_dict][0])
+    data_manager.delete_question_comment(comment_id)
+    return redirect(f'/question/{question_id}')
 
 if __name__ == "__main__":
     app.run(port=5000,
