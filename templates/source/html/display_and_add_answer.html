@@ -1,83 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Display_question</title>
-</head>
-<body>
-    {% for item in current_question %}
-        <h1 align="center">{{ item['title'] }}</h1>
-        <p align="center">{{ item['message'] }}</p>
-    {% endfor %}
-<br>
-<br>
-<table border="1">
-    <col width="150">
-    <col width="1300">
-    <col width="200">
-    <col width="75">
-    <col width="75">
-    <thead>
-        <th align="center">Votes</th>
-        <th align="center">Answers</th>
-        <th align="center">Comments</th>
-        <th align="center" colspan="2">Vote</th>
-    </thead>
-    <tbody>
-        {% for item in answer_data %}
-            <tr>
-                <td align="center">{{ item['vote_number'] }}</td>
-                <td align="center">{{ item['message'] }}</td>
-                <td align="center"><a href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
-                <td align="center"><a href="/answer/{{ item['id'] }}/vote_up">+</a></td>
-                <td align="center"><a href="/answer/{{ item['id'] }}/vote_down">-</a></td>
-                <td align="center"><a href="/answer/{{ item['id'] }}/delete">Delete</a></td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table><br>
-    <form action='{{url_for('display_question', question_id=question_id)}}' method="post">
-        <input type="submit" value="Add new answer" name="question_id">
-    </form><br>
-    <form action="/question/{{question_id}}/edit" method="get">
-        <input type="submit" value="Edit question">
-    </form><br>
-    <form action="/question/{{question_id}}/delete">
-        <input type="submit" value="Delete question" name="delete">
-    </form>
-    <h1>Comments</h1>
-<table border="1">
-    <col width="150">
-    <col width="1500">
-    <col width="150">
-        <thead>
-            <tr>
-                <th>Submission time</th>
-                <th>Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in comment_data %}
-                <tr>
-                    <td align="center">{{ item['submission_time'] }}</td>
-                    <td align="center">{{ item['message'] }}</td>
-                    <td align="center"><a href="/comments/{{ item['id'] }}/delete",
-                    onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table><br>
+{% extends "source/html/LAYOUT.html" %}
 
-
-    <form action='/question/{{question_id}}/new-comment' method="get">
-        <input type="submit" value="Add new comment" name="comment_to_question">
-    </form><br><br><br><br><br><br><br>
-
-    {% block add_answer %}
+    {% block page_title %}
+        <title>Display Question | FORUM LOOP</title>
     {% endblock %}
 
-<div>
-    <a href="/list">Back to questions</a>
-</div>
-</body>
-</html>
+    {% block content %}
+        <body>
+            {% for item in current_question %}
+                <h1 align="center">{{ item['title'] }}</h1>
+                <p align="center">{{ item['message'] }}</p>
+            {% endfor %}
+        <br>
+        <br>
+        <table border="1">
+            <col width="150">
+            <col width="1300">
+            <col width="200">
+            <col width="75">
+            <col width="75">
+            <thead>
+                <th align="center">Votes</th>
+                <th align="center">Answers</th>
+                <th align="center">Comments</th>
+                <th align="center" colspan="2">Vote</th>
+            </thead>
+            <tbody>
+                {% for item in answer_data %}
+                    <tr>
+                        <td align="center">{{ item['vote_number'] }}</td>
+                        <td align="center">{{ item['message'] }}</td>
+                        <td align="center"><a href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
+                        <td align="center"><a href="/answer/{{ item['id'] }}/vote_up">+</a></td>
+                        <td align="center"><a href="/answer/{{ item['id'] }}/vote_down">-</a></td>
+                        <td align="center"><a href="/answer/{{ item['id'] }}/delete">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+            <form action='{{url_for('display_question', question_id=question_id)}}' method="post">
+                <input type="submit" value="Add new answer" name="question_id">
+            </form><br>
+            <form action="/question/{{question_id}}/edit" method="get">
+                <input type="submit" value="Edit question">
+            </form><br>
+            <form action="/question/{{question_id}}/delete">
+                <input type="submit" value="Delete question" name="delete">
+            </form>
+            <h1>Comments</h1>
+        <table border="1">
+            <col width="150">
+            <col width="1500">
+            <col width="150">
+                <thead>
+                    <tr>
+                        <th>Submission time</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in comment_data %}
+                        <tr>
+                            <td align="center">{{ item['submission_time'] }}</td>
+                            <td align="center">{{ item['message'] }}</td>
+                            <td align="center"><a href="/comments/{{ item['id'] }}/delete",
+                            onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table><br>
+
+            <form action='/question/{{question_id}}/new-comment' method="get">
+                <input type="submit" value="Add new comment" name="comment_to_question">
+            </form><br><br><br><br><br><br><br>
+
+            {% block add_answer %}
+            {% endblock %}
+    {% endblock %}
