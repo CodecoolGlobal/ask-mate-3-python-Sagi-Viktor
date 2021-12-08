@@ -145,9 +145,12 @@ def delete_answer(answer_id):
 def list_answer_comments(answer_id):
     answer = data_manager.get_answer_message_by_answer_id(answer_id)
     comment_data = data_manager.get_comments_by_answer_id(answer_id)
+    question_id_dict = data_manager.get_question_id(answer_id)
+    question_id = str([item['question_id'] for item in question_id_dict][0])
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
-    return render_template("source/html/comment_to_answer.html", answer=answer, comment_data=comment_data)
+    return render_template("source/html/comment_to_answer.html", answer=answer, comment_data=comment_data,
+                           question_id=question_id)
 
 
 @app.route("/question/<question_id>/new-comment")
