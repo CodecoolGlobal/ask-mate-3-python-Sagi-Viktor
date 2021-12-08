@@ -149,8 +149,12 @@ def list_answer_comments(answer_id):
     question_id = str([item['question_id'] for item in question_id_dict][0])
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
+        comment_message = request.form.get('write-comment')
+        comment_items = [answer_id, comment_message, submission_time]
+        data_manager.add_comment_to_answer(comment_items)
+        return redirect(f'/answer/{answer_id}/comments')
     return render_template("source/html/comment_to_answer.html", answer=answer, comment_data=comment_data,
-                           question_id=question_id)
+                           question_id=question_id, answer_id=answer_id)
 
 
 @app.route("/question/<question_id>/new-comment")

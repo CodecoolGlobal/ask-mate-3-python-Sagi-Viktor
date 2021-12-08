@@ -28,7 +28,19 @@
         </tbody>
     </table>
     <br><br><br>
-    <footer>
+    <section id="add-comment-to-answer">
+        <header id="add-comment">
+            <h3 style="margin-left: 50px">Add comment: </h3>
+            <form action="/answer/{{ answer_id }}/comments" method="post">
+                <label for="write-comment"></label>
+                <textarea  style="margin-left: 50px" id="write-comment" name="write-comment" rows="5" cols="50" placeholder="Enter the comment here..."></textarea>
+                <br><br>
+                <button style="margin-left: 50px" type="submit">Submit comment</button>
+            </form>
+        </header>
+    </section>
+    <br><br>
+    <footer style="margin-left: 50px">
         <a href="/question/{{ question_id }}">Back to question details</a>
     </footer>
 </body>
