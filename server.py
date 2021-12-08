@@ -135,7 +135,8 @@ def delete_answer(answer_id):
 
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
-    return render_template("source/html/add_comment_to_question.html", question_id=question_id)
+    comment_data = data_manager.get_question_detail(question_id)
+    return render_template("source/html/add_comment_to_question.html", question_id=question_id, comment_data=comment_data)
 
 @app.route("/comments/<comment_id>/delete")
 def delete_question_comment(comment_id):
