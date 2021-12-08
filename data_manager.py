@@ -33,6 +33,16 @@ def get_answer_list_by_question_id(cursor, question_id):
 
 
 @connect_database.connection_handler
+def get_answer_message_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT message
+                    FROM answer
+                    WHERE id = '{answer_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
 def get_question(cursor, question_id):
     cursor.execute(f"""
                     SELECT *
@@ -60,6 +70,15 @@ def get_question_id_by_comment(cursor, comment_id):
                     """)
     return cursor.fetchall()
 
+
+@connect_database.connection_handler
+def get_answer_id_by_comment(cursor, comment_id):
+    cursor.execute(f"""
+                    SELECT answer_id
+                    FROM comment
+                    WHERE id = '{comment_id}'
+                    """)
+    return cursor.fetchall()
 
 
 @connect_database.connection_handler
@@ -142,7 +161,7 @@ def add_answer(cursor, answer_data):
 def delete_question(cursor, question_id):
     cursor.execute(f"""
                     DELETE FROM question
-                    WHERE id ={user_id}
+                    WHERE id ={question_id}
                     """)
 
 
@@ -167,6 +186,14 @@ def delete_comments_by_question_id(cursor, question_id):
     cursor.execute(f"""
                     DELETE FROM comment
                     WHERE question_id = '{question_id}'
+                    """)
+
+
+@connect_database.connection_handler
+def delete_comments_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    DELETE FROM comment
+                    WHERE answer_id = '{answer_id}'
                     """)
 
 
@@ -210,7 +237,7 @@ def get_comments_question_id(cursor, question_id):
 @connect_database.connection_handler
 def get_comments_by_answer_id(cursor, answer_id):
     cursor.execute(f"""
-                    SELECT submission_time, answer_id, message
+                    SELECT id, submission_time, answer_id, message
                     FROM comment
                     WHERE answer_id = '{answer_id}'
                     ORDER BY id
@@ -241,35 +268,43 @@ def add_comment_to_question(cursor, submission_time, message, question_id):
 
 
 @connect_database.connection_handler
-def delete_question_comment(cursor,id):
-    query = (f"""
-            DELETE FROM comment
-            WHERE id = {id}
-            """)
-    cursor.execute(query, {'id':id})
+def add_comment_to_answer(cursor, comment_data):
+    cursor.execute(f"""
+                    INSERT INTO comment
+                    (answer_id, message, submission_time)
+                    VALUES (
+                    '{comment_data[0]}',
+                    '{comment_data[1]}',
+                    '{comment_data[2]}')
+                    """)
 
 
-def search_engine(cursor, phrase):
-    answers = search_answers(phrase)
-    questions = search_questions(phrase)
-    return results
+@connect_database.connection_handler
+def delete_comment(cursor,comment_id):
+    cursor.execute(f"""
+                    DELETE FROM comment
+                    WHERE id = '{comment_id}'
+                    """)
 
 
 @connect_database.connection_handler
 def search_answers(cursor, phrase):
     query = """
-        
+        SELECT id, submission_time, question_id, message FROM answer
+        WHERE message LIKE %(phrase)s
         """
-    cursor.execute(query, )
+    cursor.execute(query, {'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
 
 @connect_database.connection_handler
 def search_questions(cursor, phrase):
     query = """
-
-        """
-    cursor.execute(query, )
+            SELECT id, submission_time, title, message FROM question
+            WHERE title LIKE %(phrase)s
+                OR message LIKE %(phrase)s
+            """
+    cursor.execute(query, {'phrase': f"%{phrase}%", 'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
 

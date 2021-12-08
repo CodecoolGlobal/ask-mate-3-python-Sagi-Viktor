@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List/Add comments for answer</title>
+</head>
+<body>
+    <header id="current-answer">
+        {% for data in answer %}
+            <h1 align="center"><strong>{{ data['message'] }}</strong></h1>
+        {% endfor %}
+    </header>
+    <br><br><br><br><br>
+    <table border="1" align="center">
+        <col width="250">
+        <col width="1200">
+        <col width="200">
+        <thead>
+            <th>Submission time</th>
+            <th>Comment</th>
+        </thead>
+        <tbody>
+            {% for item in comment_data %}
+                <tr>
+                    <td align="center">{{ item['submission_time'] }}</td>
+                    <td align="center">{{ item['message'] }}</td>
+                    <td align="center"><a href="/comments/{{ item['id'] }}/delete-answer-comment">Delete</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br><br>
+    <section id="add-comment-to-answer">
+        <header id="add-comment">
+            <h3 style="margin-left: 50px">Add comment: </h3>
+            <form action="/answer/{{ answer_id }}/comments" method="post">
+                <label for="write-comment"></label>
+                <textarea  style="margin-left: 50px" id="write-comment" name="write-comment" rows="5" cols="50" placeholder="Enter the comment here..."></textarea>
+                <br><br>
+                <button style="margin-left: 50px" type="submit">Submit comment</button>
+            </form>
+        </header>
+    </section>
+    <br><br>
+    <footer style="margin-left: 50px">
+        <a href="/question/{{ question_id }}">Back to question details</a>
+    </footer>
+</body>
+</html>

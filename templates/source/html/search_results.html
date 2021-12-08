@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Search results | FORUM LOOP</title>
+    <link rel="stylesheet" href="../../../static/source/css/layout_style.css">
 </head>
 <body>
+
+    <h1>Search Results</h1>
+
+    <table>
+        {% for data in results %}
+            {% for item in data %}
+
+                <tr>
+                    {% for value in item %}
+                        {% if value != 'id' %}
+                            <td>{{ item[value] }}</td>
+                        {%  endif %}
+                    {% endfor %}
+                </tr>
+
+            {% endfor %}
+        {% endfor %}
+    </table>
 
 </body>
 </html>

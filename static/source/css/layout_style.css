@@ -1,0 +1,127 @@
+/*HTML-BEN <link rel="stylesheet" href="../../../static/source/layout_style.css"> úton lehet elérni> Majd következő TW-héten*/
+
+        .title_link {
+            background-color: #24252a;
+            color: white;
+            font-family: monospace;
+            border-radius: 10px;
+            border-color: white;
+            text-decoration: none;
+            /*box-shadow: 0 0 10px lightgray;*/
+        }
+
+        .links {
+            background-color: #0088a9;
+            color: lightgray;
+            font-family: monospace;
+            font-size: 1.3em;
+            margin-block-start: 5px;
+            margin-inline-start: 10%;
+            border: 2px solid whitesmoke;
+        }
+
+        .add_question_link {
+            background-color: #0088a9;
+            color: lightgray;
+            font-family: monospace;
+            font-size: 1.3em;
+            /*margin-block-start: 10%;*/
+            margin-inline-start: 10%;
+            border: 2px solid whitesmoke;
+            position: absolute;
+            top: 6.5em;
+        }
+
+        h1, h2 {
+            background-color: #0088a9;
+            color: lightgray;
+            font-family: monospace;
+            /*{#background-image: url("../../../static/source/abstract.jpg");#}*/
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 8em;
+            margin-inline-end: 8em;
+            border-radius: 5px;
+            border-color: lightgrey;
+            box-shadow: 0 0 10px lightgray;
+        }
+
+        body {
+            vertical-align: middle;
+            margin: auto;
+            height: 100%;
+        }
+
+        html {
+            border: #0088a9;
+            /*background-image: url("../images/hacker.jpg");*/
+        }
+
+        table, th, td {
+            border: 1px solid black;
+            box-shadow: 0 0 10px #0088a9;
+            background-color: #24252a;
+            color: lightgray;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1.1em;
+            /*{#background-image: url("../../../static/source/abstract.jpg")#}*/
+         }
+
+        a {
+            border-radius: 5px;
+        }
+
+        table {
+            margin-inline-start: 10%;
+            margin-inline-end: 10%;
+            margin-bottom: 100px;
+        }
+
+         th {
+             background-color: #24252a;
+             color: lightgray;
+             margin: 50px;
+             padding: 10px;
+             outline: none !important;
+             border-width: 1px;
+             box-shadow: 0 0 10px black;
+         }
+
+        td {
+            text-align:  center;
+            text-decoration: none;
+            color: whitesmoke;
+        }
+
+         .searchbar {
+             text-align: right;
+             margin-inline-end: 10%;
+             margin-block-end: 1.1em;
+             height: 2em;
+         }
+
+         .search_field {
+             font-size: 1.3em;
+         }
+
+         .search_button {
+             font-size: 1.3em;
+         }
+
+         .order_menu {
+             font-size: 1em;
+             margin-block-start: 5px;
+             margin-block-end: -40px;
+             padding-inline-start: 140px;
+         }
+
+         .footer {
+             background-color: #24252a;
+             height: 50px;
+             position: fixed;
+             left: 0;
+             bottom: 0;
+             width: 100%;
+         }
+

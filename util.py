@@ -28,10 +28,21 @@ def question_sorter(sort_by):
     return foo
 
 
+def delete_question(question_id):
+    answer_data = data_manager.get_answer_list_by_question_id(question_id)
+    answer_id = get_answer_ids(answer_data)
+    data_manager.delete_question_tag(question_id)
+    data_manager.delete_comments_by_question_id(question_id)
+    for ids in answer_id:
+        data_manager.delete_comments_by_answer_id(ids)
+    data_manager.delete_answer_by_question_id(question_id)
+    data_manager.delete_question(question_id)
+
+
 def get_answer_ids(answer_data):
     id_list = [[row[item] for item in row if item == 'id'] for row in answer_data]
     answer_ids = [data[0] for data in id_list]
-    return get_comments_by_answer_ids(answer_ids)
+    return answer_ids
 
 
 def get_comments_by_answer_ids(answer_ids):
@@ -46,5 +57,9 @@ def get_comments_by_answer_ids(answer_ids):
                 if data['answer_id'] == keys:
                     id_dict[keys] += 1
     return id_dict
-    # nr_of_comments = [number for number in id_dict.values()]
-    # return nr_of_comments
+
+
+def search_engine(phrase):
+    answers = data_manager.search_answers(phrase)
+    questions = data_manager.search_questions(phrase)
+    return [questions, answers]
