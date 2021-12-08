@@ -18,7 +18,7 @@ def generate_submission_time():
     return str(datetime.datetime.now()).split('.')[0]
 
 
-def question_sorter(sort_by, orientation='asc'):
+def question_sorter(sort_by):
     """ Main logic for sorting questions.
         ARGUMENTS: Arg1 == the HEADER name for sort |
         Arg2 == (optional) 'desc' if descending form needed
