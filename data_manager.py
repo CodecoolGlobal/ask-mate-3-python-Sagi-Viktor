@@ -52,15 +52,6 @@ def get_question_id_by_comment(cursor, comment_id):
 
 
 @connect_database.connection_handler
-def get_answer_list(cursor):
-    cursor.execute(f"""
-                    SELECT *
-                    FROM answer
-                    ORDER BY id""")
-    return cursor.fetchall()
-
-
-@connect_database.connection_handler
 def add_question(cursor, question_data):
     cursor.execute(f"""
                     INSERT INTO question
@@ -113,6 +104,15 @@ def vote_down_answer(cursor, answer_id):
 
 
 @connect_database.connection_handler
+def view_counter(cursor, question_id):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = '{question_id}'
+                    """)
+
+
+@connect_database.connection_handler
 def add_answer(cursor, answer_data):
     cursor.execute(f"""
         INSERT INTO answer
@@ -129,31 +129,31 @@ def add_answer(cursor, answer_data):
 
 @connect_database.connection_handler
 def delete_question(cursor, user_id):
-    query = f"""
-    DELETE FROM question
-    WHERE id ={user_id}
-    """
-    cursor.execute(query)
+    cursor.execute(f"""
+                    DELETE FROM question
+                    WHERE id ={user_id}
+                    """)
 
 
 @connect_database.connection_handler
-def delete_answer(cursor,id):
-    query = f"""
-            DELETE FROM answer
-            WHERE id = {id}
-            """
-    cursor.execute(query, {'id':id})
+def delete_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    DELETE FROM answer
+                    WHERE id = '{answer_id}'
+                    """)
+
 
 @connect_database.connection_handler
-def sort_question_asc(cursor,sort_by):
+def sort_question_asc(cursor, sort_by):
     cursor.execute(f"""
                     SELECT *
                     FROM question
                     ORDER BY {sort_by} ASC""")
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
-def sort_question_desc(cursor,sort_by):
+def sort_question_desc(cursor, sort_by):
     cursor.execute(f"""
                     SELECT *
                     FROM question
@@ -162,13 +162,14 @@ def sort_question_desc(cursor,sort_by):
 
 
 @connect_database.connection_handler
-def display_question_detail(cursor,question_id):
+def display_question_detail(cursor, question_id):
     cursor.execute(f"""
                     SELECT submission_time,message
                     FROM comment
                     WHERE question_id = {question_id}
                     ORDER BY id""")
     return cursor.fetchall()
+
 
 @connect_database.connection_handler
 def get_question_detail(cursor,question_id):
@@ -198,3 +199,29 @@ def delete_question_comment(cursor,id):
             WHERE id = {id}
             """)
     cursor.execute(query, {'id':id})
+
+def search_engine(cursor, phrase):
+    answers = search_answers(phrase)
+    questions = search_questions(phrase)
+
+    return results
+
+
+@connect_database.connection_handler
+def search_answers(cursor, phrase):
+    query = """
+        
+        """
+    cursor.execute(query, )
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def search_questions(cursor, phrase):
+    query = """
+
+        """
+    cursor.execute(query, )
+    return cursor.fetchall()
+
+

@@ -25,6 +25,7 @@ def get_list():
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
 def display_question(question_id):
+    data_manager.view_counter(question_id)
     current_question = data_manager.get_question(question_id)
     answer_data = data_manager.get_answer_list()
     comment_data = data_manager.get_question_detail(question_id)
@@ -34,9 +35,11 @@ def display_question(question_id):
         data_manager.add_comment_to_question(submission_time,question_comment,question_id)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
+        comment_data = data_manager.display_question_detail(question_id)
+    if request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
     return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
-                           answer_data=answer_data, current_question=current_question,comment_data=comment_data)
+                           answer_data=answer_data, current_question=current_question, comment_data=comment_data)
 
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
@@ -69,6 +72,7 @@ def add_question():
         image = ''
         question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
+        return redirect("/list")
     return render_template('source/html/add_question.html')
 
 
@@ -131,8 +135,7 @@ def delete_answer(answer_id):
 
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
-    comment_data = data_manager.display_question_detail(question_id)
-    return render_template("source/html/add_comment_to_question.html" ,question_id=question_id,comment_data=comment_data)
+    return render_template("source/html/add_comment_to_question.html", question_id=question_id)
 
 @app.route("/comments/<comment_id>/delete")
 def delete_question_comment(comment_id):
@@ -140,6 +143,13 @@ def delete_question_comment(comment_id):
     question_id = str([item['question_id'] for item in question_id_dict][0])
     data_manager.delete_question_comment(comment_id)
     return redirect(f'/question/{question_id}')
+
+@app.route("/search")
+def search_in_question():
+    searched_phrase = request.args.get('q')
+    results = data_manager.search_engine(searched_phrase)
+    return render_template('search_results.html', results=results)
+
 
 if __name__ == "__main__":
     app.run(port=5000,

@@ -63,3 +63,8 @@
              border-width: 1px;
              box-shadow: 0 0 10px black;
          }
+
+         .searchbar {
+             text-align: right;
+             margin-right: 150px;
+         }
