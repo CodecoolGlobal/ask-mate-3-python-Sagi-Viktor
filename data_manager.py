@@ -149,3 +149,13 @@ def sort_question_desc(cursor,sort_by):
                     FROM question
                     ORDER BY {sort_by} DESC""")
     return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def display_question_detail(cursor,question_id):
+    cursor.execute(f"""
+                    SELECT submission_time,message
+                    FROM comment
+                    WHERE question_id = {question_id}
+                    ORDER BY id""")
+    return cursor.fetchall()

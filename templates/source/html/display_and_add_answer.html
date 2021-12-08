@@ -36,8 +36,14 @@
     </tbody>
 </table>
 <br><br>
+    <form action='/question/{{question_id}}/detail' method="get">
+        <input type="submit" value="Question details" name="question_detail">
+    </form><br>
     <form action='{{url_for('display_question', question_id=question_id)}}' method="post">
         <input type="submit" value="Add new answer" name="question_id">
+    </form><br>
+    <form action='/question/{{question_id}}/new-comment' method="get">
+        <input type="submit" value="Add new comment" name="comment_to_question">
     </form><br>
     <form action="/question/{{question_id}}/edit" method="get">
         <input type="submit" value="Edit question">

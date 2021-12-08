@@ -123,6 +123,16 @@ def delete_answer(answer_id):
     return redirect(f'/question/{question_id}')
 
 
+@app.route("/question/<question_id>/new-comment")
+def add_comment_to_question(question_id):
+    return render_template("source/html/add_comment_to_question.html" ,question_id=question_id)
+
+@app.route("/question/<question_id>/detail")
+def display_question_detail(question_id):
+    comment_data = data_manager.display_question_detail(question_id)
+    return render_template("source/html/question_detail.html", question_id=question_id, comment_data=comment_data)
+
+
 if __name__ == "__main__":
     app.run(port=5000,
             debug=True)
