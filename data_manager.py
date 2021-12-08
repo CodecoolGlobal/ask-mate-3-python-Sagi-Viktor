@@ -42,15 +42,6 @@ def get_question_id(cursor, answer_id):
 
 
 @connect_database.connection_handler
-def get_answer_list(cursor):
-    cursor.execute(f"""
-                    SELECT *
-                    FROM answer
-                    ORDER BY id""")
-    return cursor.fetchall()
-
-
-@connect_database.connection_handler
 def add_question(cursor, question_data):
     cursor.execute(f"""
                     INSERT INTO question
@@ -103,6 +94,15 @@ def vote_down_answer(cursor, answer_id):
 
 
 @connect_database.connection_handler
+def view_counter(cursor, question_id):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET view_number = view_number + 1
+                    WHERE id = '{question_id}'
+                    """)
+
+
+@connect_database.connection_handler
 def add_answer(cursor, answer_data):
     cursor.execute(f"""
         INSERT INTO answer
@@ -119,20 +119,18 @@ def add_answer(cursor, answer_data):
 
 @connect_database.connection_handler
 def delete_question(cursor, user_id):
-    query = f"""
-    DELETE FROM question
-    WHERE id ={user_id}
-    """
-    cursor.execute(query)
+    cursor.execute(f"""
+                    DELETE FROM question
+                    WHERE id ={user_id}
+                    """)
 
 
 @connect_database.connection_handler
-def delete_answer(cursor, id):
-    query = f"""
-            DELETE FROM answer
-            WHERE id = {id}
-            """
-    cursor.execute(query, {'id': id})
+def delete_answer(cursor, answer_id):
+    cursor.execute(f"""
+                    DELETE FROM answer
+                    WHERE id = '{answer_id}'
+                    """)
 
 
 @connect_database.connection_handler
@@ -150,6 +148,16 @@ def sort_question_desc(cursor, sort_by):
                     SELECT *
                     FROM question
                     ORDER BY {sort_by} DESC""")
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def display_question_detail(cursor, question_id):
+    cursor.execute(f"""
+                    SELECT submission_time,message
+                    FROM comment
+                    WHERE question_id = {question_id}
+                    ORDER BY id""")
     return cursor.fetchall()
 
 
