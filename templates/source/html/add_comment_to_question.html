@@ -5,7 +5,29 @@
     <title>Add comment</title>
 </head>
 <body>
-    <form action="/question/{{question_id}}", method="POST">
-        <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea>
+    <h1>Comments</h1>
+    <table border="1">
+    <col width="150">
+    <col width="1500">
+
+        <thead>
+            <tr>
+                <th>Submission time</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in comment_data %}
+            <tr>
+                {% for data in item %}
+                    <td align="center">{{ item[data] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+    <form action="/question/{{question_id}}", method="post">
+        <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
+        <input type="submit" value="Submit">
     </form>
 </body>

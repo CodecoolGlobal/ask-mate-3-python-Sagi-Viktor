@@ -159,3 +159,14 @@ def display_question_detail(cursor,question_id):
                     WHERE question_id = {question_id}
                     ORDER BY id""")
     return cursor.fetchall()
+
+@connect_database.connection_handler
+def add_comment_to_question(cursor, submission_time, message,question_id):
+    cursor.execute(f"""
+        INSERT INTO comment
+        (submission_time, message, question_id)
+        VALUES (
+                '{submission_time}',
+                '{message}',
+                '{question_id}')
+                """)
