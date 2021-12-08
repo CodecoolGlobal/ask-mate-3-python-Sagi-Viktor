@@ -34,16 +34,9 @@
             {% endif %}
         {% endfor %}
     </tbody>
-</table>
-<br><br>
-    <form action='/question/{{question_id}}/detail' method="get">
-        <input type="submit" value="Question details" name="question_detail">
-    </form><br>
+</table><br>
     <form action='{{url_for('display_question', question_id=question_id)}}' method="post">
         <input type="submit" value="Add new answer" name="question_id">
-    </form><br>
-    <form action='/question/{{question_id}}/new-comment' method="get">
-        <input type="submit" value="Add new comment" name="comment_to_question">
     </form><br>
     <form action="/question/{{question_id}}/edit" method="get">
         <input type="submit" value="Edit question">
@@ -51,7 +44,33 @@
     <form action="/question/{{question_id}}/delete" method="POST">
         <input type="submit" value="Delete question" name="delete">
     </form>
-    <br><br><br><br><br><br>
+    <h1>Comments</h1>
+<table border="1">
+    <col width="150">
+    <col width="1500">
+    <col width="75">
+    <col width="75">
+        <thead>
+            <tr>
+                <th>Submission time</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in comment_data %}
+            <tr>
+                {% for data in item %}
+                    <td align="center">{{ item[data] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+
+
+    <form action='/question/{{question_id}}/new-comment' method="get">
+        <input type="submit" value="Add new comment" name="comment_to_question">
+    </form><br><br><br><br><br><br><br>
 
     {% block add_answer %}
     {% endblock %}
