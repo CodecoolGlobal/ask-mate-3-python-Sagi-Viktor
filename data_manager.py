@@ -127,16 +127,16 @@ def delete_question(cursor, user_id):
 
 
 @connect_database.connection_handler
-def delete_answer(cursor,id):
+def delete_answer(cursor, id):
     query = f"""
             DELETE FROM answer
             WHERE id = {id}
             """
-    cursor.execute(query, {'id':id})
+    cursor.execute(query, {'id': id})
 
 
 @connect_database.connection_handler
-def sort_question_asc(cursor,sort_by):
+def sort_question_asc(cursor, sort_by):
     cursor.execute(f"""
                     SELECT *
                     FROM question
@@ -145,7 +145,7 @@ def sort_question_asc(cursor,sort_by):
 
 
 @connect_database.connection_handler
-def sort_question_desc(cursor,sort_by):
+def sort_question_desc(cursor, sort_by):
     cursor.execute(f"""
                     SELECT *
                     FROM question
