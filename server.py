@@ -28,18 +28,27 @@ def get_list():
 def display_question(question_id):
     data_manager.view_counter(question_id)
     current_question = data_manager.get_question(question_id)
-    answer_data = data_manager.get_answer_list()
-    comment_data = data_manager.display_question_detail(question_id)
+    answer_data = data_manager.get_answer_list_by_question_id(question_id)
+    nr_of_comments = util.get_answer_ids(answer_data)
+    comment_data = data_manager.get_comments_question_id(question_id)
+    question_comment = request.form.get('add_comment_to_question')
+    if question_comment:
+        submission_time = util.generate_submission_time()
+        data_manager.add_comment_to_question(submission_time,question_comment,question_id)
+        return redirect(f'/question/{question_id}')
+    elif request.method == 'POST':
+        comment_data = data_manager.display_question_detail(question_id)
     if request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
     return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
-                           answer_data=answer_data, current_question=current_question, comment_data=comment_data)
+                           answer_data=answer_data, current_question=current_question, comment_data=comment_data,
+                           nr_of_comments=nr_of_comments)
 
 
 @app.route("/question/<question_id>/new-answer", methods=['GET', 'POST'])
 def add_answer(question_id):
     question_data = data_manager.get_question_list()
-    answer_data = data_manager.get_answer_list()
+    answer_data = data_manager.get_answer_list_by_question_id(question_id)
     question_id = question_id
     if request.method == 'POST':
         answer_id = util.generate_id('answer')
@@ -51,7 +60,7 @@ def add_answer(question_id):
         data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
     return render_template('source/html/add_answer.html', question_id=question_id, question_data=question_data,
-                           answer_data=answer_data)
+                           answer_data=answer_data, nr_of_comments=0)
 
 
 @app.route("/add-question", methods=['POST', 'GET'])
@@ -66,11 +75,17 @@ def add_question():
         image = ''
         question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
+        return redirect("/list")
     return render_template('source/html/add_question.html')
 
 
 @app.route("/question/<question_id>/delete")
 def delete_question(question_id):
+    question_id = question_id
+    print(question_id)
+    data_manager.delete_question_tag(question_id)
+    data_manager.delete_comments_by_question_id(question_id)
+    data_manager.delete_answer_by_question_id(question_id)
     data_manager.delete_question(question_id)
     return redirect('/list')
 
@@ -126,10 +141,23 @@ def delete_answer(answer_id):
     return redirect(f'/question/{question_id}')
 
 
+@app.route("/answer/<answer_id>/comments")
+def list_answer_comments(answer_id):
+    print(answer_id)
+
+
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
-    return render_template("source/html/add_comment_to_question.html", question_id=question_id)
+    comment_data = data_manager.get_comments_question_id(question_id)
+    return render_template("source/html/add_comment_to_question.html", question_id=question_id,
+                           comment_data=comment_data)
 
+@app.route("/comments/<comment_id>/delete")
+def delete_question_comment(comment_id):
+    question_id_dict = data_manager.get_question_id_by_comment(comment_id)
+    question_id = str([item['question_id'] for item in question_id_dict][0])
+    data_manager.delete_question_comment(comment_id)
+    return redirect(f'/question/{question_id}')
 
 @app.route("/search")
 def search_in_question():

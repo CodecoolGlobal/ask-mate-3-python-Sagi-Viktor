@@ -19,9 +19,8 @@
         <tbody>
             {% for item in comment_data %}
             <tr>
-                {% for data in item %}
-                    <td align="center">{{ item[data] }}</td>
-                {% endfor %}
+                <td align="center">{{ item['submission_time'] }}</td>
+                <td align="center">{{ item['message'] }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -29,5 +28,7 @@
     <form action="/question/{{question_id}}", method="post">
         <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
         <input type="submit" value="Submit">
-    </form>
+    </form><br>
+    <a href="/question/{{question_id}}">Back to question</a>
+
 </body>

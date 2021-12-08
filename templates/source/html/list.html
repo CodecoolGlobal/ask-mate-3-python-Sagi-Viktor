@@ -41,20 +41,22 @@
 
     <form action="/list">
         <select onchange='this.form.submit()' name='status_asc' id="cars" class="links">
-            <option value='submission_time'>submission time(asc)</option>
-            <option value='message'>message(asc)</option>
-            <option value='title'>title(asc)</option>
-            <option value='view_number'>views(asc)</option>
-            <option value='vote_number'>votes(asc)</option>
-        </select><br>
+            <option disabled selected value> -- order by asc -- </option>
+            <option value='submission_time'>submission time</option>
+            <option value='message'>message</option>
+            <option value='title'>title</option>
+            <option value='view_number'>views</option>
+            <option value='vote_number'>votes</option>
+        </select>
     </form>
     <form action="/list">
         <select onchange='this.form.submit()' name='status_desc' id="cars" class="links">
-            <option value='submission_time'>submission time(desc)</option>
-            <option value='message'>message(desc)</option>
-            <option value='title'>title(desc)</option>
-            <option value='view_number'>views(desc)</option>
-            <option value='vote_number'>votes(desc)</option>
+            <option disabled selected value> -- order by desc -- </option>
+            <option value='submission_time'>submission time</option>
+            <option value='message'>message</option>
+            <option value='title'>title</option>
+            <option value='view_number'>views</option>
+            <option value='vote_number'>votes</option>
         </select>
     </form>
 
