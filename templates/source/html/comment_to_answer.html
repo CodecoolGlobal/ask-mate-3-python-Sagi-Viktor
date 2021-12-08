@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List/Add comments for answer</title>
+</head>
+<body>
+    <header id="current-answer">
+        {% for data in answer %}
+            <h1 align="center"><strong>{{ data['message'] }}</strong></h1>
+        {% endfor %}
+    </header>
+    <br><br><br><br><br>
+    <table border="1" align="center">
+        <col width="250">
+        <col width="1400">
+        <thead>
+            <th>Submission time</th>
+            <th>Comment</th>
+        </thead>
+        <tbody>
+            {% for item in comment_data %}
+                <tr>
+                    <td align="center">{{ item['submission_time'] }}</td>
+                    <td align="center">{{ item['message'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

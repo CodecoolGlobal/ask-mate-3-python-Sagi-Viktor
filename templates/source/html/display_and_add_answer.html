@@ -13,15 +13,14 @@
 <br>
 <table border="1">
     <col width="150">
-    <col width="1200">
-    <col width="150">
-    <col width="150">
+    <col width="1300">
+    <col width="200">
     <col width="75">
     <col width="75">
     <thead>
         <th align="center">Votes</th>
         <th align="center">Answers</th>
-        <th align="center" colspan="2">Comments</th>
+        <th align="center">Comments</th>
         <th align="center" colspan="2">Vote</th>
     </thead>
     <tbody>
@@ -29,7 +28,6 @@
             <tr>
                 <td align="center">{{ item['vote_number'] }}</td>
                 <td align="center">{{ item['message'] }}</td>
-                <td align="center"><a href="/answer/{{ item['id'] }}/new-comment">Add comment</a> </td>
                 <td align="center"><a href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
                 <td align="center"><a href="/answer/{{ item['id'] }}/vote_up">+</a></td>
                 <td align="center"><a href="/answer/{{ item['id'] }}/vote_down">-</a></td>

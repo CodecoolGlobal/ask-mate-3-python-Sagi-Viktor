@@ -34,7 +34,7 @@ def display_question(question_id):
     question_comment = request.form.get('add_comment_to_question')
     if question_comment:
         submission_time = util.generate_submission_time()
-        data_manager.add_comment_to_question(submission_time,question_comment,question_id)
+        data_manager.add_comment_to_question(submission_time, question_comment, question_id)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
         comment_data = data_manager.display_question_detail(question_id)
@@ -141,9 +141,13 @@ def delete_answer(answer_id):
     return redirect(f'/question/{question_id}')
 
 
-@app.route("/answer/<answer_id>/comments")
+@app.route("/answer/<answer_id>/comments", methods=['GET', 'POST'])
 def list_answer_comments(answer_id):
-    print(answer_id)
+    answer = data_manager.get_answer_message_by_answer_id(answer_id)
+    comment_data = data_manager.get_comments_by_answer_id(answer_id)
+    if request.method == 'POST':
+        submission_time = util.generate_submission_time()
+    return render_template("source/html/comment_to_answer.html", answer=answer, comment_data=comment_data)
 
 
 @app.route("/question/<question_id>/new-comment")
@@ -152,6 +156,7 @@ def add_comment_to_question(question_id):
     return render_template("source/html/add_comment_to_question.html", question_id=question_id,
                            comment_data=comment_data)
 
+
 @app.route("/comments/<comment_id>/delete")
 def delete_question_comment(comment_id):
     question_id_dict = data_manager.get_question_id_by_comment(comment_id)
@@ -159,10 +164,11 @@ def delete_question_comment(comment_id):
     data_manager.delete_question_comment(comment_id)
     return redirect(f'/question/{question_id}')
 
+
 @app.route("/search")
 def search_in_question():
     searched_phrase = request.args.get('q')
-    results = data_manager.search_engine(searched_phrase)
+    results = util.search_engine(searched_phrase)
     return render_template('/source/html/search_results.html', results=results)
 
 

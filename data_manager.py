@@ -33,6 +33,16 @@ def get_answer_list_by_question_id(cursor, question_id):
 
 
 @connect_database.connection_handler
+def get_answer_message_by_answer_id(cursor, answer_id):
+    cursor.execute(f"""
+                    SELECT message
+                    FROM answer
+                    WHERE id = '{answer_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
 def get_question(cursor, question_id):
     cursor.execute(f"""
                     SELECT *
@@ -241,19 +251,24 @@ def add_comment_to_question(cursor, submission_time, message, question_id):
 
 
 @connect_database.connection_handler
+def add_comment_to_answer(cursor, comment_data):
+    cursor.execute(f"""
+                    INSERT INTO comment
+                    (answer_id, message, submission_time)
+                    VALUES (
+                    '{comment_data[0]}',
+                    '{comment_data[1]}',
+                    '{comment_data[2]}')
+                    """)
+
+
+@connect_database.connection_handler
 def delete_question_comment(cursor,id):
     query = (f"""
             DELETE FROM comment
             WHERE id = {id}
             """)
     cursor.execute(query, {'id':id})
-
-
-def search_engine(cursor, phrase):
-def search_engine(phrase):
-    answers = search_answers(phrase)
-    questions = search_questions(phrase)
-    return [questions, answers]
 
 
 @connect_database.connection_handler

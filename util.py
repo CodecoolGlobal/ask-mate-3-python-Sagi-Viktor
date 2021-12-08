@@ -46,5 +46,9 @@ def get_comments_by_answer_ids(answer_ids):
                 if data['answer_id'] == keys:
                     id_dict[keys] += 1
     return id_dict
-    # nr_of_comments = [number for number in id_dict.values()]
-    # return nr_of_comments
+
+
+def search_engine(phrase):
+    answers = data_manager.search_answers(phrase)
+    questions = data_manager.search_questions(phrase)
+    return [questions, answers]
