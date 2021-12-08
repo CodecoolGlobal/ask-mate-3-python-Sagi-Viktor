@@ -71,6 +71,15 @@ def get_question_id_by_comment(cursor, comment_id):
     return cursor.fetchall()
 
 
+@connect_database.connection_handler
+def get_answer_id_by_comment(cursor, comment_id):
+    cursor.execute(f"""
+                    SELECT answer_id
+                    FROM comment
+                    WHERE id = '{comment_id}'
+                    """)
+    return cursor.fetchall()
+
 
 @connect_database.connection_handler
 def add_question(cursor, question_data):
@@ -220,7 +229,7 @@ def get_comments_question_id(cursor, question_id):
 @connect_database.connection_handler
 def get_comments_by_answer_id(cursor, answer_id):
     cursor.execute(f"""
-                    SELECT submission_time, answer_id, message
+                    SELECT id, submission_time, answer_id, message
                     FROM comment
                     WHERE answer_id = '{answer_id}'
                     ORDER BY id
@@ -263,12 +272,11 @@ def add_comment_to_answer(cursor, comment_data):
 
 
 @connect_database.connection_handler
-def delete_question_comment(cursor,id):
-    query = (f"""
-            DELETE FROM comment
-            WHERE id = {id}
-            """)
-    cursor.execute(query, {'id':id})
+def delete_comment(cursor,comment_id):
+    cursor.execute(f"""
+                    DELETE FROM comment
+                    WHERE id = '{comment_id}'
+                    """)
 
 
 @connect_database.connection_handler

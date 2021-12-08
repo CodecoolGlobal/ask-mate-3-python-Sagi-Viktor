@@ -157,6 +157,14 @@ def list_answer_comments(answer_id):
                            question_id=question_id, answer_id=answer_id)
 
 
+@app.route("/comments/<comment_id>/delete-answer-comment")
+def delete_answer_comment(comment_id):
+    answer_id_dict = data_manager.get_answer_id_by_comment(comment_id)
+    answer_id = str([item['answer_id'] for item in answer_id_dict][0])
+    data_manager.delete_comment(comment_id)
+    return redirect(f'/answer/{answer_id}/comments')
+
+
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
     comment_data = data_manager.get_comments_question_id(question_id)
@@ -168,7 +176,7 @@ def add_comment_to_question(question_id):
 def delete_question_comment(comment_id):
     question_id_dict = data_manager.get_question_id_by_comment(comment_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
-    data_manager.delete_question_comment(comment_id)
+    data_manager.delete_comment(comment_id)
     return redirect(f'/question/{question_id}')
 
 
