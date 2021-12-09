@@ -31,7 +31,7 @@
             margin-inline-start: 10%;
             border: 2px solid whitesmoke;
             position: absolute;
-            top: 6.5em;
+            top: 8em;
             text-decoration: none;
         }
 
@@ -189,8 +189,9 @@
          }
 
          .displayed_question_message {
-            margin-inline-start: 10%;
-             margin-inline-end: 45%;
+            margin-inline-start: 15%;
+             margin-inline-end: 15%;
+             margin-top: 2em;
              text-align: justify;
              padding: 1%;
              background-color: lightgrey;
@@ -205,6 +206,7 @@
              margin-inline-end: 15%;
              margin-top: 30px;
              width: 70%;
+             margin-bottom: 50px;
          }
 
          .submit_buttons_div {
@@ -240,17 +242,17 @@
          .button_place4 {
              margin-inline-start: 69%;
              width: 100%;
-             margin-bottom: 300px;
          }
 
          .comment_section {
-             background-color: #0088a9;
-             border: 0;
-             box-shadow: 0 0 15px #0088a9;
-             margin-inline-start: 55%;
+             margin-inline-start: 35%;
              margin-inline-end: 15%;
-             margin-top: -32%;
-             margin-bottom: 1000px;
-             width: 45%;
+             width: 50%;
+             margin-bottom: 3em;
          }
+
+         .form_design {
+            margin-inline-start: 15%;
+         }
+
 
