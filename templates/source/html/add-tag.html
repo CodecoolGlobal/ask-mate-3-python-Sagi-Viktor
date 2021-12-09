@@ -29,21 +29,25 @@
     <section class="add-tag-section" style="margin-left: 15%">
         <h3>Add/Create tag</h3>
         <br><br>
-        <form action="/question/{{ question_id }}/new-tag">
+
+        <form action="/question/{{ question_id }}/new-tag" method="post">
             <label for="choose-existing-tag">Choose tag:</label>
             <select id="choose-existing-tag" name="choose-tag">
                 {% for item in tag_list %}
-                    <option value="tag_element">{{ item['name'] }}</option>
+                    <option value="{{ item['name'] }}">{{ item['name'] }}</option>
                 {% endfor %}
             </select>
             <button type="submit">Add</button>
+
         </form>
         <br>
-        <form action="/question/{{ question_id }}/new-tag">
+
+        <form action="/question/{{ question_id }}/new-tag" method="post">
             <label for="add-new-tag">New tag:</label>
             <input id="add-new-tag" name="add-new-tag" type="text">
             <button type="submit">Create</button>
         </form>
+
     </section>
 
 {% endblock %}
