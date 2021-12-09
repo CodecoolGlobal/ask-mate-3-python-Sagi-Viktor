@@ -43,8 +43,8 @@
             /*{#background-image: url("../../../static/source/abstract.jpg");#}*/
             margin-block-start: 0.83em;
             margin-block-end: 0.83em;
-            margin-inline-start: 8em;
-            margin-inline-end: 8em;
+            margin-inline-start: 15%;
+            margin-inline-end: 15%;
             border-radius: 5px;
             border-color: lightgrey;
             box-shadow: 0 0 10px lightgray;
@@ -207,7 +207,7 @@
              margin-inline-end: 15%;
              margin-top: 30px;
              width: 70%;
-             margin-bottom: 50px;
+             margin-bottom: 80px;
          }
 
          .submit_buttons_div {
@@ -265,6 +265,7 @@
 
          .form_design {
             margin-inline-start: 15%;
+             margin-bottom: 400px;
          }
 
 

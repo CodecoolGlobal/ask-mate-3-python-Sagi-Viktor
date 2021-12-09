@@ -7,22 +7,23 @@
 </head>
 <body>
     <h1>{%block h1%}ADD QUESTION{%endblock%}</h1>
-    <form {%block form%}action="/add-question" {%endblock%} method="post">
-        {%block title2%}<label for="question-title">
-            <input type="text" id="question-title" name="question-title" {%block title%}placeholder="Enter The Title"{%endblock%}><br>
-        </label><br>{% endblock %}
+    <form class="form_design" {%block form%}action="/add-question" {%endblock%} method="post">
+        <label for="question-title">
+            <input type="text" id="question-title" name="question-title" {%block title%}placeholder="Enter The Title"{%endblock%}>
+        </label><br>
         <label for="question-message">
             <textarea id="question-message" name="question-message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea>
         </label><br>
         <input type="submit" {%block submit%}value="Share your question with the world!"{%endblock%}>
     </form>
-    {%block picture%}<form action="/add-question" method="post" enctype="multipart/form-data">
-        <br>
-        <fieldset>
-            <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png"/>
-        </fieldset>
-        <br>
-    </form>
-    {% endblock %}
+
+{#    <form class="form_design" action="/add-question" method="post" enctype="multipart/form-data">#}
+{#        <br>#}
+{#        <fieldset>#}
+{#            <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png"/>#}
+{#        </fieldset>#}
+{#        <br>#}
+{#    </form>#}
+
 </body>
 </html>
