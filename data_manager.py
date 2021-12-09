@@ -61,6 +61,7 @@ def get_question_id(cursor, answer_id):
                     """)
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
 def get_question_id_by_comment(cursor, comment_id):
     cursor.execute(f"""
@@ -246,7 +247,7 @@ def get_comments_by_answer_id(cursor, answer_id):
 
 
 @connect_database.connection_handler
-def display_question_detail(cursor,question_id):
+def display_question_detail(cursor, question_id):
     cursor.execute(f"""
                     SELECT submission_time,message
                     FROM comment
@@ -256,7 +257,7 @@ def display_question_detail(cursor,question_id):
 
 
 @connect_database.connection_handler
-def get_question_detail(cursor,question_id):
+def get_question_detail(cursor, question_id):
     cursor.execute(f"""
                     SELECT submission_time,message,id
                     FROM comment
@@ -290,7 +291,7 @@ def add_comment_to_answer(cursor, comment_data):
 
 
 @connect_database.connection_handler
-def delete_comment(cursor,comment_id):
+def delete_comment(cursor, comment_id):
     cursor.execute(f"""
                     DELETE FROM comment
                     WHERE id = '{comment_id}'
@@ -314,21 +315,22 @@ def search_questions(cursor, phrase):
             WHERE title LIKE %(phrase)s
                 OR message LIKE %(phrase)s
             """
-    cursor.execute(query, {'phrase': f"%{phrase}%", 'phrase': f"%{phrase}%"})
+    cursor.execute(query, {'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
-def get_message_for_comment(cursor,id):
+def get_message_for_comment(cursor, comment_id):
     cursor.execute(f"""
                     SELECT message
                     FROM comment
-                    WHERE id = {id}
+                    WHERE id = {comment_id}
                     """)
     return cursor.fetchall()
 
 
 @connect_database.connection_handler
-def edit_question_comment(cursor,comment_id,new_message,time):
+def edit_question_comment(cursor, comment_id, new_message, time):
     cursor.execute(f"""
             UPDATE comment
             SET message = '{new_message}',
@@ -337,23 +339,24 @@ def edit_question_comment(cursor,comment_id,new_message,time):
 
 
 @connect_database.connection_handler
-def get_message_for_comment(cursor,id):
+def get_message_for_comment(cursor, comment_id):
     cursor.execute(f"""
                     SELECT message
                     FROM comment
-                    WHERE id = {id}
+                    WHERE id = {comment_id}
                     """)
     return cursor.fetchall()
 
 
 @connect_database.connection_handler
-def get_edited_comment_count(cursor,comment_id):
+def get_edited_comment_count(cursor, comment_id):
     cursor.execute(f"""
                     SELECT edited_count
                     FROM comment
                     where id = {comment_id}
                     """)
     return cursor.fetchall()
+
 
 @connect_database.connection_handler
 def get_all_edited_comment_count(cursor):
@@ -363,12 +366,14 @@ def get_all_edited_comment_count(cursor):
                     """)
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
-def update_edited_comment_count(cursor,comment_id,new_edited_count):
+def update_edited_comment_count(cursor, comment_id, new_edited_count):
     cursor.execute(f"""
             UPDATE comment
             SET edited_count = {new_edited_count}
             WHERE id = {comment_id}""")
+
 
 @connect_database.connection_handler
 def convert_comment_edit_count_to_zero(cursor):
@@ -376,3 +381,12 @@ def convert_comment_edit_count_to_zero(cursor):
             UPDATE comment
             SET edited_count = 0
             WHERE edited_count IS NULL """)
+
+
+@connect_database.connection_handler
+def edit_question(cursor, question_id, new_message):
+    cursor.execute(f"""
+                    UPDATE question
+                    SET message = '{new_message}'
+                    WHERE id = '{question_id}'
+                    """)

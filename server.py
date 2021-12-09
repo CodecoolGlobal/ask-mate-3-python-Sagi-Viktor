@@ -38,7 +38,6 @@ def display_question(question_id):
         data_manager.add_comment_to_question(submission_time, question_comment, question_id)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
-        comment_data = data_manager.display_question_detail(question_id)
         return redirect(f'/question/{question_id}/new-answer')
     return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
                            answer_data=answer_data, current_question=current_question, comment_data=comment_data,
@@ -87,32 +86,31 @@ def delete_question(question_id):
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
-    current_question = data_manager.get_current_question(question_id)
-    question_data = data_manager.import_data('questions')
+    question_data = data_manager.get_question(question_id)
+    question_title = [message['title'] for message in question_data][0]
+    question_message = [message['message'] for message in question_data][0]
     if request.method == "POST":
-        data_manager.submit_edited_question(request.form, current_question)
+        new_message = request.form.get('question-message')
+        data_manager.edit_question(question_id, new_message)
         return redirect(f"/question/{question_id}")
-    return render_template("source/html/edit_question.html", question_id=question_id, current_question=current_question,
-                           question_data=question_data)
+    return render_template("source/html/edit_question.html", question_id=question_id, question_title=question_title,
+                           question_message=question_message)
 
 
 @app.route("/question/<question_id>/vote_up")
 def question_vote_up(question_id=None):
-    question_id = question_id
     data_manager.vote_up_question(question_id)
     return redirect('/list')
 
 
 @app.route("/question/<question_id>/vote_down")
 def question_vote_down(question_id=None):
-    question_id = question_id
     data_manager.vote_down_question(question_id)
     return redirect('/list')
 
 
 @app.route("/answer/<answer_id>/vote_up")
 def answer_vote_up(answer_id):
-    answer_id = answer_id
     question_id_dict = data_manager.get_question_id(answer_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
     data_manager.vote_up_answer(answer_id)
@@ -121,7 +119,6 @@ def answer_vote_up(answer_id):
 
 @app.route("/answer/<answer_id>/vote_down")
 def answer_vote_down(answer_id):
-    answer_id = answer_id
     question_id_dict = data_manager.get_question_id(answer_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
     data_manager.vote_down_answer(answer_id)
