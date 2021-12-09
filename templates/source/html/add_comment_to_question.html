@@ -21,10 +21,9 @@
                     {% endfor %}
                 </tbody>
             </table><br>
-            {%block form%}<form action="/question/{{question_id}}", method="post">
-                <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
+            {%block form%}<form class="form_design" action="/question/{{question_id}}", method="post">
+                <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea>
                 <input type="submit" value="Submit">
             </form>{%endblock%}
-            <a href="/question/{{question_id}}">Back to question</a>
         </body>
     {% endblock %}

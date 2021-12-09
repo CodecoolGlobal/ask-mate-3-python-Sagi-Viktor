@@ -7,10 +7,14 @@ def generate_id(table):
     if table == 'question':
         question_data = data_manager.get_question_list()
         numbers = [[row[item] for item in row if item == 'id'] for row in question_data]
+        if not numbers:
+            return 1
         return numbers[-1][0] + 1
     elif table == 'answer':
         answer_data = data_manager.get_answer_list()
         numbers = [[row[item] for item in row if item == 'id'] for row in answer_data]
+        if not numbers:
+            return 1
         return numbers[-1][0] + 1
 
 

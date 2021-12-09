@@ -1,9 +1,7 @@
 {% extends "source/html/display_and_add_answer.html" %}
 {% block add_answer %}
-<form action="/question/{{ question_id }}/new-answer" method="POST">
-    <textarea name="message" rows="5" cols="100" placeholder="Enter your Answer Here ..."></textarea>
-    <br>
-    <input type="submit" value="Send your answer !!!">
-</form>
-    <br>
+    <form class="form_design" /question/{{ question_id }}/new-answer" method="POST">
+        <textarea name="message" rows="5" cols="100" placeholder="Enter your Answer Here ..."></textarea>
+        <input type="submit" value="Send your answer !!!">
+    </form>
 {% endblock %}

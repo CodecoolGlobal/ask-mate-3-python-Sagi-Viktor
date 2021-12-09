@@ -8,51 +8,44 @@
         <body>
             {% for item in current_question %}
                 <h1 class="displayed_question_title">{{ item['title'] }}</h1>
-                <p class="displayed_question_message">{{ item['message'] }}</p>
+                    <p class="displayed_question_message">{{ item['message'] }}</p>
+                </div>
             {% endfor %}
 
-        <table class="comment_section">
-            <thead>
-                <tr>
-                    <th>Submission time</th>
-                    <th>Question Comments</th>
-                    <th>Edits</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in comment_data %}
-                    <tr>
-                        <td>{{ item['submission_time'] }}</td>
-                        <td>{{ item['message'] }}</td>
-                        <td align="center"><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></td>
-                        <td><a href="/comments/{{ item['id'] }}/delete",
-                        onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+{#        <div class="comment_section2">#}
+{#            {%  for item in comment_data %}#}
+{#                <div class="comment_ROW">#}
+{#                    <div class="comment_time">{{ item['submission_time'] }}</div>#}
+{#                    <div class="comment_message">{{ item['message'] }}</div>#}
+{#                    <div class="comment_edit"><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></div>#}
+{#                    <div class="comment_delete"><a href="/comments/{{ item['id'] }}/delete",#}
+{#                    onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
 
-            <table class="displayed_answers">
-                <thead>
-                    <th>Votes</th>
-                    <th>Answers</th>
-                    <th>Comments</th>
-                    <th colspan="2">Vote</th>
-                </thead>
-                <tbody>
-                    {% for item in answer_data %}
-                        <tr>
-                            <td>{{ item['vote_number'] }}</td>
-                            <td>{{ item['message'] }}</td>
-                            <td><a class="title_link" href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
-                            <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_up">+</a></td>
-                            <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_down">-</a></td>
-                            <td><a class="title_link" href="/answer/{{ item['id'] }}/delete">Delete</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table><br>
+            <table class="comment_section">
 
+                {#            <thead>#}
+                {#                <tr>#}
+                {#                    <th>Submission time</th>#}
+                {#                    <th>Question Comments</th>#}
+                {#                    <th>Edits</th>#}
+                {#                </tr>#}
+                {#            </thead>#}
+                                <tbody>
+                                    {% for item in comment_data %}
+                                        <tr>
+                                            <td class="comment_time" >{{ item['submission_time'] }}</td>
+                                            <td class="comment_message" >{{ item['message'] }}</td>
+                                            <td class="comment_edit" ><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></td>
+                                            <td class="comment_delete" ><a href="/comments/{{ item['id'] }}/delete",
+                                            onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </div>
+                        </table>
             <div class="submit_buttons_div">
                 <form class="button_place1" action='{{url_for('display_question', question_id=question_id)}}' method="post">
                     <input class="submit_button" type="submit" value="Add new answer" name="question_id">
@@ -67,6 +60,27 @@
                     <input class="submit_button" type="submit" value="Delete question" name="comment_to_question">
                 </form>
             </div>
+            <table class="displayed_answers">
+                    <thead>
+                        <th>Votes</th>
+                        <th>Answers</th>
+                        <th>Comments</th>
+                        <th colspan="2">Vote</th>
+                    </thead>
+                    <tbody>
+                        {% for item in answer_data %}
+                            <tr>
+                                <td>{{ item['vote_number'] }}</td>
+                                <td>{{ item['message'] }}</td>
+                                <td><a class="title_link" href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
+                                <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_up">+</a></td>
+                                <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_down">-</a></td>
+                                <td><a class="title_link" href="/answer/{{ item['id'] }}/delete">Delete</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             {% block add_answer %}
             {% endblock %}
+        </body>
     {% endblock %}
