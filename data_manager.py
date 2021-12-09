@@ -391,6 +391,16 @@ def edit_question(cursor, question_id, new_message):
                     WHERE id = '{question_id}'
                     """)
 
+
+@connect_database.connection_handler
+def get_tag_list(cursor):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM tag
+                    ORDER BY id
+                    """)
+    return cursor.fetchall()
+
 @connect_database.connection_handler
 def edit_answer(cursor, answer_id, message):
     cursor.execute(f"""

@@ -1,1 +1,49 @@
 {% extends "source/html/display_and_add_answer.html" %}
+
+{% block content %}
+
+    {% for item in question_data %}
+        <h1>{{ item['message'] }}</h1>
+    {% endfor %}
+
+    <br><br>
+
+    <table class="tag-section">
+        <thead>
+            <tr>
+                <th align="center">Current tags:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CSS</td>
+            </tr>
+            <tr>
+                <td>python</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <section class="add-tag-section" style="margin-left: 15%">
+        <h3>Add/Create tag</h3>
+        <br><br>
+        <form action="/question/{{ question_id }}/new-tag">
+            <label for="choose-existing-tag">Choose tag:</label>
+            <select id="choose-existing-tag" name="choose-tag">
+                {% for item in tag_list %}
+                    <option value="tag_element">{{ item['name'] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add</button>
+        </form>
+        <br>
+        <form action="/question/{{ question_id }}/new-tag">
+            <label for="add-new-tag">New tag:</label>
+            <input id="add-new-tag" name="add-new-tag" type="text">
+            <button type="submit">Create</button>
+        </form>
+    </section>
+
+{% endblock %}
