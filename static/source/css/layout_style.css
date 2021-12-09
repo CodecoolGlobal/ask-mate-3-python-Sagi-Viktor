@@ -38,6 +38,7 @@
         h1, h2 {
             background-color: #0088a9;
             color: lightgray;
+            text-align: center;
             font-family: monospace;
             /*{#background-image: url("../../../static/source/abstract.jpg");#}*/
             margin-block-start: 0.83em;
@@ -215,22 +216,16 @@
          .button_place4 {
              margin-inline-start: 69%;
              width: 100%;
-             margin-bottom: 40px;
+             margin-bottom: 300px;
          }
 
          .comment_section {
              background-color: #0088a9;
              border: 0;
              box-shadow: 0 0 15px #0088a9;
-             margin-inline-start: 15%;
+             margin-inline-start: 40%;
              margin-inline-end: 15%;
-             margin-top: 30px;
-             width: 70%;
+             margin-top: 30px;;
+             width: 45%;
          }
 
-         thead tr th:first-child,
-         tbody tr td:first-child {
-              width: 8em;
-              min-width: 2em;
-              max-width: 7.5em;
-         }

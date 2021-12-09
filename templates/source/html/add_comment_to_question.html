@@ -1,34 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{%block title%}Add comment{% endblock %}</title>
-</head>
-<body>
-    <h1>Comments</h1>
-    <table border="1">
-    <col width="150">
-    <col width="1500">
+{%extends "source/html/LAYOUT.html" %}
 
-        <thead>
-            <tr>
-                <th>Submission time</th>
-                <th>Message</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in comment_data %}
-            <tr>
-                <td align="center">{{ item['submission_time'] }}</td>
-                <td align="center">{{ item['message'] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table><br>
-    {%block form%}<form action="/question/{{question_id}}", method="post">
-        <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
-        <input type="submit" value="Submit">
-    </form>{%endblock%}<br>
-    <a href="/question/{{question_id}}">Back to question</a>
+    {%block title%}<title>Add comment</title>{% endblock %}
 
-</body>
+    {% block content %}
+        <body>
+            <h1>Comments</h1>
+            <table class="comment_section">
+                <thead>
+                    <tr>
+                        <th>Submission time</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in comment_data %}
+                    <tr>
+                        <td>{{ item['submission_time'] }}</td>
+                        <td>{{ item['message'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table><br>
+            {%block form%}<form action="/question/{{question_id}}", method="post">
+                <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
+                <input type="submit" value="Submit">
+            </form>{%endblock%}
+            <a href="/question/{{question_id}}">Back to question</a>
+        </body>
+    {% endblock %}
