@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add comment</title>
+    <title>{%block title%}Add comment{% endblock %}</title>
 </head>
 <body>
     <h1>Comments</h1>
@@ -25,10 +25,10 @@
             {% endfor %}
         </tbody>
     </table><br>
-    <form action="/question/{{question_id}}", method="post">
+    {%block form%}<form action="/question/{{question_id}}", method="post">
         <textarea name="add_comment_to_question" rows="5" cols="50"placeholder="Enter The Comment Here..."></textarea><br>
         <input type="submit" value="Submit">
-    </form><br>
+    </form>{%endblock%}<br>
     <a href="/question/{{question_id}}">Back to question</a>
 
 </body>

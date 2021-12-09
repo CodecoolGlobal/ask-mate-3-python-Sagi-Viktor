@@ -226,7 +226,7 @@ def sort_question_desc(cursor, sort_by):
 @connect_database.connection_handler
 def get_comments_question_id(cursor, question_id):
     cursor.execute(f"""
-                    SELECT submission_time,message
+                    SELECT submission_time,message,id
                     FROM comment
                     WHERE question_id = {question_id}
                     ORDER BY id
@@ -307,4 +307,11 @@ def search_questions(cursor, phrase):
     cursor.execute(query, {'phrase': f"%{phrase}%", 'phrase': f"%{phrase}%"})
     return cursor.fetchall()
 
-
+@connect_database.connection_handler
+def get_message_for_comment(cursor,id):
+    cursor.execute(f"""
+                    SELECT message
+                    FROM comment
+                    WHERE id = {id}
+                    """)
+    return cursor.fetchall()
