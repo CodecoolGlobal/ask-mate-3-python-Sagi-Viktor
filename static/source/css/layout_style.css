@@ -2,12 +2,12 @@
 
         .title_link {
             background-color: #24252a;
-            color: white;
+            color: #1fb7db;
             font-family: monospace;
+            font-style: normal;
             border-radius: 10px;
             border-color: white;
             text-decoration: none;
-            /*box-shadow: 0 0 10px lightgray;*/
         }
 
         .links {
@@ -62,7 +62,7 @@
 
         table, th, td {
             border: 1px solid black;
-            box-shadow: 0 0 10px #0088a9;
+            box-shadow: 0 0 10px #14758c;
             background-color: #24252a;
             color: lightgray;
             border-radius: 5px;
@@ -76,9 +76,13 @@
         }
 
         .main_page_table {
-            margin-inline-start: 10%;
-            margin-inline-end: 10%;
-            margin-bottom: 100px;
+             background-color: #0088a9;
+             border: 0;
+             box-shadow: 0 0 15px #0088a9;
+             margin-inline-start: 10%;
+             margin-inline-end: 10%;
+             margin-bottom: 300px;
+             width: 80%;
         }
 
          th {
@@ -184,20 +188,49 @@
          .submit_button {
              font-size: 1em;
              width: 15%;
+             background-color: #0088a9;
+            color: lightgray;
+            font-family: monospace;
+             font-size: 20px;
+            border: 5px solid #0088a9;
+             border-radius: 10px;
+             cursor: pointer;
          }
 
          .button_place1 {
-             margin-inline-start: 15%;
+             margin-inline-start: 16%;
+             width: 100%;
+             margin-bottom: -33px;
          }
          .button_place2 {
-             margin-inline-start: 15%;
-             padding-inline-start: 12em;
+             margin-inline-start: 33%;
+             width: 100%;
+             margin-bottom: -33px;
          }
          .button_place3 {
-             margin-inline-start: 15%;
-             padding-inline-start: 24em;
+             margin-inline-start: 51%;
+             width: 100%;
+             margin-bottom: -33px;
          }
          .button_place4 {
+             margin-inline-start: 69%;
+             width: 100%;
+             margin-bottom: 40px;
+         }
+
+         .comment_section {
+             background-color: #0088a9;
+             border: 0;
+             box-shadow: 0 0 15px #0088a9;
              margin-inline-start: 15%;
-             padding-inline-start: 36em;
+             margin-inline-end: 15%;
+             margin-top: 30px;
+             width: 70%;
+         }
+
+         thead tr th:first-child,
+         tbody tr td:first-child {
+              width: 8em;
+              min-width: 2em;
+              max-width: 7.5em;
          }
