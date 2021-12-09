@@ -176,10 +176,10 @@ def delete_question_comment(comment_id):
 def search_in_question():
     searched_phrase = request.args.get('q')
     results = util.search_engine(searched_phrase)
-    return render_template('/source/html/search_results.html', results=results)
+    return render_template('source/html/search_results.html', results=results)
 
 
-@app.route("/comments/<comment_id>/edit",methods=['GET', 'POST'])
+@app.route("/comments/<comment_id>/edit", methods=['GET', 'POST'])
 def edit_question_comment(comment_id):
     question_id_dict = data_manager.get_question_id_by_comment(comment_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
@@ -191,11 +191,16 @@ def edit_question_comment(comment_id):
         new_edition = util.check_comment_edit_count(edition)
         time = util.generate_submission_time()
         new_message = request.form.get("edit_question_comment")
-        data_manager.edit_question_comment(comment_id,new_message,time)
-        data_manager.update_edited_comment_count(comment_id,new_edition)
+        data_manager.edit_question_comment(comment_id, new_message, time)
+        data_manager.update_edited_comment_count(comment_id, new_edition)
         return redirect(f'/question/{question_id}')
-    return render_template("/source/html/edit_question_comment.html",comment_id=comment_id, comment_data=comment_data,
-                           current_comment=current_comment,question_id=question_id)
+    return render_template("source/html/edit_question_comment.html", comment_id=comment_id, comment_data=comment_data,
+                           current_comment=current_comment, question_id=question_id)
+
+
+@app.route('/question/<question_id>/new-tag', methods=['GET', 'POST'])
+def add_new_tag(question_id):
+    return render_template('source/html/add-tag.html', question_id=question_id)
 
 
 if __name__ == "__main__":

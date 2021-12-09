@@ -9,7 +9,6 @@
             {% for item in current_question %}
                 <h1 class="displayed_question_title">{{ item['title'] }}</h1>
                     <p class="displayed_question_message">{{ item['message'] }}</p>
-                </div>
             {% endfor %}
 
 {#        <div class="comment_section2">#}
@@ -39,13 +38,25 @@
                                             <td class="comment_time" >{{ item['submission_time'] }}</td>
                                             <td class="comment_message" >{{ item['message'] }}</td>
                                             <td class="comment_edit" ><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></td>
-                                            <td class="comment_delete" ><a href="/comments/{{ item['id'] }}/delete",
+                                            <td class="comment_delete" ><a href="/comments/{{ item['id'] }}/delete"
                                             onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
-                            </div>
                         </table>
+
+            <table class="tag-section">
+                <tr>
+                    <td>Tags:</td>
+                    <td>python, sql, css</td>
+                </tr>
+            </table>
+            <br>
+            <div class="add_tag_button">
+                <form class="tag-button" action="/question/{{ question_id }}/new-tag">
+                    <button class="submit_button">Add new tag</button>
+                </form>
+            </div>
             <div class="submit_buttons_div">
                 <form class="button_place1" action='{{url_for('display_question', question_id=question_id)}}' method="post">
                     <input class="submit_button" type="submit" value="Add new answer" name="question_id">
