@@ -376,3 +376,12 @@ def convert_comment_edit_count_to_zero(cursor):
             UPDATE comment
             SET edited_count = 0
             WHERE edited_count IS NULL """)
+
+
+@connect_database.connection_handler
+def edit_question(cursor,id,title,message):
+    cursor.execute(f"""
+            UPDATE answer
+            SET title = {title},
+            message = {message}
+            WHERE id = {id}""")

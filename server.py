@@ -87,13 +87,13 @@ def delete_question(question_id):
 
 @app.route("/question/<question_id>/edit", methods=["GET", "POST"])
 def edit_question(question_id):
-    current_question = data_manager.get_current_question(question_id)
-    question_data = data_manager.import_data('questions')
+    current_question = data_manager.get_answer_list_by_question_id(question_id)
     if request.method == "POST":
-        data_manager.submit_edited_question(request.form, current_question)
+        title = request.form.get('question-title')
+        message = request.form.get('question-message')
+        data_manager.edit_question(id,title,message)
         return redirect(f"/question/{question_id}")
-    return render_template("source/html/edit_question.html", question_id=question_id, current_question=current_question,
-                           question_data=question_data)
+    return render_template("source/html/edit_question.html",current_question=current_question,)
 
 
 @app.route("/question/<question_id>/vote_up")

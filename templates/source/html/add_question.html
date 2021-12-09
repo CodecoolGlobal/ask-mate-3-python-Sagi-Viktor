@@ -9,7 +9,7 @@
     <h1>{%block h1%}ADD QUESTION{%endblock%}</h1>
     <form {%block form%}action="/add-question" {%endblock%} method="post">
         <label for="question-title">
-            <input type="text" id="question-title" name="question-title" {%block title%}placeholder="Enter The Title"{%endblock%}>
+            <input type="text" id="question-title" name="question-title" {%block title%}placeholder="Enter The Title"{%endblock%}><br>
         </label><br>
         <label for="question-message">
             <textarea id="question-message" name="question-message" rows="5" cols="50" {%block message%}placeholder="Enter The Question Here...">{%endblock%}</textarea>
