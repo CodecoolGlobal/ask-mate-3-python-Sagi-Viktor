@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>{%block h1%}ADD QUESTION{%endblock%}</h1>
-    <form {%block form%}action="/add-question" {%endblock%} method="post">
+    <form class="form_design" {%block form%}action="/add-question" {%endblock%} method="post">
         <label for="question-title">
             <input type="text" id="question-title" name="question-title" {%block title%}placeholder="Enter The Title"{%endblock%}>
         </label><br>
@@ -16,12 +16,14 @@
         </label><br>
         <input type="submit" {%block submit%}value="Share your question with the world!"{%endblock%}>
     </form>
-    <form action="/add-question" method="post" enctype="multipart/form-data">
-        <br>
-        <fieldset>
-            <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png"/>
-        </fieldset>
-        <br>
-    </form>
+
+{#    <form class="form_design" action="/add-question" method="post" enctype="multipart/form-data">#}
+{#        <br>#}
+{#        <fieldset>#}
+{#            <input type="file" name="picture" id="picture" accept=".jpg, .jpeg, .png"/>#}
+{#        </fieldset>#}
+{#        <br>#}
+{#    </form>#}
+
 </body>
 </html>

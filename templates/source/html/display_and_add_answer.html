@@ -11,41 +11,19 @@
                     <p class="displayed_question_message">{{ item['message'] }}</p>
                 </div>
             {% endfor %}
-
-{#        <div class="comment_section2">#}
-{#            {%  for item in comment_data %}#}
-{#                <div class="comment_ROW">#}
-{#                    <div class="comment_time">{{ item['submission_time'] }}</div>#}
-{#                    <div class="comment_message">{{ item['message'] }}</div>#}
-{#                    <div class="comment_edit"><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></div>#}
-{#                    <div class="comment_delete"><a href="/comments/{{ item['id'] }}/delete",#}
-{#                    onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></div>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
-
             <table class="comment_section">
-
-                {#            <thead>#}
-                {#                <tr>#}
-                {#                    <th>Submission time</th>#}
-                {#                    <th>Question Comments</th>#}
-                {#                    <th>Edits</th>#}
-                {#                </tr>#}
-                {#            </thead>#}
-                                <tbody>
-                                    {% for item in comment_data %}
-                                        <tr>
-                                            <td class="comment_time" >{{ item['submission_time'] }}</td>
-                                            <td class="comment_message" >{{ item['message'] }}</td>
-                                            <td class="comment_edit" ><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></td>
-                                            <td class="comment_delete" ><a href="/comments/{{ item['id'] }}/delete",
-                                            onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </div>
-                        </table>
+                <tbody>
+                    {% for item in comment_data %}
+                        <tr>
+                            <td class="comment_time" >{{ item['submission_time'] }}</td>
+                            <td class="comment_message" >{{ item['message'] }}</td>
+                            <td class="comment_link" ><a href="/comments/{{ item['id'] }}/edit">Edited {{ item['edited_count'] }} times</a></td>
+                            <td class="comment_link" ><a href="/comments/{{ item['id'] }}/delete",
+                            onclick="return confirm('Are you sure you want to delete this comment?')">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
             <div class="submit_buttons_div">
                 <form class="button_place1" action='{{url_for('display_question', question_id=question_id)}}' method="post">
                     <input class="submit_button" type="submit" value="Add new answer" name="question_id">
@@ -66,6 +44,7 @@
                         <th>Answers</th>
                         <th>Comments</th>
                         <th colspan="2">Vote</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         {% for item in answer_data %}

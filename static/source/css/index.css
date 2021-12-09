@@ -42,12 +42,13 @@
 
     /* Add styles to the form container */
     .container {
-      position: absolute;
-      right: 0;
-      margin: 100px;
-      max-width: 300px;
-      padding: 16px;
-      background-color: #24252a;
+        position: fixed;
+        left: 10%;
+        top: 10%;
+        margin: 100px;
+        max-width: 300px;
+        padding: 16px;
+        background-color: #24252a;
         left: 27.5em;
     }
 
