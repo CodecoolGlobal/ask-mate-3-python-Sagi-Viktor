@@ -111,6 +111,7 @@
              margin-inline-end: 10%;
              margin-block-end: 1.1em;
              height: 2em;
+             border-radius : 10px;
          }
 
          .search_field {
