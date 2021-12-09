@@ -58,6 +58,10 @@
 
         html {
             border: #0088a9;
+            background: repeating-radial-gradient(darkslateblue, blue 10%);
+            background-size: cover;
+            margin: auto;
+            height: 50rem;
             /*background-image: url("../images/hacker.jpg");*/
         }
 
