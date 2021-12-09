@@ -182,13 +182,18 @@ def search_in_question():
     return render_template('/source/html/search_results.html', results=results)
 
 
-@app.route("/comments/<comment_id>/edit")
+@app.route("/comments/<comment_id>/edit",methods=['GET', 'POST'])
 def edit_question_comment(comment_id):
     question_id_dict = data_manager.get_question_id_by_comment(comment_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
     comment_data = data_manager.get_comments_question_id(question_id)
     current_comment_dict = data_manager.get_message_for_comment(comment_id)
     current_comment = [item['message'] for item in current_comment_dict][0]
+    if request.method == "POST":
+        time = util.generate_submission_time()
+        new_message = request.form.get("edit_question_comment")
+        data_manager.edit_question_comment(comment_id,new_message,time)
+        return redirect(f'/question/{question_id}')
     return render_template("/source/html/edit_question_comment.html",comment_id=comment_id, comment_data=comment_data,
                            current_comment=current_comment,question_id=question_id)
 

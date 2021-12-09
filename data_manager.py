@@ -246,6 +246,16 @@ def get_comments_by_answer_id(cursor, answer_id):
 
 
 @connect_database.connection_handler
+def display_question_detail(cursor,question_id):
+    cursor.execute(f"""
+                    SELECT submission_time,message
+                    FROM comment
+                    WHERE question_id = {question_id}
+                    ORDER BY id""")
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
 def get_question_detail(cursor,question_id):
     cursor.execute(f"""
                     SELECT submission_time,message,id
@@ -315,3 +325,14 @@ def get_message_for_comment(cursor,id):
                     WHERE id = {id}
                     """)
     return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def edit_question_comment(cursor,comment_id,new_message,time):
+    cursor.execute(f"""
+            UPDATE comment
+            SET message = '{new_message}',
+            submission_time = '{time}'
+            WHERE id = {comment_id}""")
+
+

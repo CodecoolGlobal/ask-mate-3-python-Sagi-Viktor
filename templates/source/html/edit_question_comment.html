@@ -1,7 +1,7 @@
 {%extends "source/html/add_comment_to_question.html" %}
 {%block title%}Edit comment{%endblock%}
 {%block form%}
-    <form action="/question/{{question_id}}", method="post">
+    <form action="/comments/{{comment_id}}/edit", method="post">
         <textarea name="edit_question_comment" rows="5" cols="50">{{ current_comment }}</textarea><br>
         <input type="submit" value="Submit">
     </form>
