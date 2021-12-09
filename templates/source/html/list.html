@@ -20,6 +20,7 @@
             </form>
 
             <form action="/list">
+                <label for="cars"></label>
                 <select onchange='this.form.submit()' name='status_desc' id="cars" class="links">
                     <option disabled selected value> -- order by desc -- </option>
                     <option value='submission_time'>submission time</option>
@@ -33,7 +34,8 @@
 
         <div class="searchbar">
             <form action="/search" method="GET">
-                <input class="search_field" type="text" name="q">
+                <label for="q"></label>
+                <input class="search_field" type="text" name="q" id="q">
                 <input class="search_button" type="submit" value="search">
             </form>
         </div>
@@ -55,11 +57,18 @@
                 {% for item in question_data %}
                 <tr>
                     {% for data in item %}
-                        {% if data == 'title' %}
-                            <td><a class="title_link" href= "/question/{{item['id']}}">{{ item[data] }}</a></td>
-                        {% elif data == 'id' %}
-                        {% else %}
-                            <td>{{ item[data] }}</td>
+                        {% if data != 'id' %}
+                            {% if data == 'title' %}
+                                <td><a class="title_link" href= "/question/{{ item['id'] }}">{{ item[data] }}</a></td>
+                            {% elif data != 'message' %}
+                                <td>{{ item[data] }}</td>
+                            {% else %}
+                                <td>
+                                    {{ item[data] }}
+                                    <br><br>
+                                    Tags:
+                                </td>
+                            {% endif %}
                         {% endif %}
                     {% endfor %}
                     <td><a class="title_link" href="/question/{{ item['id'] }}/vote_up">+</a></td>

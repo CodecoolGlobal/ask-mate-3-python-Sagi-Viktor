@@ -9,7 +9,6 @@
             {% for item in current_question %}
                 <h1 class="displayed_question_title">{{ item['title'] }}</h1>
                     <p class="displayed_question_message">{{ item['message'] }}</p>
-                </div>
             {% endfor %}
             <table class="comment_section">
                 <tbody>
@@ -54,6 +53,7 @@
                                 <td><a class="title_link" href="/answer/{{ item['id'] }}/comments">{{ nr_of_comments[item['id']] }} comments</a></td>
                                 <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_up">+</a></td>
                                 <td><a class="title_link" href="/answer/{{ item['id'] }}/vote_down">-</a></td>
+                                <td><a class="title_link" href="/answer/{{ item['id'] }}/edit">Edit</a></td>
                                 <td><a class="title_link" href="/answer/{{ item['id'] }}/delete">Delete</a></td>
                             </tr>
                         {% endfor %}

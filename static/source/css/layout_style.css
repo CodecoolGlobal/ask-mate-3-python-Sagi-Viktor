@@ -65,7 +65,7 @@
             /*height: 50rem;*/
 
             background-size: cover;
-            background: linear-gradient(-45deg, #8b985c, #ccc9b1, #cda980, #98a406);
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
 	        animation: gradient 15s ease infinite;
 	        height: 50rem;
@@ -195,6 +195,7 @@
              text-align: justify;
              padding: 1%;
              background-color: lightgrey;
+             text-align: center;
 
          }
 
@@ -212,6 +213,12 @@
          .submit_buttons_div {
          }
 
+         .add_tag_button {
+             margin-inline-start: 16%;
+             width: 100%;
+             margin-bottom: 10px;
+         }
+
          .submit_button {
              font-size: 1em;
              width: 15%;
@@ -222,6 +229,7 @@
             border: 5px solid #0088a9;
              border-radius: 10px;
              cursor: pointer;
+             text-align: center;
          }
 
          .button_place1 {
@@ -251,9 +259,8 @@
              margin-bottom: 3em;
          }
 
-         .comment_link {
-             color: #0088a9;
-            text-decoration: none;
+         .tag-section {
+             margin-inline-start: 15%;
          }
 
          .form_design {
