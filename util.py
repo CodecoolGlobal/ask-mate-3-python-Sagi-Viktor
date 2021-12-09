@@ -63,3 +63,11 @@ def search_engine(phrase):
     answers = data_manager.search_answers(phrase)
     questions = data_manager.search_questions(phrase)
     return [questions, answers]
+
+
+def check_comment_edit_count(edited_count_dict):
+    edited_count = [item['edited_count'] for item in edited_count_dict][0]
+    if edited_count is None:
+        return 0
+    else:
+        return edited_count + 1

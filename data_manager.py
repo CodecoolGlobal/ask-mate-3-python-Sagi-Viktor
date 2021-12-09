@@ -226,7 +226,7 @@ def sort_question_desc(cursor, sort_by):
 @connect_database.connection_handler
 def get_comments_question_id(cursor, question_id):
     cursor.execute(f"""
-                    SELECT submission_time,message,id
+                    SELECT submission_time,message,id,edited_count
                     FROM comment
                     WHERE question_id = {question_id}
                     ORDER BY id
@@ -336,3 +336,43 @@ def edit_question_comment(cursor,comment_id,new_message,time):
             WHERE id = {comment_id}""")
 
 
+@connect_database.connection_handler
+def get_message_for_comment(cursor,id):
+    cursor.execute(f"""
+                    SELECT message
+                    FROM comment
+                    WHERE id = {id}
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_edited_comment_count(cursor,comment_id):
+    cursor.execute(f"""
+                    SELECT edited_count
+                    FROM comment
+                    where id = {comment_id}
+                    """)
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def get_all_edited_comment_count(cursor):
+    cursor.execute(f"""
+                    SELECT edited_count
+                    FROM comment
+                    """)
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def update_edited_comment_count(cursor,comment_id,new_edited_count):
+    cursor.execute(f"""
+            UPDATE comment
+            SET edited_count = {new_edited_count}
+            WHERE id = {comment_id}""")
+
+@connect_database.connection_handler
+def convert_comment_edit_count_to_zero(cursor):
+    cursor.execute(f"""
+            UPDATE comment
+            SET edited_count = 0
+            WHERE edited_count IS NULL """)
