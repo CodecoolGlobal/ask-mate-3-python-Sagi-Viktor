@@ -57,12 +57,22 @@
         }
 
         html {
-            border: #0088a9;
-            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, darkslateblue);
-            background-size: cover;
-            margin: auto;
-            height: 50rem;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+	        animation: gradient 15s ease infinite;
+	        height: 100vh;
             /*background-image: url("../images/hacker.jpg");*/
+        }
+            @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         table, th, td {
@@ -111,6 +121,7 @@
              margin-inline-end: 10%;
              margin-block-end: 1.1em;
              height: 2em;
+             border-radius : 10px;
          }
 
          .search_field {
