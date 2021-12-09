@@ -13,7 +13,6 @@ def main_page():
 @app.route("/list", methods=['POST', 'GET'])
 def get_list():
     question_data = data_manager.get_question_list()
-    print(f"ser.py print::::: {question_data}")
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')

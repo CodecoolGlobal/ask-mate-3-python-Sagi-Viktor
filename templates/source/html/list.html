@@ -43,7 +43,9 @@
             <thead>
                 <tr>
                     {% for header in question_headers %}
-                        <th>{{ header }}</th>
+                        {% if header != 'Id' %}
+                            <th>{{ header }}</th>
+                        {% endif %}
                     {% endfor %}
                     <th colspan="2">Vote</th>
                 </tr>
@@ -55,6 +57,7 @@
                     {% for data in item %}
                         {% if data == 'title' %}
                             <td><a class="title_link" href= "/question/{{item['id']}}">{{ item[data] }}</a></td>
+                        {% elif data == 'id' %}
                         {% else %}
                             <td>{{ item[data] }}</td>
                         {% endif %}
