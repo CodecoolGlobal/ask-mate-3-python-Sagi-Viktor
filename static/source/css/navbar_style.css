@@ -12,6 +12,26 @@
       background-color: #24252a;
     }
 
+     .btn-grad {background-image: linear-gradient(to right, #1A2980 0%, #26D0CE  51%, #1A2980  100%)}
+     .btn-grad {
+        margin: 10px;
+        padding: 15px 45px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;
+        box-shadow: 0 0 20px gray;
+        border-radius: 10px;
+        display: block;
+      }
+
+      .btn-grad:hover {
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
+      }
+
     .logo {
       cursor: pointer;
     }
@@ -40,19 +60,6 @@
 
     .nav__links li a:hover {
       color: #0088a9;
-    }
-
-    .cta {
-      padding: 9px 25px;
-      background-color: rgba(0, 136, 169, 1);
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease 0s;
-    }
-
-    .cta:hover {
-      background-color: rgba(0, 136, 169, 0.8);
     }
 
     /* Mobile Nav */
