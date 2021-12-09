@@ -26,6 +26,7 @@ def get_list():
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
 def display_question(question_id):
+    data_manager.convert_comment_edit_count_to_zero()
     data_manager.view_counter(question_id)
     current_question = data_manager.get_question(question_id)
     answer_data = data_manager.get_answer_list_by_question_id(question_id)
@@ -190,9 +191,12 @@ def edit_question_comment(comment_id):
     current_comment_dict = data_manager.get_message_for_comment(comment_id)
     current_comment = [item['message'] for item in current_comment_dict][0]
     if request.method == "POST":
+        edition = data_manager.get_edited_comment_count(comment_id)
+        new_edition = util.check_comment_edit_count(edition)
         time = util.generate_submission_time()
         new_message = request.form.get("edit_question_comment")
         data_manager.edit_question_comment(comment_id,new_message,time)
+        data_manager.update_edited_comment_count(comment_id,new_edition)
         return redirect(f'/question/{question_id}')
     return render_template("/source/html/edit_question_comment.html",comment_id=comment_id, comment_data=comment_data,
                            current_comment=current_comment,question_id=question_id)
