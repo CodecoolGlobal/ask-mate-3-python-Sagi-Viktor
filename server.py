@@ -202,9 +202,16 @@ def edit_question_comment(comment_id):
 def add_new_tag(question_id):
     question_data = data_manager.get_question(question_id)
     tag_list = data_manager.get_tag_list()
-    print(tag_list)
+    tag_chosen = request.form.get('choose-tag')
+    tag_created = request.form.get('add-new-tag')
+    if request.method == "POST":
+        if tag_chosen:
+            pass
+        else:
+            pass
     return render_template('source/html/add-tag.html', question_id=question_id, question_data=question_data,
                            tag_list=tag_list)
+
 
 @app.route("/answer/<answer_id>/edit", methods=["GET", "POST"])
 def edit_answer(answer_id):
