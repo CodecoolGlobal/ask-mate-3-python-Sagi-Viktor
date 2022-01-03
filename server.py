@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
 
@@ -224,6 +225,11 @@ def edit_answer(answer_id):
         question_id = str([item['question_id'] for item in question_id_dict][0])
         return redirect(f'/question/{question_id}')
     return render_template("/source/html/edit_answer.html", answer_message=answer_message,answer_id=answer_id)
+
+
+@app.route("/bonus-questions")
+def main():
+    return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
 
 
 if __name__ == "__main__":
