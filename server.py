@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, url_for
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
@@ -6,9 +6,36 @@ import util
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route('/')
 def main_page():
-    return render_template("index.html")
+    if 'email' in session:
+        return render_template('index.html', logged_in=True, user_email=escape(session['email']))
+    else:
+        return render_template('index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('list.html')      #Logged in - It should display the logged in user
+    else:
+        email = request.form['email']
+        password = request.form['password']
+
+        if email in data.users.keys():          #Database need instead of data
+            hashed_password = data.users[email]     #Database need instead of data
+            is_password_valid = util.verify_password(password, hashed_password)
+            if is_password_valid:
+                session['email'] = request.form['email']
+                return redirect(url_for('index'))
+        return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
+
+
+@app.route('/logout')
+def logout():
+    session.pop('email', None)
+    session.pop('questions_answered', None)
+    return redirect(url_for('index'))
 
 
 @app.route("/list", methods=['POST', 'GET'])
