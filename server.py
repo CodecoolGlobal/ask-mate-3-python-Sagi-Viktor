@@ -279,8 +279,10 @@ def registration():
 
 @app.route("/users")
 def users_list():
-    users = data_manager.get_users()
-    return render_template('users_list.html', users=users)
+    if session.get('username'):
+        users = data_manager.get_users()
+        return render_template('users_list.html', users=users)
+    return redirect(url_for('main_page'))
 
 
 if __name__ == "__main__":
