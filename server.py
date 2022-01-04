@@ -5,6 +5,8 @@ import util
 
 app = Flask(__name__)
 
+app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
+
 
 @app.route('/')
 def main_page():
@@ -20,15 +22,17 @@ def login():
         return render_template('list.html')      #Logged in - It should display the logged in user
     else:
         email = request.form['email']
-        password = request.form['password']
+        password = request.POST['password'].encode('utf-8')
+        if util.login_validation(email, password):
+            return redirect("/list")
 
-        if email in data.users.keys():          #Database need instead of data
-            hashed_password = data.users[email]     #Database need instead of data
-            is_password_valid = util.verify_password(password, hashed_password)
-            if is_password_valid:
-                session['email'] = request.form['email']
-                return redirect(url_for('index'))
-        return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
+        # if email in data.users.keys():          #Database need instead of data
+        #     hashed_password = data.users[email]     #Database need instead of data
+        #     is_password_valid = util.verify_password(password, hashed_password)
+        #     if is_password_valid:
+        #         session['email'] = request.form['email']
+        #         return redirect(url_for('index'))
+        # return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
 
 
 @app.route('/logout')
