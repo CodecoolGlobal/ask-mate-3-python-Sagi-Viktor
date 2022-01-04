@@ -433,3 +433,26 @@ def get_users(cursor):
                     """)
     return cursor.fetchall()
 
+
+@connect_database.connection_handler
+def add_user(cursor, user_data):
+    cursor.execute(f"""
+                    INSERT INTO users
+                    (id, username, password_hash, registration_date)
+                    VALUES (
+                    '{user_data[0]}',
+                    '{user_data[1]}',
+                    '{user_data[2]}',
+                    '{user_data[3]}')
+                    """)
+
+
+@connect_database.connection_handler
+def get_users(cursor):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM users
+                    ORDER BY id
+                    """)
+    return cursor.fetchall()
+

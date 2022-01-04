@@ -23,6 +23,12 @@ def generate_id(table):
         if not numbers:
             return 1
         return numbers[-1][0] + 1
+    elif table == 'users':
+        users_data = data_manager.get_users()
+        numbers = [[row[item] for item in row if item == 'id'] for row in users_data]
+        if not numbers:
+            return 1
+        return numbers[-1][0] + 1
 
 
 def generate_submission_time():
