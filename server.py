@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, escape
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
@@ -9,9 +9,9 @@ app = Flask(__name__)
 @app.route('/')
 def main_page():
     if 'email' in session:
-        return render_template('index.html', logged_in=True, user_email=escape(session['email']))
+        return render_template('login.html', logged_in=True, user_email=escape(session['email']))
     else:
-        return render_template('index.html')
+        return render_template('login.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
