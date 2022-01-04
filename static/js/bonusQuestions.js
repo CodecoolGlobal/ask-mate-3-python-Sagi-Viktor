@@ -35,20 +35,25 @@ function getFilteredItems() {
                 row.querySelector('td').textContent.toLowerCase().includes(qWithoutFirst)
                 ? (row.style.display = "none")
                 : (row.style.display = "table-row");
-            } if(q === "!"){
-                row.querySelector('td').textContent.toLowerCase()
-                ? (row.style.display = "table-row")
-                : (row.style.display = "table-row");
+
             } if(!q.startsWith("!")){
             row.querySelector('td').textContent.toLowerCase().includes(q)
                 ? (row.style.display = "table-row")
                 : (row.style.display = "none");
+
             } if(q.slice(0,12).toLowerCase().startsWith("description:")){
                 const qWithoutFirstTwelve = q.slice(12)
                 row.querySelector('td:nth-child(2)').textContent.toLowerCase().includes(qWithoutFirstTwelve)
                 ? (row.style.display = "table-row")
                 : (row.style.display = "none");
-            } if(q === "description:"){
+
+            } if(q.slice(0,13).toLowerCase().startsWith("!description:")){
+                const qWithoutFirstThirteen = q.slice(13)
+                row.querySelector('td:nth-child(2)').textContent.toLowerCase().includes(qWithoutFirstThirteen)
+                ? (row.style.display = "none")
+                : (row.style.display = "table-row");
+
+            } if(q === "description:" || q === "!" || q === "!description:"){
                 row.querySelector('td').textContent.toLowerCase()
                 ? (row.style.display = "table-row")
                 : (row.style.display = "table-row");
