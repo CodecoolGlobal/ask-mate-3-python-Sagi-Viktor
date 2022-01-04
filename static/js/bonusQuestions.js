@@ -43,7 +43,17 @@ function getFilteredItems() {
             row.querySelector('td').textContent.toLowerCase().includes(q)
                 ? (row.style.display = "table-row")
                 : (row.style.display = "none");
-        }});
+            } if(q.slice(0,12).toLowerCase().startsWith("description:")){
+                const qWithoutFirstTwelve = q.slice(12)
+                row.querySelector('td:nth-child(2)').textContent.toLowerCase().includes(qWithoutFirstTwelve)
+                ? (row.style.display = "table-row")
+                : (row.style.display = "none");
+            } if(q === "description:"){
+                row.querySelector('td').textContent.toLowerCase()
+                ? (row.style.display = "table-row")
+                : (row.style.display = "table-row");
+            }
+        });
     });
 }
 
