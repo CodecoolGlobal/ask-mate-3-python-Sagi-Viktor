@@ -22,13 +22,11 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        if email in data.users.keys():
-            hashed_password = data.users[email]
-            is_password_valid = helper.verify_password(password, hashed_password)
+        if email in data.users.keys():          #Database need instead of data
+            hashed_password = data.users[email]     #Database need instead of data
+            is_password_valid = util.verify_password(password, hashed_password)
             if is_password_valid:
                 session['email'] = request.form['email']
-                session['questions_answered'] = 0
-                session['correct_answers'] = 0
                 return redirect(url_for('index'))
         return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
 
@@ -36,7 +34,6 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('email', None)
-    session.pop('correct_answers', None)
     session.pop('questions_answered', None)
     return redirect(url_for('index'))
 
