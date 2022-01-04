@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main_page():
-    return render_template("source/html/index.html")
+    return render_template("index.html")
 
 
 @app.route("/list", methods=['POST', 'GET'])
@@ -21,7 +21,7 @@ def get_list():
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
         question_data = data_manager.sort_question_desc(sorting_desc)
-    return render_template('source/html/list.html', question_data=question_data, question_headers=question_headers)
+    return render_template('list.html', question_data=question_data, question_headers=question_headers)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
@@ -40,7 +40,7 @@ def display_question(question_id):
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
-    return render_template('source/html/display_and_add_answer.html', question_id=int(question_id),
+    return render_template('display_and_add_answer.html', question_id=int(question_id),
                            answer_data=answer_data, current_question=current_question, comment_data=comment_data,
                            nr_of_comments=nr_of_comments)
 
@@ -59,7 +59,7 @@ def add_answer(question_id):
         answer_data = [answer_id, submission_time, vote_number, question_id, message, image]
         data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
-    return render_template('source/html/add_answer.html', question_id=question_id, question_data=question_data,
+    return render_template('add_answer.html', question_id=question_id, question_data=question_data,
                            answer_data=answer_data, nr_of_comments=0)
 
 
@@ -76,7 +76,7 @@ def add_question():
         question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
         return redirect("/list")
-    return render_template('source/html/add_question.html')
+    return render_template('add_question.html')
 
 
 @app.route("/question/<question_id>/delete")
@@ -94,7 +94,7 @@ def edit_question(question_id):
         new_message = request.form.get('question-message')
         data_manager.edit_question(question_id, new_message)
         return redirect(f"/question/{question_id}")
-    return render_template("source/html/edit_question.html", question_id=question_id, question_title=question_title,
+    return render_template("edit_question.html", question_id=question_id, question_title=question_title,
                            question_message=question_message)
 
 
@@ -146,7 +146,7 @@ def list_answer_comments(answer_id):
         comment_items = [answer_id, comment_message, submission_time]
         data_manager.add_comment_to_answer(comment_items)
         return redirect(f'/answer/{answer_id}/comments')
-    return render_template("source/html/comment_to_answer.html", answer=answer, comment_data=comment_data,
+    return render_template("comment_to_answer.html", answer=answer, comment_data=comment_data,
                            question_id=question_id, answer_id=answer_id)
 
 
@@ -161,7 +161,7 @@ def delete_answer_comment(comment_id):
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
     comment_data = data_manager.get_comments_question_id(question_id)
-    return render_template("source/html/add_comment_to_question.html", question_id=question_id,
+    return render_template("add_comment_to_question.html", question_id=question_id,
                            comment_data=comment_data)
 
 
@@ -177,7 +177,7 @@ def delete_question_comment(comment_id):
 def search_in_question():
     searched_phrase = request.args.get('q')
     results = util.search_engine(searched_phrase)
-    return render_template('source/html/search_results.html', results=results)
+    return render_template('search_results.html', results=results)
 
 
 @app.route("/comments/<comment_id>/edit", methods=['GET', 'POST'])
@@ -195,7 +195,7 @@ def edit_question_comment(comment_id):
         data_manager.edit_question_comment(comment_id, new_message, time)
         data_manager.update_edited_comment_count(comment_id, new_edition)
         return redirect(f'/question/{question_id}')
-    return render_template("source/html/edit_question_comment.html", comment_id=comment_id, comment_data=comment_data,
+    return render_template("edit_question_comment.html", comment_id=comment_id, comment_data=comment_data,
                            current_comment=current_comment, question_id=question_id)
 
 
@@ -210,7 +210,7 @@ def add_new_tag(question_id):
             pass
         else:
             pass
-    return render_template('source/html/add-tag.html', question_id=question_id, question_data=question_data,
+    return render_template('add-tag.html', question_id=question_id, question_data=question_data,
                            tag_list=tag_list)
 
 
@@ -224,7 +224,7 @@ def edit_answer(answer_id):
         question_id_dict = data_manager.get_question_id(answer_id)
         question_id = str([item['question_id'] for item in question_id_dict][0])
         return redirect(f'/question/{question_id}')
-    return render_template("/source/html/edit_answer.html", answer_message=answer_message,answer_id=answer_id)
+    return render_template("edit_answer.html", answer_message=answer_message,answer_id=answer_id)
 
 
 @app.route("/bonus-questions")
