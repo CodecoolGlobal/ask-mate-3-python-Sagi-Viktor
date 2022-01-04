@@ -24,23 +24,31 @@ function getSortedItems(items, sortField, sortDirection) {
 }
 
 // you receive an array of objects which you must filter by all it's keys to have a value matching "filterValue"
-function getFilteredItems(items, filterValue) {
-    console.log(items);
-    console.log(filterValue);
+function getFilteredItems() {
+    const searchInput = document.getElementById("search");
+    const rows = document.querySelectorAll("tbody tr");
+    searchInput.addEventListener("keyup",function(event){
+        const q = event.target.value.toLowerCase();
+        rows.forEach(row =>{
+            if(q.startsWith("!")){
+                const qWithoutFirst = q.slice(1)
+                row.querySelector('td').textContent.toLowerCase().includes(qWithoutFirst)
+                ? (row.style.display = "none")
+                : (row.style.display = "table-row");
+            } if(q === "!"){
+                row.querySelector('td').textContent.toLowerCase()
+                ? (row.style.display = "table-row")
+                : (row.style.display = "table-row");
+            } if(!q.startsWith("!")){
+            row.querySelector('td').textContent.toLowerCase().includes(q)
+                ? (row.style.display = "table-row")
+                : (row.style.display = "none");
+        }});
+    });
 }
 
-const searchInput = document.getElementById("search");
-const rows = document.querySelectorAll("tbody tr");
-searchInput.addEventListener("keyup",function(event){
-    const q = event.target.value.toLowerCase();
-    rows.forEach(row =>{
-        row.querySelector('td').textContent.toLowerCase().includes(q)
-            ? (row.style.display = "table-row")
-            : (row.style.display = "none");
+getFilteredItems()
 
-
-    });
-});
 
 function toggleTheme() {
     console.log("toggle theme")
