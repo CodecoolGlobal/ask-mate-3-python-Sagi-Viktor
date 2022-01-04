@@ -1,17 +1,19 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, escape
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
 
 app = Flask(__name__)
 
+app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
+
 
 @app.route('/')
 def main_page():
     if 'email' in session:
-        return render_template('index.html', logged_in=True, user_email=escape(session['email']))
+        return render_template('login.html', logged_in=True, user_email=escape(session['email']))
     else:
-        return render_template('index.html')
+        return render_template('login.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -20,15 +22,17 @@ def login():
         return render_template('list.html')      #Logged in - It should display the logged in user
     else:
         email = request.form['email']
-        password = request.form['password']
+        password = request.POST['password'].encode('utf-8')
+        if util.login_validation(email, password):
+            return redirect("/list")
 
-        if email in data.users.keys():          #Database need instead of data
-            hashed_password = data.users[email]     #Database need instead of data
-            is_password_valid = util.verify_password(password, hashed_password)
-            if is_password_valid:
-                session['email'] = request.form['email']
-                return redirect(url_for('index'))
-        return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
+        # if email in data.users.keys():          #Database need instead of data
+        #     hashed_password = data.users[email]     #Database need instead of data
+        #     is_password_valid = util.verify_password(password, hashed_password)
+        #     if is_password_valid:
+        #         session['email'] = request.form['email']
+        #         return redirect(url_for('index'))
+        # return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
 
 
 @app.route('/logout')
@@ -257,6 +261,18 @@ def edit_answer(answer_id):
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
+
+@app.route("/registration", methods=["GET", "POST"])
+def registration():
+    if request.method == 'POST':
+        username = request.form['email']
+        password = request.form['password']
+        session['username'] = username
+        util.export_registration_data(username, password)
+        return redirect(url_for('main_page'))
+    else:
+        return render_template('registration.html')
 
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
+{%extends "/LAYOUT.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,21 @@
 
 </head>
 <body>
+
+{% block page_title %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        <input type="text" name="email" placeholder="email">
+        <input type="password" name="password" placeholder="password">
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}
+
     <div class="bg-img">
-        <form action="/list" class="container">
+        <form method="post" class="container">
             <h1 style="color: white">Welcome on Forum Loop</h1>
 
             <label style="color: white" for="email"><b>Email</b></label>
