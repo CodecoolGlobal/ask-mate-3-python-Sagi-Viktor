@@ -259,6 +259,18 @@ def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
 
 
+@app.route("/registration", methods=["GET", "POST"])
+def registration():
+    if request.method == 'POST':
+        username = request.form['email']
+        password = request.form['password']
+        session['username'] = username
+        util.export_registration_data(username, password)
+        return redirect(url_for('main_page'))
+    else:
+        return render_template('registration.html')
+
+
 if __name__ == "__main__":
     app.run(port=5000,
             debug=True)

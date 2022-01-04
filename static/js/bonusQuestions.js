@@ -25,19 +25,22 @@ function getSortedItems(items, sortField, sortDirection) {
 
 // you receive an array of objects which you must filter by all it's keys to have a value matching "filterValue"
 function getFilteredItems(items, filterValue) {
-    console.log(items)
-    console.log(filterValue)
-
-    // === SAMPLE CODE ===
-    // if you have not changed the original html uncomment the code below to have an idea of the
-    // effect this function has on the table
-    //
-    for (let i=0; i<filterValue.length; i++) {
-        items.pop()
-    }
-
-    return items
+    console.log(items);
+    console.log(filterValue);
 }
+
+const searchInput = document.getElementById("search");
+const rows = document.querySelectorAll("tbody tr");
+searchInput.addEventListener("keyup",function(event){
+    const q = event.target.value.toLowerCase();
+    rows.forEach(row =>{
+        row.querySelector('td').textContent.toLowerCase().includes(q)
+            ? (row.style.display = "table-row")
+            : (row.style.display = "none");
+
+
+    });
+});
 
 function toggleTheme() {
     console.log("toggle theme")
