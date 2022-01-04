@@ -1,9 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, session, render_template, request, redirect, url_for
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
 
 app = Flask(__name__)
+
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route("/")
@@ -230,6 +232,18 @@ def edit_answer(answer_id):
 @app.route("/bonus-questions")
 def main():
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS)
+
+
+@app.route("/registration", methods=["GET", "POST"])
+def registration():
+    if request.method == 'POST':
+        username = request.form['email']
+        password = request.form['password']
+        session['username'] = username
+        util.export_registration_data(username, password)
+        return redirect(url_for('main_page'))
+    else:
+        return render_template('registration.html')
 
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import data_manager
 import datetime
+import bcrypt
 from operator import itemgetter
 
 
@@ -13,6 +14,12 @@ def generate_id(table):
     elif table == 'answer':
         answer_data = data_manager.get_answer_list()
         numbers = [[row[item] for item in row if item == 'id'] for row in answer_data]
+        if not numbers:
+            return 1
+        return numbers[-1][0] + 1
+    elif table == 'users':
+        users_data = data_manager.get_users()
+        numbers = [[row[item] for item in row if item == 'id'] for row in users_data]
         if not numbers:
             return 1
         return numbers[-1][0] + 1
@@ -75,3 +82,26 @@ def check_comment_edit_count(edited_count_dict):
         return 0
     else:
         return edited_count + 1
+
+
+def export_registration_data(username, password):
+    user_data = [generate_id('users'), username, hash_password(password), generate_submission_time()]
+    return data_manager.add_user(user_data)
+
+
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
+
+
+def check_password(email, plain_text_password):
+    try:
+        password = users[email]
+    except KeyError:
+        return False
+    return verify_password(plain_text_password, password)
