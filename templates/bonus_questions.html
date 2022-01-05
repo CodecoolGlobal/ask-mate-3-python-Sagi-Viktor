@@ -2,9 +2,9 @@
 <html>
     <head>
         {% block page_title %}
+            <title>Bonus Questions</title>
             <script type="text/javascript" src="{{ url_for('static', filename='js/bonusQuestions.js') }}" defer></script>
             <script type="text/javascript" src="{{ url_for('static', filename='js/doNotModifyThisFile.js') }}" defer></script>
-            <title>Bonus Questions</title>
         {% endblock %}
     </head>
     <body>
@@ -20,13 +20,13 @@
                 style="width: 500px" id="doNotModifyThisId_QuestionsFilter"
                 type="text"
                 placeholder="filter questions by keywords">
-        <table>
+        <table id="myTable">
             <thead id="doNotModifyThisId_QuestionsTableHeader">
                 <tr>
-                    <td>Title</td>
-                    <td>Description</td>
-                    <td>Vote Count</td>
-                    <td>View Number</td>
+                    <th id="th1" style="cursor: pointer" onclick="getSortedItems(0)">Title ▼</th>
+                    <th id="th2" style="cursor: pointer" onclick="getSortedItems(1)">Description ▼</th>
+                    <th>Vote Count</th>
+                    <th>View Number</th>
                 </tr>
             </thead>
             <tbody id="doNotModifyThisId_QuestionsTableBody">
