@@ -456,3 +456,6 @@ def get_users(cursor):
                     """)
     return cursor.fetchall()
 
+
+if __name__ == "__main__":
+    pass

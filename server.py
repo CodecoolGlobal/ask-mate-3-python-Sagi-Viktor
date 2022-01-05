@@ -7,6 +7,8 @@ app = Flask(__name__)
 
 app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/')
 def main_page():
@@ -273,6 +275,14 @@ def registration():
         return redirect(url_for('main_page'))
     else:
         return render_template('registration.html')
+
+
+@app.route("/users")
+def users_list():
+    if session.get('username'):
+        users = data_manager.get_users()
+        return render_template('users_list.html', users=users)
+    return redirect(url_for('main_page'))
 
 
 if __name__ == "__main__":
