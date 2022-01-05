@@ -9,21 +9,25 @@
     <div>
         <table>
             <thead>
-                {% for user in users %}
-                    <tr>
-                        {% for data in user %}
-                            <td>{{ user[data] }}</td>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
+                <tr>
+                    {% for data in users[1] %}
+                        {% if data != 'password_hash' %}
+                            <td>{{ data }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
             </thead>
+            <tbody>
                 {% for user in users %}
                     <tr>
                         {% for data in user %}
-                            <td>{{ user[data] }}</td>
+                            {% if data != 'password_hash' %}
+                                <td>{{ user[data] }}</td>
+                            {% endif %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
+            </tbody>
         </table>
     </div>
 
