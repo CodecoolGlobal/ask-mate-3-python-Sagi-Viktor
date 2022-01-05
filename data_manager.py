@@ -447,15 +447,5 @@ def add_user(cursor, user_data):
                     """)
 
 
-@connect_database.connection_handler
-def get_users(cursor):
-    cursor.execute(f"""
-                    SELECT *
-                    FROM users
-                    ORDER BY id
-                    """)
-    return cursor.fetchall()
-
-
 if __name__ == "__main__":
-    pass
+    print(get_users())
