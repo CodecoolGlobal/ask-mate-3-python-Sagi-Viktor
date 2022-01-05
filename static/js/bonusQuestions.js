@@ -86,9 +86,9 @@ function getFilteredItems() {
 
 getFilteredItems()
 
-
+var body = document.getElementsByTagName("body")
 function toggleTheme() {
-    console.log("toggle theme")
+    document.body.style.backgroundImage = 'linear-gradient(black, purple)';
 }
 
 var counter = 9
