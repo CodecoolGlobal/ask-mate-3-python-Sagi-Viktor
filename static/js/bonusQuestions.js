@@ -22,14 +22,12 @@ function getSortedItems(n) {
       if (dir == "asc") {
         if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
           shouldSwitch = true;
-          document.getElementById("th1").innerHTML = "Title ▼";
           document.getElementById("th2").innerHTML = "Description ▼";
           break;
         }
       } else if (dir == "desc") {
         if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
           shouldSwitch = true;
-          document.getElementById("th1").innerHTML = "Title ▲";
           document.getElementById("th2").innerHTML = "Description ▲";
           break;
         }
@@ -93,12 +91,126 @@ function toggleTheme() {
     console.log("toggle theme")
 }
 
-function increaseFont() {
-    console.log("increaseFont")
+var counter = 9
+var table = document.getElementById("myTable")
+var search = document.getElementById("search")
+var deButton = document.getElementById("decrease-font-button")
+var inButton = document.getElementById("increase-font-button")
+var themeButton = document.getElementById("theme-button")
+function sizer(table){
+    if(counter == 3){
+    table.style.fontSize = '50%';
+    search.style.fontSize = '50%';
+    deButton.style.fontSize = '50%';
+    inButton.style.fontSize = '50%';
+    themeButton.style.fontSize = '50%';
+    }
+    else if(counter == 4){
+    table.style.fontSize = '60%';
+    search.style.fontSize = '60%';
+    deButton.style.fontSize = '60%';
+    inButton.style.fontSize = '60%';
+    themeButton.style.fontSize = '60%';
+    }
+    else if(counter == 5){
+    table.style.fontSize = '70%';
+    search.style.fontSize = '70%';
+    deButton.style.fontSize = '70%';
+    inButton.style.fontSize = '70%';
+    themeButton.style.fontSize = '70%';
+    }
+    else if(counter == 6){
+    table.style.fontSize = '80%';
+    search.style.fontSize = '80%';
+    deButton.style.fontSize = '80%';
+    inButton.style.fontSize = '80%';
+    themeButton.style.fontSize = '80%';
+    }
+    else if(counter == 7){
+    table.style.fontSize = '90%';
+    search.style.fontSize = '90%';
+    deButton.style.fontSize = '90%';
+    inButton.style.fontSize = '90%';
+    themeButton.style.fontSize = '90%';
+    }
+    else if(counter == 8){
+    table.style.fontSize = '100%';
+    search.style.fontSize = '100%';
+    deButton.style.fontSize = '100%';
+    inButton.style.fontSize = '100%';
+    themeButton.style.fontSize = '100%';
+}
+    else if(counter == 9){
+    table.style.fontSize = '110%';
+    search.style.fontSize = '110%';
+    deButton.style.fontSize = '110%';
+    inButton.style.fontSize = '110%';
+    themeButton.style.fontSize = '110%';
+    }
+    else if(counter == 10){
+    table.style.fontSize = '120%';
+    search.style.fontSize = '120%';
+    deButton.style.fontSize = '120%';
+    inButton.style.fontSize = '120%';
+    themeButton.style.fontSize = '120%';
+    }
+    else if(counter == 11){
+    table.style.fontSize = '130%';
+    search.style.fontSize = '130%';
+    deButton.style.fontSize = '130%';
+    inButton.style.fontSize = '130%';
+    themeButton.style.fontSize = '130%';
+    }
+    else if(counter == 12){
+    table.style.fontSize = '140%';
+    search.style.fontSize = '140%';
+    deButton.style.fontSize = '140%';
+    inButton.style.fontSize = '140%';
+    themeButton.style.fontSize = '140%';
+    }
+    else if(counter == 13){
+    table.style.fontSize = '150%';
+    search.style.fontSize = '150%';
+    deButton.style.fontSize = '150%';
+    inButton.style.fontSize = '150%';
+    themeButton.style.fontSize = '150%';
+    }
+    else if(counter == 14){
+    table.style.fontSize = '160%';
+    search.style.fontSize = '160%';
+    deButton.style.fontSize = '160%';
+    inButton.style.fontSize = '160%';
+    themeButton.style.fontSize = '160%';
+    }
+    else if(counter == 15){
+    table.style.fontSize = '170%';
+    search.style.fontSize = '170%';
+    deButton.style.fontSize = '170%';
+    inButton.style.fontSize = '170%';
+    themeButton.style.fontSize = '170%';
+}
 }
 
+function increaseFont() {
+    if (counter < 15) {
+        counter++
+        console.log(counter);
+        sizer(table)
+    } else {
+        alert('Max size');
+    }
+}
+
+
+
 function decreaseFont() {
-    console.log("decreaseFont")
+        if (counter > 3) {
+        counter--
+        console.log(counter);
+        sizer(table)
+    } else {
+        alert('Min size');
+    }
 }
 
 
