@@ -37,14 +37,25 @@
             color: lightgray;
             font-family: monospace;
             font-size: 1.3em;
-            /*margin-block-start: 10%;*/
-            margin-inline-start: 10%;
+            margin-block-start: 10%;
+            margin-inline-start: 30%;
             border: 2px solid whitesmoke;
             position: absolute;
             top: 8em;
             text-decoration: none;
         }
-
+        .my_profile{
+            background-color: #0088a9;
+            padding: 3px;
+            padding-inline: 0.8em;
+            color: lightgray;
+            font-family: monospace;
+            font-size: 1.3em;
+            margin-inline-start: 10%;
+            border: 2px solid whitesmoke;
+            position: absolute;
+            text-decoration: none;
+        }
         h1, h2 {
             background-color: #0088a9;
             color: lightgray;
@@ -66,32 +77,45 @@
             height: 100%;
         }
 
-        html {
-            /*border: #0088a9;*/
-            /*background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, darkslateblue);*/
-            /*animation: gradient 15s ease infinite;*/
-            /*background-size: cover;*/
-            /*margin: auto;*/
-            /*height: 50rem;*/
+        * {
+            margin:0;
+            padding:0;
+            font-family: consolas, sans-serif;
+        }
+        body {
+            background: #555;
+        }
+        section{
+            padding: 100px;
+        }
+        section h2{
+            font-size:3.5em;
+            color:#555;
+        }
+        section p{
+            font-size:1.2em;
+            color: #555;
+        }
 
-            background-size: cover;
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-	        animation: gradient 15s ease infinite;
-	        height: 50rem;
-            /*background-image: url("../images/hacker.jpg");*/
-        }
-            @keyframes gradient {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+        /*---------------------------VILÁGÍTÓ HÁTTÉR KÓDJA -----------------------------*/
+        /*html {*/
+        /*    background-size: cover;*/
+        /*    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);*/
+        /*    background-size: 400% 400%;*/
+	    /*    animation: gradient 15s ease infinite;*/
+	    /*    height: 50rem;*/
+        /*}*/
+        /*    @keyframes gradient {*/
+        /*    0% {*/
+        /*        background-position: 0% 50%;*/
+        /*    }*/
+        /*    50% {*/
+        /*        background-position: 100% 50%;*/
+        /*    }*/
+        /*    100% {*/
+        /*        background-position: 0% 50%;*/
+        /*    }*/
+        /*}*/
 
         table, th, td {
             border: 1px solid black;
@@ -140,6 +164,9 @@
              margin-block-end: 1.1em;
              height: 2em;
              border-radius : 10px;
+             position: absolute;
+             right: 0;
+             top: 12.5em;
          }
 
          .search_field {
@@ -148,13 +175,10 @@
 
          .search_button {
              font-size: 1.3em;
-         }
-
-         .order_menu {
-             font-size: 1em;
-             margin-block-start: 5px;
-             margin-block-end: -40px;
-             padding-inline-start: 170px;
+             background-color: #0088a9;
+             color: lightgray;
+             font-family: monospace;
+             text-align: center;
          }
 
          .footer {
@@ -278,4 +302,74 @@
              margin-bottom: 400px;
          }
 
+         /*----------Ez a scroolbar-------------*/
+         #scrollpath{
+            position:fixed;
+            top:0;
+            right:0;
+            width:10px;
+            height:100%;
+             background: rgba(255,255,255,0.05);
+         }
+
+         #progressbar{
+            position:fixed;
+            top:0;
+            right:0;
+            width:10px;
+            height:100%;
+            background: linear-gradient(to top,#008aff,#00ffe7);
+             animation: animate 5s linear infinite;
+        }
+
+         #progressbar:before,
+         #progressbar::after{
+            content:'';
+             position:absolute;
+            top:0;
+            right:0;
+            width:100%;
+            height:100%;
+             background: linear-gradient(to top,#008aff,#00ffe7);
+             filter: blur(10px);
+         }
+
+         #progressbar:after{
+             filter: blur(30px);
+         }
+
+         @keyframes animate{
+             0%,100%
+             {
+                 filter: hue-rotate(0deg);
+             }
+             50%
+             {
+                 filter: hue-rotate(360deg);
+             }
+         }
+         ::-webkit-scrollbar{
+             width:0;
+         }
+
+         #percent {
+             position: fixed;
+             top: 50%;
+             transform: translateY(-50%) rotateX(180deg) rotateY(180deg);
+             right: 15px;
+             color: #fff;
+             font-size: 2em;
+             writing-mode: vertical-rl;
+             text-orientation: sideways;
+         }
+
+         input[type="text"]{
+             margin: 50px;
+             padding: 10px;
+             border-radius: 10px;
+             outline: none! important;
+             border-width: 1px;
+             box-shadow: gray;
+             border-color: #1A2980;
+         }
 
