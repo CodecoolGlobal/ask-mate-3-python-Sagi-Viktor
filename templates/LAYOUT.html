@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../static/source/css/navbar_style.css">
     <link rel="stylesheet" href="../static/source/css/layout_style.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+    <title>Forum Loop</title>
 </head>
 <body>
 
@@ -19,9 +20,15 @@
         <nav>
             <ul class="nav__links">
                 <li><a href="/list">FORUM LOOP Q&A SITE</a></li>
-                <li><a href="{{ url_for('main') }}">Bonus Questions</a></li>
                 <li><a href = "https://telex.hu/">News</a></li>
                 <li><a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a></li>
+                <li><a href="{{ url_for('main') }}">Bonus Questions</a></li>
+                {% if logged_in %}
+                <p>You are logged in as <span>{{ user_email }}</span>.</p>
+                {% else %}
+                    <p>You are not logged in.</p>
+                    <a href="{{ url_for('main_page') }}">Click here to log in!</a>
+                {% endif %}
             </ul>
         </nav>
         <a class="btn-grad" href = "https://codecool.com/hu/kapcsolat/">Contact</a>

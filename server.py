@@ -13,14 +13,11 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     if request.method == 'GET':
-        return render_template('login.html')      #Logged in - It should display the logged in user
+        return render_template('login.html')
     else:
-        email = request.form['email']
-        password = request.form['password']
-        users_data = data_manager.get_users()
-        username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
-        if email in username:
-            if util.login_validation(password):
+        username = data_manager.is_user_in_database(request.form["email"])
+        if username:
+            if util.verify_password(request.form['password'], username['password_hash']):
                 session['email'] = request.form['email']
                 return redirect(url_for('get_list'))
         return render_template('login.html', invalid=True)
@@ -39,14 +36,14 @@ def get_list():
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
-    username = session["username"]
-    current_user_id = data_manager.get_current_user_id(username)[0]['id']
+    user_email = session['email']
+    current_user_id = data_manager.get_current_user_id(user_email)[0]['id']
     if sorting_asc:
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
         question_data = data_manager.sort_question_desc(sorting_desc)
     return render_template('list.html', question_data=question_data, question_headers=question_headers,
-                           current_user_id=current_user_id)
+                           logged_in=True, current_user_id=current_user_id, user_email=user_email)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
@@ -276,12 +273,14 @@ def users_list():
         return render_template('users_list.html', users=users)
     return redirect(url_for('main_page'))
 
+
 @app.route("/user/<user_id>")
 def profile(user_id):
     current_user_data = data_manager.get_current_user_data(user_id)[0]
     current_user_questions = data_manager.get_current_user_questions(user_id)
+    current_user_answers = data_manager.get_current_user_answers(user_id)
     return render_template('profile.html', user_id=user_id, current_user_data=current_user_data,
-                           current_user_questions=current_user_questions)
+                           current_user_questions=current_user_questions, current_user_answers=current_user_answers)
 
 
 if __name__ == "__main__":

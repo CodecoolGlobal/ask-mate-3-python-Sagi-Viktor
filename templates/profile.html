@@ -21,6 +21,7 @@
     <h1>User Questions:</h1>
     <table>
         <thead>
+            <th>ID</th>
             <th>Submission time</th>
             <th>View number</th>
             <th>Vote number</th>
@@ -31,7 +32,9 @@
         {% for question in current_user_questions %}
             <tr>
             {% for data in question %}
-                {% if data != 'id' and data!='user_id' and data != 'password_hash' and data !='username' and data!='registration_date' %}
+                {% if data == 'title' %}
+                    <td><a href="/question/{{ question['id'] }}">{{ question[data] }}</a></td>
+                {% else %}
                     <td>{{ question[data] }}</td>
                 {% endif %}
             {% endfor %}
@@ -39,7 +42,23 @@
         {% endfor %}
         </tbody>
     </table>
-
+<h1>User Answers:</h1>
+<table>
+        <thead>
+            <th>Submission time</th>
+            <th>Vote number</th>
+            <th>Message</th>
+            <th>Image</th>
+        </thead>
+        {% for answers in current_user_answers %}
+            <tr>
+            {% for data in answers %}
+                    <td>{{ answers[data] }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {%endblock%}
 </body>
 </html>
