@@ -33,7 +33,7 @@
             {% for data in question %}
                 {% if data == 'title' %}
                     <td><a href="/question/{{ question['id'] }}">{{ question[data] }}</a></td>
-                {% else %}
+                {% elif data != 'id' %}
                     <td>{{ question[data] }}</td>
                 {% endif %}
             {% endfor %}

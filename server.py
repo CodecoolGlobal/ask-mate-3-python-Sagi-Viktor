@@ -5,8 +5,6 @@ import util
 
 app = Flask(__name__)
 
-app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
-
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
@@ -19,12 +17,14 @@ def main_page():
         if username:
             if util.verify_password(request.form['password'], username['password_hash']):
                 session['email'] = request.form['email']
+                session['user_id'] = data_manager.get_current_user_id(session['email'])[0]['id']
                 return redirect(url_for('get_list'))
         return render_template('login.html', invalid=True)
 
 
 @app.route('/logout')
 def logout():
+    session.pop('user_id', None)
     session.pop('email', None)
     session.pop('questions_answered', None)
     return redirect(url_for('index'))
@@ -55,11 +55,13 @@ def display_question(question_id):
     answer_ids = util.get_answer_ids(answer_data)
     nr_of_comments = util.get_comments_by_answer_ids(answer_ids)
     comment_data = data_manager.get_comments_question_id(question_id)
-    question_comment = request.form.get('add_comment_to_question')
+    comment_message = request.form.get('add_comment_to_question')
     user_email = session['email']
-    if question_comment:
+    if comment_message:
+        comment_id = util.generate_id('comment')
         submission_time = util.generate_submission_time()
-        data_manager.add_comment_to_question(submission_time, question_comment, question_id)
+        comment_data = [comment_id, session['user_id'], question_id, comment_message, submission_time, question_id]
+        data_manager.add_comment_to_question(comment_data)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
@@ -76,11 +78,12 @@ def add_answer(question_id):
     user_email = session['email']
     if request.method == 'POST':
         answer_id = util.generate_id('answer')
+        user_id = data_manager.get_current_user_id(user_email)[0]['id']
         submission_time = util.generate_submission_time()
         vote_number = 0
         message = request.form.get('message')
         image = request.form.get('image')
-        answer_data = [answer_id, submission_time, vote_number, question_id, message, image]
+        answer_data = [answer_id, user_id, submission_time, vote_number, question_id, message, image]
         data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
     return render_template('add_answer.html', question_id=question_id, question_data=question_data,
@@ -92,13 +95,14 @@ def add_question():
     user_email = session['email']
     if request.method == "POST":
         question_id = util.generate_id('question')
+        user_id = data_manager.get_current_user_id(user_email)[0]['id']
         submission_time = util.generate_submission_time()
         view_number = 0
         vote_number = 0
         title = request.form.get('question-title')
         message = request.form.get('question-message')
         image = ''
-        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
+        question_data = [question_id, user_id, submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
         return redirect("/list")
     return render_template('add_question.html', logged_in=True, user_email=user_email)
@@ -170,7 +174,9 @@ def list_answer_comments(answer_id):
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
         comment_message = request.form.get('write-comment')
-        comment_items = [answer_id, comment_message, submission_time]
+        comment_id = util.generate_id('comment')
+        user_id = session['user_id']
+        comment_items = [comment_id, user_id, answer_id, comment_message, submission_time]
         data_manager.add_comment_to_answer(comment_items)
         return redirect(f'/answer/{answer_id}/comments')
     return render_template("comment_to_answer.html", answer=answer, comment_data=comment_data,
@@ -216,7 +222,7 @@ def edit_question_comment(comment_id):
     comment_data = data_manager.get_comments_question_id(question_id)
     current_comment_dict = data_manager.get_message_for_comment(comment_id)
     current_comment = [item['message'] for item in current_comment_dict][0]
-    user_email = session['email']
+    user_email = session["email"]
     if request.method == "POST":
         edition = data_manager.get_edited_comment_count(comment_id)
         new_edition = util.check_comment_edit_count(edition)
@@ -236,7 +242,7 @@ def add_new_tag(question_id):
     tag_list = data_manager.get_tag_list()
     tag_chosen = request.form.get('choose-tag')
     tag_created = request.form.get('add-new-tag')
-    user_email = session['email']
+    user_email = session["email"]
     if request.method == "POST":
         if tag_chosen:
             pass
@@ -250,7 +256,7 @@ def add_new_tag(question_id):
 def edit_answer(answer_id):
     answer_message_dict = data_manager.get_answer_message_by_answer_id(answer_id)
     answer_message = [item['message'] for item in answer_message_dict][0]
-    user_email = session['email']
+    user_email = session["email"]
     if request.method == "POST":
         new_answer_message = request.form.get("question-message") #which is answer message
         data_manager.edit_answer(answer_id,new_answer_message)
@@ -263,7 +269,7 @@ def edit_answer(answer_id):
 
 @app.route("/bonus-questions")
 def main():
-    user_email = session["username"]
+    user_email = session["email"]
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS, logged_in=True, user_email=user_email)
 
 
@@ -284,14 +290,14 @@ def registration():
 def users_list():
     if session.get('username'):
         users = data_manager.get_users()
-        user_email = session['email']
+        user_email = session["email"]
         return render_template('users_list.html', users=users, logged_in=True, user_email=user_email)
     return redirect(url_for('main_page'))
 
 
 @app.route("/user/<user_id>")
 def profile(user_id):
-    user_email = session['email']
+    user_email = session["email"]
     current_user_data = data_manager.get_current_user_data(user_id)[0]
     current_user_questions = data_manager.get_current_user_questions(user_id)
     current_user_answers = data_manager.get_current_user_answers(user_id)

@@ -37,8 +37,8 @@
             color: lightgray;
             font-family: monospace;
             font-size: 1.3em;
-            /*margin-block-start: 10%;*/
-            margin-inline-start: 10%;
+            margin-block-start: 10%;
+            margin-inline-start: 30%;
             border: 2px solid whitesmoke;
             position: absolute;
             top: 8em;
@@ -175,6 +175,10 @@
 
          .search_button {
              font-size: 1.3em;
+             background-color: #0088a9;
+             color: lightgray;
+             font-family: monospace;
+             text-align: center;
          }
 
          .footer {
@@ -359,4 +363,13 @@
              text-orientation: sideways;
          }
 
+         input[type="text"]{
+             margin: 50px;
+             padding: 10px;
+             border-radius: 10px;
+             outline: none! important;
+             border-width: 1px;
+             box-shadow: gray;
+             border-color: #1A2980;
+         }
 

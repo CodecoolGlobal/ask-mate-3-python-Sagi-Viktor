@@ -33,7 +33,7 @@
                 <tbody>
                     <tr>
                         {% for item in current_question %}
-                            <td>{{ item['username'] }}</td>
+                            <td><a href={{ url_for('profile', user_id=item['user_id']) }} >{{ item['username'] }}</a></td>
                         {% endfor %}
                     </tr>
                 </tbody>
