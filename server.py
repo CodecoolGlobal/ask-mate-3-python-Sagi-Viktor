@@ -73,7 +73,7 @@ def add_answer(question_id):
     question_data = data_manager.get_question_list()
     answer_data = data_manager.get_answer_list_by_question_id(question_id)
     question_id = question_id
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == 'POST':
         answer_id = util.generate_id('answer')
         submission_time = util.generate_submission_time()
@@ -89,6 +89,7 @@ def add_answer(question_id):
 
 @app.route("/add-question", methods=['POST', 'GET'])
 def add_question():
+    user_email = session['email']
     if request.method == "POST":
         question_id = util.generate_id('question')
         submission_time = util.generate_submission_time()
@@ -114,7 +115,7 @@ def edit_question(question_id):
     question_data = data_manager.get_question(question_id)
     question_title = [message['title'] for message in question_data][0]
     question_message = [message['message'] for message in question_data][0]
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == "POST":
         new_message = request.form.get('question-message')
         data_manager.edit_question(question_id, new_message)
@@ -165,7 +166,7 @@ def list_answer_comments(answer_id):
     comment_data = data_manager.get_comments_by_answer_id(answer_id)
     question_id_dict = data_manager.get_question_id(answer_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
         comment_message = request.form.get('write-comment')
@@ -187,7 +188,7 @@ def delete_answer_comment(comment_id):
 @app.route("/question/<question_id>/new-comment")
 def add_comment_to_question(question_id):
     comment_data = data_manager.get_comments_question_id(question_id)
-    user_email = session["email"]
+    user_email = session['email']
     return render_template("add_comment_to_question.html", question_id=question_id,
                            comment_data=comment_data, logged_in=True, user_email=user_email)
 
@@ -204,7 +205,7 @@ def delete_question_comment(comment_id):
 def search_in_question():
     searched_phrase = request.args.get('q')
     results = util.search_engine(searched_phrase)
-    user_email = session["email"]
+    user_email = session['email']
     return render_template('search_results.html', results=results, logged_in=True, user_email=user_email)
 
 
@@ -215,7 +216,7 @@ def edit_question_comment(comment_id):
     comment_data = data_manager.get_comments_question_id(question_id)
     current_comment_dict = data_manager.get_message_for_comment(comment_id)
     current_comment = [item['message'] for item in current_comment_dict][0]
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == "POST":
         edition = data_manager.get_edited_comment_count(comment_id)
         new_edition = util.check_comment_edit_count(edition)
@@ -235,7 +236,7 @@ def add_new_tag(question_id):
     tag_list = data_manager.get_tag_list()
     tag_chosen = request.form.get('choose-tag')
     tag_created = request.form.get('add-new-tag')
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == "POST":
         if tag_chosen:
             pass
@@ -249,7 +250,7 @@ def add_new_tag(question_id):
 def edit_answer(answer_id):
     answer_message_dict = data_manager.get_answer_message_by_answer_id(answer_id)
     answer_message = [item['message'] for item in answer_message_dict][0]
-    user_email = session["email"]
+    user_email = session['email']
     if request.method == "POST":
         new_answer_message = request.form.get("question-message") #which is answer message
         data_manager.edit_answer(answer_id,new_answer_message)
@@ -262,13 +263,13 @@ def edit_answer(answer_id):
 
 @app.route("/bonus-questions")
 def main():
-    user_email = session["email"]
+    user_email = session["username"]
     return render_template('bonus_questions.html', questions=SAMPLE_QUESTIONS, logged_in=True, user_email=user_email)
 
 
 @app.route("/registration", methods=["GET", "POST"])
 def registration():
-    user_email = session["username"]
+    user_email = session['email']
     if request.method == 'POST':
         username = request.form['email']
         password = request.form['password']
@@ -283,14 +284,14 @@ def registration():
 def users_list():
     if session.get('username'):
         users = data_manager.get_users()
-        user_email = session["email"]
+        user_email = session['email']
         return render_template('users_list.html', users=users, logged_in=True, user_email=user_email)
     return redirect(url_for('main_page'))
 
 
 @app.route("/user/<user_id>")
 def profile(user_id):
-    user_email = session["email"]
+    user_email = session['email']
     current_user_data = data_manager.get_current_user_data(user_id)[0]
     current_user_questions = data_manager.get_current_user_questions(user_id)
     current_user_answers = data_manager.get_current_user_answers(user_id)
@@ -298,7 +299,6 @@ def profile(user_id):
     return render_template('profile.html', user_id=user_id, current_user_data=current_user_data,
                            current_user_questions=current_user_questions, current_user_answers=current_user_answers,
                            logged_in=True, user_email=user_email, current_user_comments=current_user_comments)
-
 
 if __name__ == "__main__":
     app.run(port=5000,

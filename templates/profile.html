@@ -21,7 +21,6 @@
     <h1>User Questions:</h1>
     <table>
         <thead>
-            <th>ID</th>
             <th>Submission time</th>
             <th>View number</th>
             <th>Vote number</th>
@@ -60,8 +59,21 @@
         </tbody>
     </table>
 <h1>User Comments:</h1>
-<h1>{{ current_user_comments }}</h1>
-
+<table>
+        <thead>
+            <th>Submission time</th>
+            <th>Message</th>
+            <th>Edited_count</th>
+        </thead>
+        {% for comments in current_user_comments %}
+            <tr>
+            {% for data in comments %}
+                    <td>{{ comments[data] }}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {%endblock%}
 </body>
 </html>

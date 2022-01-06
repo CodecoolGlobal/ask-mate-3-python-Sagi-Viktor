@@ -6,23 +6,17 @@ from operator import itemgetter
 
 def generate_id(table):
     if table == 'question':
-        question_data = data_manager.get_question_list()
-        numbers = [[row[item] for item in row if item == 'id'] for row in question_data]
-        if not numbers:
-            return 1
-        return numbers[-1][0] + 1
+        data = data_manager.get_question_list()
     elif table == 'answer':
-        answer_data = data_manager.get_answer_list()
-        numbers = [[row[item] for item in row if item == 'id'] for row in answer_data]
-        if not numbers:
-            return 1
-        return numbers[-1][0] + 1
+        data = data_manager.get_answer_list()
     elif table == 'users':
-        users_data = data_manager.get_users()
-        numbers = [[row[item] for item in row if item == 'id'] for row in users_data]
-        if not numbers:
-            return 1
-        return numbers[-1][0] + 1
+        data = data_manager.get_users()
+    elif table == 'comment':
+        data = data_manager.get_comments()
+    numbers = [[row[item] for item in row if item == 'id'] for row in data]
+    if not numbers:
+        return 1
+    return numbers[-1][0] + 1
 
 
 def generate_submission_time():

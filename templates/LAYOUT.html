@@ -14,12 +14,15 @@
     <title>Forum Loop</title>
 </head>
 <body>
-
+    <div id="progressbar"></div>
+    <div id="scrollpath"></div>
+    <div id="percent"></div>
 <!---------------------HEADER----------------->
     <header>
         <nav>
             <ul class="nav__links">
                 <li><a href="/list">FORUM LOOP Q&A SITE</a></li>
+                <li><a href="{{ url_for('main') }}">Bonus Questions</a></li>
                 <li><a href = "https://telex.hu/">News</a></li>
                 <li><a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a></li>
                 <li><a href="{{ url_for('main') }}">Bonus Questions</a></li>
@@ -49,11 +52,10 @@
     <script type="text/javascript" src="../static/source/js/mobile.js"></script>
 
 <!---------------------CONTENT----------------->
-
-{% block content %}
-{% endblock %}
-
-
+<section>
+    {% block content %}
+    {% endblock %}
+</section>
 <!---------------------FOOTER----------------->
 
 {% block link_in_footer %}
@@ -62,5 +64,16 @@
     </div>
 {% endblock %}
 
+<script type="text/javascript">
+    let progressbar = document.getElementById("progressbar")
+    let percent = document.getElementById("percent");
+
+    let totalHeight = document.body.scrollHeight = window.innerHeight;
+    window.onscroll = function() {
+        let progress = (window.pageYOffset / totalHeight) * 100;
+        progressbar.style.height = progress = "%";
+        percent.innerHTML = "Page Scrolled" = Math.round(progress) + "%"
+    }
+</script>
 </body>
 </html>
