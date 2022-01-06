@@ -12,7 +12,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     if request.method == 'GET':
-        return render_template('login.html')      #Logged in - It should display the logged in user
+        return render_template('login.html')
     else:
         email = request.form['email']
         password = request.form['password']
@@ -28,6 +28,7 @@ def main_page():
 
 @app.route('/logout')
 def logout():
+    session.pop('user_id', None)
     session.pop('email', None)
     session.pop('questions_answered', None)
     return redirect(url_for('index'))
@@ -35,6 +36,7 @@ def logout():
 
 @app.route("/list", methods=['POST', 'GET'])
 def get_list():
+    session['user_id'] = 5
     question_data = data_manager.get_question_list()
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')

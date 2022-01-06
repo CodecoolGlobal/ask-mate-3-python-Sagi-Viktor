@@ -26,8 +26,10 @@ def get_answer_list_by_question_id(cursor, question_id):
     cursor.execute(f"""
                     SELECT *
                     FROM answer
+                    LEFT JOIN users
+                        ON answer.user_id = users.id
                     WHERE question_id = '{question_id}'
-                    ORDER BY id
+                    ORDER BY answer.id
                     """)
     return cursor.fetchall()
 
@@ -45,9 +47,10 @@ def get_answer_message_by_answer_id(cursor, answer_id):
 @connect_database.connection_handler
 def get_question(cursor, question_id):
     cursor.execute(f"""
-                    SELECT *
-                    FROM question
-                    WHERE id = '{question_id}'
+                    SELECT * FROM question
+                    LEFT JOIN users
+                        ON question.user_id = users.id
+                    WHERE question.id = {question_id};
                     """)
     return cursor.fetchall()
 
@@ -229,10 +232,12 @@ def sort_question_desc(cursor, sort_by):
 @connect_database.connection_handler
 def get_comments_question_id(cursor, question_id):
     cursor.execute(f"""
-                    SELECT submission_time,message,id,edited_count
+                    SELECT *
                     FROM comment
+                    LEFT JOIN users
+                        ON comment.user_id = users.id
                     WHERE question_id = {question_id}
-                    ORDER BY id
+                    ORDER BY comment.id
                     """)
     return cursor.fetchall()
 
@@ -278,7 +283,7 @@ def get_question_detail(cursor, question_id):
 
 
 @connect_database.connection_handler
-def add_comment_to_question(cursor, comment_data, submission_time, message, question_id):
+def add_comment_to_question(cursor, comment_data):
     cursor.execute(f"""
         INSERT INTO comment
         (submission_time, message, question_id)
@@ -460,6 +465,24 @@ def add_user(cursor, user_data):
                     '{user_data[3]}')
                     """)
 
+@connect_database.connection_handler
+def get_current_user_id(cursor,username):
+    cursor.execute(f"""
+                    SELECT id
+                    FROM users
+                    WHERE username = '{username}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_current_user_data(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM users
+                    WHERE id = '{user_id}'
+                    """)
+    return cursor.fetchall()
 
 if __name__ == "__main__":
     print(get_users())
