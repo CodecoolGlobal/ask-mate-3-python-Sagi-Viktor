@@ -94,13 +94,14 @@ def add_question():
     user_email = session['email']
     if request.method == "POST":
         question_id = util.generate_id('question')
+        user_id = data_manager.get_current_user_id(user_email)[0]['id']
         submission_time = util.generate_submission_time()
         view_number = 0
         vote_number = 0
         title = request.form.get('question-title')
         message = request.form.get('question-message')
         image = ''
-        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
+        question_data = [question_id, user_id, submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
         return redirect("/list")
     return render_template('add_question.html', logged_in=True, user_email=user_email)
