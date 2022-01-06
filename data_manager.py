@@ -504,6 +504,58 @@ def is_user_in_database(cursor, user):
                     """)
     return cursor.fetchone()
 
+@connect_database.connection_handler
+def get_current_user_id(cursor,username):
+    cursor.execute(f"""
+                    SELECT id
+                    FROM users
+                    WHERE username = '{username}'
+                    """)
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def get_current_user_data(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM users
+                    WHERE id = '{user_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_current_user_questions(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT question.id, question.submission_time, question.view_number, question.vote_number, question.title,
+                    question.message, question.image
+                    FROM question
+                    LEFT JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.user_id = {user_id}
+                    """);
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def is_user_in_database(cursor, user):
+    cursor.execute(f"""
+                    SELECT username, password_hash FROM users WHERE username = '{user}'
+                    """)
+    return cursor.fetchone()
+
+
+@connect_database.connection_handler
+def get_current_user_answers(cursor, user_id):
+    cursor.execute(f"""
+                    SELECT answer.submission_time, answer.vote_number, answer.message, answer.image
+                    FROM question
+                    JOIN answer
+                    ON answer.question_id=question.id
+                    JOIN users
+                    ON question.user_id=users.id
+                    WHERE users.id = {user_id};
+                    """);
+    return cursor.fetchall()
 
 if __name__ == "__main__":
-    print(is_user_in_database)
+    print(get_users())
