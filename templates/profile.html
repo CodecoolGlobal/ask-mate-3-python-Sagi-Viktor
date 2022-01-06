@@ -17,8 +17,28 @@
         <li>Number of answers: Coming Soon</li>
         <li>Number of comments: Coming Soon</li>
         <li>Reputation: Coming Soon</li>
-
     </ul>
+    <h1>User Questions:</h1>
+    <table>
+        <thead>
+            <th>Submission time</th>
+            <th>View number</th>
+            <th>Vote number</th>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Image</th>
+        </thead>
+        {% for question in current_user_questions %}
+            <tr>
+            {% for data in question %}
+                {% if data != 'id' and data!='user_id' and data != 'password_hash' and data !='username' and data!='registration_date' %}
+                    <td>{{ question[data] }}</td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {%endblock%}
 </body>
 </html>

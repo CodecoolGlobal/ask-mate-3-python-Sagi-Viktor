@@ -464,5 +464,18 @@ def get_current_user_data(cursor,user_id):
                     """)
     return cursor.fetchall()
 
+
+@connect_database.connection_handler
+def get_current_user_questions(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM question
+                    LEFT JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.user_id = {user_id}
+                    """);
+    return cursor.fetchall()
+
+
 if __name__ == "__main__":
     print(get_users())
