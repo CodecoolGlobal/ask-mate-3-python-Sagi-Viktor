@@ -5,7 +5,6 @@ import util
 
 app = Flask(__name__)
 
-
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
@@ -18,7 +17,6 @@ def main_page():
         password = request.form['password']
         users_data = data_manager.get_users()
         username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
-
         if email in username:
             if util.login_validation(password):
                 session['email'] = request.form['email']
@@ -36,7 +34,6 @@ def logout():
 
 @app.route("/list", methods=['POST', 'GET'])
 def get_list():
-    session['user_id'] = 5
     question_data = data_manager.get_question_list()
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
