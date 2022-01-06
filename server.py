@@ -38,12 +38,14 @@ def get_list():
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
-    user_id = data_manager.
+    username = session["username"]
+    current_user_id = data_manager.get_current_user_id(username)[0]['id']
     if sorting_asc:
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
         question_data = data_manager.sort_question_desc(sorting_desc)
-    return render_template('list.html', question_data=question_data, question_headers=question_headers)
+    return render_template('list.html', question_data=question_data, question_headers=question_headers,
+                           current_user_id=current_user_id)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
@@ -279,7 +281,8 @@ def users_list():
 
 @app.route("/user/<user_id>")
 def profile(user_id):
-    return render_template('profile.html')
+    current_user_data = data_manager.get_current_user_data(user_id)[0]
+    return render_template('profile.html', user_id=user_id, current_user_data=current_user_data)
 
 
 if __name__ == "__main__":

@@ -21,7 +21,10 @@
                 {% for user in users %}
                     <tr>
                         {% for data in user %}
-                            {% if data != 'password_hash' %}
+                            {% if data == 'username' %}
+                                <td><a href="/user/{{ user['id'] }}">{{ user[data] }}</a></td>
+                            {% endif %}
+                            {% if data != 'password_hash' and data != 'username' %}
                                 <td>{{ user[data] }}</td>
                             {% endif %}
                         {% endfor %}
