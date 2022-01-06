@@ -26,8 +26,10 @@ def get_answer_list_by_question_id(cursor, question_id):
     cursor.execute(f"""
                     SELECT *
                     FROM answer
+                    LEFT JOIN users
+                        ON answer.user_id = users.id
                     WHERE question_id = '{question_id}'
-                    ORDER BY id
+                    ORDER BY answer.id
                     """)
     return cursor.fetchall()
 
@@ -45,9 +47,10 @@ def get_answer_message_by_answer_id(cursor, answer_id):
 @connect_database.connection_handler
 def get_question(cursor, question_id):
     cursor.execute(f"""
-                    SELECT *
-                    FROM question
-                    WHERE id = '{question_id}'
+                    SELECT * FROM question
+                    LEFT JOIN users
+                        ON question.user_id = users.id
+                    WHERE question.id = {question_id};
                     """)
     return cursor.fetchall()
 
@@ -86,7 +89,7 @@ def get_answer_id_by_comment(cursor, comment_id):
 def add_question(cursor, question_data):
     cursor.execute(f"""
                     INSERT INTO question
-                    (id, submission_time, view_number, vote_number, title, message, image)
+                    (id, user_id, submission_time, view_number, vote_number, title, message, image)
                     VALUES (
                     '{question_data[0]}',
                     '{question_data[1]}',
@@ -94,7 +97,8 @@ def add_question(cursor, question_data):
                     '{question_data[3]}',
                     '{question_data[4]}',
                     '{question_data[5]}',
-                    '{question_data[6]}')
+                    '{question_data[6]}',
+                    '{question_data[7]}')
                     """)
 
 
@@ -147,14 +151,15 @@ def view_counter(cursor, question_id):
 def add_answer(cursor, answer_data):
     cursor.execute(f"""
         INSERT INTO answer
-        (id, submission_time, vote_number, question_id, message, image)
+        (id, user_id, submission_time, vote_number, question_id, message, image)
         VALUES (
                 '{answer_data[0]}',
                 '{answer_data[1]}',
                 '{answer_data[2]}',
                 '{answer_data[3]}',
                 '{answer_data[4]}',
-                '{answer_data[5]}')
+                '{answer_data[5]}',
+                '{answer_data[6]}')
         """)
 
 
@@ -227,10 +232,12 @@ def sort_question_desc(cursor, sort_by):
 @connect_database.connection_handler
 def get_comments_question_id(cursor, question_id):
     cursor.execute(f"""
-                    SELECT submission_time,message,id,edited_count
+                    SELECT *
                     FROM comment
+                    LEFT JOIN users
+                        ON comment.user_id = users.id
                     WHERE question_id = {question_id}
-                    ORDER BY id
+                    ORDER BY comment.id
                     """)
     return cursor.fetchall()
 
@@ -241,6 +248,15 @@ def get_comments_by_answer_id(cursor, answer_id):
                     SELECT id, submission_time, answer_id, message
                     FROM comment
                     WHERE answer_id = '{answer_id}'
+                    ORDER BY id
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_comments(cursor):
+    cursor.execute(f"""
+                    SELECT * FROM comment
                     ORDER BY id
                     """)
     return cursor.fetchall()
@@ -267,14 +283,17 @@ def get_question_detail(cursor, question_id):
 
 
 @connect_database.connection_handler
-def add_comment_to_question(cursor, submission_time, message, question_id):
+def add_comment_to_question(cursor, comment_data):
     cursor.execute(f"""
         INSERT INTO comment
         (submission_time, message, question_id)
-        VALUES (
-                '{submission_time}',
-                '{message}',
-                '{question_id}')
+        VALUES ('{comment_data[0]}',
+                '{comment_data[1]}',
+                '{comment_data[2]}',
+                '{comment_data[3]}',
+                '{comment_data[4]}',
+                '{comment_data[5]}',
+                '{comment_data[6]}')
                 """)
 
 
@@ -455,6 +474,7 @@ def get_current_user_id(cursor,username):
                     """)
     return cursor.fetchall()
 
+
 @connect_database.connection_handler
 def get_current_user_data(cursor,user_id):
     cursor.execute(f"""
@@ -484,6 +504,58 @@ def is_user_in_database(cursor, user):
                     """)
     return cursor.fetchone()
 
+@connect_database.connection_handler
+def get_current_user_id(cursor,username):
+    cursor.execute(f"""
+                    SELECT id
+                    FROM users
+                    WHERE username = '{username}'
+                    """)
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def get_current_user_data(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM users
+                    WHERE id = '{user_id}'
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def get_current_user_questions(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT question.id, question.submission_time, question.view_number, question.vote_number, question.title,
+                    question.message, question.image
+                    FROM question
+                    LEFT JOIN users
+                    ON question.user_id=users.id
+                    WHERE question.user_id = {user_id}
+                    """);
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
+def is_user_in_database(cursor, user):
+    cursor.execute(f"""
+                    SELECT username, password_hash FROM users WHERE username = '{user}'
+                    """)
+    return cursor.fetchone()
+
+
+@connect_database.connection_handler
+def get_current_user_answers(cursor, user_id):
+    cursor.execute(f"""
+                    SELECT answer.submission_time, answer.vote_number, answer.message, answer.image
+                    FROM question
+                    JOIN answer
+                    ON answer.question_id=question.id
+                    JOIN users
+                    ON question.user_id=users.id
+                    WHERE users.id = {user_id};
+                    """);
+    return cursor.fetchall()
 
 if __name__ == "__main__":
-    print(is_user_in_database)
+    print(get_users())
