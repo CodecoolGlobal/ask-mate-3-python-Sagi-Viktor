@@ -7,7 +7,7 @@
 
     {% block content %}
         <a class="add_question_link" href="/add-question">Add Question</a>
-
+        <a href="/user/{{ user_id }}">Profile</a>
         <div class="order_menu">
             <form action="/list">
                 <select onchange='this.form.submit()' name='status_asc' id="cars" class="links">
