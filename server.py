@@ -1,11 +1,10 @@
-from flask import Flask, render_template, request, redirect, session, url_for, escape
+from flask import Flask, render_template, request, redirect, session, url_for
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
 
 app = Flask(__name__)
 
-app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
 
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -56,10 +55,12 @@ def display_question(question_id):
     answer_ids = util.get_answer_ids(answer_data)
     nr_of_comments = util.get_comments_by_answer_ids(answer_ids)
     comment_data = data_manager.get_comments_question_id(question_id)
-    question_comment = request.form.get('add_comment_to_question')
-    if question_comment:
+    comment_message = request.form.get('add_comment_to_question')
+    comment_id = 99
+    if comment_message:
         submission_time = util.generate_submission_time()
-        data_manager.add_comment_to_question(submission_time, question_comment, question_id)
+        comment_data = [comment_id, session['user_id'], question_id, comment_message, submission_time, question_id]
+        data_manager.add_comment_to_question(comment_data)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
         return redirect(f'/question/{question_id}/new-answer')
@@ -79,7 +80,7 @@ def add_answer(question_id):
         vote_number = 0
         message = request.form.get('message')
         image = request.form.get('image')
-        answer_data = [answer_id, submission_time, vote_number, question_id, message, image]
+        answer_data = [answer_id, session['user_id'], submission_time, vote_number, question_id, message, image]
         data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
     return render_template('add_answer.html', question_id=question_id, question_data=question_data,
@@ -96,7 +97,7 @@ def add_question():
         title = request.form.get('question-title')
         message = request.form.get('question-message')
         image = ''
-        question_data = [question_id, submission_time, view_number, vote_number, title, message, image]
+        question_data = [question_id, session['user_id'], submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
         return redirect("/list")
     return render_template('add_question.html')

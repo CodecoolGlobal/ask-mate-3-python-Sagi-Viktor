@@ -86,7 +86,7 @@ def get_answer_id_by_comment(cursor, comment_id):
 def add_question(cursor, question_data):
     cursor.execute(f"""
                     INSERT INTO question
-                    (id, submission_time, view_number, vote_number, title, message, image)
+                    (id, user_id, submission_time, view_number, vote_number, title, message, image)
                     VALUES (
                     '{question_data[0]}',
                     '{question_data[1]}',
@@ -94,7 +94,8 @@ def add_question(cursor, question_data):
                     '{question_data[3]}',
                     '{question_data[4]}',
                     '{question_data[5]}',
-                    '{question_data[6]}')
+                    '{question_data[6]}',
+                    '{question_data[7]}')
                     """)
 
 
@@ -147,14 +148,15 @@ def view_counter(cursor, question_id):
 def add_answer(cursor, answer_data):
     cursor.execute(f"""
         INSERT INTO answer
-        (id, submission_time, vote_number, question_id, message, image)
+        (id, user_id, submission_time, vote_number, question_id, message, image)
         VALUES (
                 '{answer_data[0]}',
                 '{answer_data[1]}',
                 '{answer_data[2]}',
                 '{answer_data[3]}',
                 '{answer_data[4]}',
-                '{answer_data[5]}')
+                '{answer_data[5]}',
+                '{answer_data[6]}')
         """)
 
 
@@ -267,14 +269,17 @@ def get_question_detail(cursor, question_id):
 
 
 @connect_database.connection_handler
-def add_comment_to_question(cursor, submission_time, message, question_id):
+def add_comment_to_question(cursor, comment_data, submission_time, message, question_id):
     cursor.execute(f"""
         INSERT INTO comment
         (submission_time, message, question_id)
-        VALUES (
-                '{submission_time}',
-                '{message}',
-                '{question_id}')
+        VALUES ('{comment_data[0]}',
+                '{comment_data[1]}',
+                '{comment_data[2]}',
+                '{comment_data[3]}',
+                '{comment_data[4]}',
+                '{comment_data[5]}',
+                '{comment_data[6]}')
                 """)
 
 

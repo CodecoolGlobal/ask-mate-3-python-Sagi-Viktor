@@ -39,6 +39,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS public.answer;
 CREATE TABLE answer (
     id serial NOT NULL,
+    user_id serial NOT NULL,
     submission_time timestamp without time zone,
     vote_number integer,
     question_id integer,
@@ -49,6 +50,7 @@ CREATE TABLE answer (
 DROP TABLE IF EXISTS public.comment;
 CREATE TABLE comment (
     id serial NOT NULL,
+    user_id serial NOT NULL,
     question_id integer,
     answer_id integer,
     message text,
@@ -89,6 +91,12 @@ ALTER TABLE ONLY tag
     
 ALTER TABLE ONLY question
     ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+    
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
+    
+ALTER TABLE ONLY comment
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE ONLY comment
     ADD CONSTRAINT fk_answer_id FOREIGN KEY (answer_id) REFERENCES answer(id);
@@ -105,7 +113,11 @@ ALTER TABLE ONLY comment
 ALTER TABLE ONLY question_tag
     ADD CONSTRAINT fk_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
     
-INSERT INTO users VALUES (5, 'Igor', 'aufz89fu23dsuafhödsj', '2017-05-01 05:49:00');
+INSERT INTO users VALUES (1, 'Igor', '$2b$12$lOzILU9M3/JLMpd7oFSmMOi0I/rnIW0ojyRviMQLEgkNOmVCMVvfa', '2017-05-01 05:49:00');
+INSERT INTO users VALUES (2, 'Simson', '$2b$12$HoRUhpTM6i3IGOBPwjVOiefqteBPCZGiD.x.762GxeJ3BhbLH3VB2', '2014-10-11 05:49:00');
+INSERT INTO users VALUES (3, 'Emily', '$2b$12$diJPq.QPnLITNWA2XZHOHu6xZ83c2nGpmOPHC/ApXX6R8TIdFlzj2', '2022-01-03 05:49:00');
+INSERT INTO users VALUES (4, 'Andy', '$2b$12$KafohO.vqVW52PClAHLsmOL5KWJ/NYSepOaRAgc9vtb4QJLPvEu6m', '2020-07-21 05:49:00');
+INSERT INTO users VALUES (5, 'Jhon', '$2b$12$hObTNU7lSD7fStaoQKGStejbVxo2synxLvmbeAZHGb15FhVMZom0q', '2021-07-21 05:49:00');
 
 INSERT INTO question VALUES (0, 5, '2017-04-28 08:29:00', 29, 7, 'How to make lists in Python?', 'I am totally new to this, any hints?', NULL);
 INSERT INTO question VALUES (1, 5, '2017-04-29 09:19:00', 15, 9, 'Wordpress loading multiple jQuery Versions', 'I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $(".myBook").booklet();
@@ -122,12 +134,12 @@ INSERT INTO question VALUES (2, 5, '2017-05-01 10:41:00', 1364, 57, 'Drawing can
 
 SELECT pg_catalog.setval('question_id_seq', 2, true);
 
-INSERT INTO answer VALUES (1, '2017-04-28 16:49:00', 4, 1, 'You need to use brackets: my_list = []', NULL);
-INSERT INTO answer VALUES (2, '2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg');
+INSERT INTO answer VALUES (1, 5,'2017-04-28 16:49:00', 4, 1, 'You need to use brackets: my_list = []', NULL);
+INSERT INTO answer VALUES (2, 5,'2017-04-25 14:42:00', 35, 1, 'Look it up in the Python docs', 'images/image2.jpg');
 SELECT pg_catalog.setval('answer_id_seq', 2, true);
 
-INSERT INTO comment VALUES (1, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
-INSERT INTO comment VALUES (2, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
+INSERT INTO comment VALUES (1, 5, 0, NULL, 'Please clarify the question as it is too vague!', '2017-05-01 05:49:00');
+INSERT INTO comment VALUES (2, 5, NULL, 1, 'I think you could use my_list = list() as well.', '2017-05-02 16:55:00');
 SELECT pg_catalog.setval('comment_id_seq', 2, true);
 
 INSERT INTO tag VALUES (1, 'python');
