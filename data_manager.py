@@ -446,6 +446,23 @@ def add_user(cursor, user_data):
                     '{user_data[3]}')
                     """)
 
+@connect_database.connection_handler
+def get_current_user_id(cursor,username):
+    cursor.execute(f"""
+                    SELECT id
+                    FROM users
+                    WHERE username = '{username}'
+                    """)
+    return cursor.fetchall()
+
+@connect_database.connection_handler
+def get_current_user_data(cursor,user_id):
+    cursor.execute(f"""
+                    SELECT *
+                    FROM users
+                    WHERE id = '{user_id}'
+                    """)
+    return cursor.fetchall()
 
 if __name__ == "__main__":
     print(get_users())

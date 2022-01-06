@@ -1,10 +1,24 @@
+{%extends "/LAYOUT.html" %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {%block PAGE_title%}
     <meta charset="UTF-8">
     <title>profile</title>
+    {%endblock%}
 </head>
 <body>
+{% block content %}
+    <ul>
+        <li>User ID: {{ user_id }}</li>
+        <li>User: {{ current_user_data['username'] }}</li>
+        <li>Registration Date: {{ current_user_data['registration_date'] }}</li>
+        <li>Number of asked questions: Coming Soon</li>
+        <li>Number of answers: Coming Soon</li>
+        <li>Number of comments: Coming Soon</li>
+        <li>Reputation: Coming Soon</li>
 
+    </ul>
+{%endblock%}
 </body>
 </html>
