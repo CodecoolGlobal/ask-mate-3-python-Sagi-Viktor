@@ -447,5 +447,13 @@ def add_user(cursor, user_data):
                     """)
 
 
+@connect_database.connection_handler
+def is_user_in_database(cursor, user):
+    cursor.execute(f"""
+                    SELECT username, password_hash FROM users WHERE username = '{user}'
+                    """)
+    return cursor.fetchone()
+
+
 if __name__ == "__main__":
-    print(get_users())
+    print(is_user_in_database)

@@ -13,15 +13,11 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
     if request.method == 'GET':
-        return render_template('login.html')      #Logged in - It should display the logged in user
+        return render_template('login.html')
     else:
-        email = request.form['email']
-        password = request.form['password']
-        users_data = data_manager.get_users()
-        username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
-
-        if email in username:
-            if util.login_validation(password):
+        username = data_manager.is_user_in_database(request.form["email"])
+        if username:
+            if util.verify_password(request.form['password'], username['password_hash']):
                 session['email'] = request.form['email']
                 return redirect(url_for('get_list'))
         return render_template('login.html', invalid=True)
@@ -40,11 +36,12 @@ def get_list():
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
+    user_email = session['email']
     if sorting_asc:
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
         question_data = data_manager.sort_question_desc(sorting_desc)
-    return render_template('list.html', question_data=question_data, question_headers=question_headers)
+    return render_template('list.html', question_data=question_data, question_headers=question_headers, logged_in=True, user_email=user_email)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])
