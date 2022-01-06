@@ -10,31 +10,21 @@ app.secret_key = b'J63jJ="5Kr.!ld**;x985a423N74KeO5p500'
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def main_page():
-    if 'email' in session:
-        return render_template('login.html', logged_in=True, user_email=escape(session['email']))
-    else:
-        return render_template('login.html')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
     if request.method == 'GET':
-        return render_template('list.html')      #Logged in - It should display the logged in user
+        return render_template('login.html')      #Logged in - It should display the logged in user
     else:
         email = request.form['email']
-        password = request.POST['password'].encode('utf-8')
-        if util.login_validation(email, password):
-            return redirect("/list")
+        password = request.form['password']
+        users_data = data_manager.get_users()
+        username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
 
-        # if email in data.users.keys():          #Database need instead of data
-        #     hashed_password = data.users[email]     #Database need instead of data
-        #     is_password_valid = util.verify_password(password, hashed_password)
-        #     if is_password_valid:
-        #         session['email'] = request.form['email']
-        #         return redirect(url_for('index'))
-        # return render_template('list.html', invalid=True)   #Logged in - It should display the logged in user
+        if email in username:
+            if util.login_validation(password):
+                session['email'] = request.form['email']
+                return redirect(url_for('get_list'))
+        return render_template('login.html', invalid=True)
 
 
 @app.route('/logout')
