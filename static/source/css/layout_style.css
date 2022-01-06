@@ -37,8 +37,8 @@
             color: lightgray;
             font-family: monospace;
             font-size: 1.3em;
-            /*margin-block-start: 10%;*/
-            margin-inline-start: 10%;
+            margin-block-start: 10%;
+            margin-inline-start: 30%;
             border: 2px solid whitesmoke;
             position: absolute;
             top: 8em;
