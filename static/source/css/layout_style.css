@@ -37,8 +37,8 @@
             color: lightgray;
             font-family: monospace;
             font-size: 1.3em;
-            margin-block-start: 10%;
-            margin-inline-start: 30%;
+            margin-block-start: 7%;
+            margin-inline-start: 37%;
             border: 2px solid whitesmoke;
             position: absolute;
             top: 8em;
@@ -167,6 +167,13 @@
              position: absolute;
              right: 0;
              top: 12.5em;
+         }
+         .searchbar .search_button {
+             font-size: 2em;
+             border-radius: 5px;
+         }
+         .searchbar .search_field{
+             margin-right: 1em;
          }
 
          .search_field {
