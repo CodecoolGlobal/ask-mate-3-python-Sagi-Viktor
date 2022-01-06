@@ -38,6 +38,7 @@ def get_list():
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
     sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
+    user_id = data_manager.
     if sorting_asc:
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
@@ -275,6 +276,10 @@ def users_list():
         users = data_manager.get_users()
         return render_template('users_list.html', users=users)
     return redirect(url_for('main_page'))
+
+@app.route("/user/<user_id>")
+def profile(user_id):
+    return render_template('profile.html')
 
 
 if __name__ == "__main__":
