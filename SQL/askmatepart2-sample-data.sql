@@ -60,6 +60,8 @@ CREATE TABLE tag (
     name text
 );
 
+ALTER TABLE ONLY question
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users(id);
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
