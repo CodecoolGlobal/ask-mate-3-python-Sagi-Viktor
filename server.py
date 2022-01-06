@@ -167,7 +167,8 @@ def list_answer_comments(answer_id):
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
         comment_message = request.form.get('write-comment')
-        comment_items = [answer_id, comment_message, submission_time]
+        comment_id =
+        comment_items = [comment_id, user_id, answer_id, comment_message, submission_time]
         data_manager.add_comment_to_answer(comment_items)
         return redirect(f'/answer/{answer_id}/comments')
     return render_template("comment_to_answer.html", answer=answer, comment_data=comment_data,

@@ -249,6 +249,15 @@ def get_comments_by_answer_id(cursor, answer_id):
 
 
 @connect_database.connection_handler
+def get_comments(cursor):
+    cursor.execute(f"""
+                    SELECT * FROM comment
+                    ORDER BY id
+                    """)
+    return cursor.fetchall()
+
+
+@connect_database.connection_handler
 def display_question_detail(cursor, question_id):
     cursor.execute(f"""
                     SELECT submission_time,message
