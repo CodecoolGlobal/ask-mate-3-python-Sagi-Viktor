@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, escape
 from bonus_questions import SAMPLE_QUESTIONS
 import data_manager
 import util
@@ -13,12 +13,9 @@ def main_page():
     if request.method == 'GET':
         return render_template('login.html')
     else:
-        email = request.form['email']
-        password = request.form['password']
-        users_data = data_manager.get_users()
-        username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
-        if email in username:
-            if util.login_validation(password):
+        username = data_manager.is_user_in_database(request.form["email"])
+        if username:
+            if util.verify_password(request.form['password'], username['password_hash']):
                 session['email'] = request.form['email']
                 return redirect(url_for('get_list'))
         return render_template('login.html', invalid=True)
@@ -44,8 +41,7 @@ def get_list():
         question_data = data_manager.sort_question_asc(sorting_asc)
     elif sorting_desc:
         question_data = data_manager.sort_question_desc(sorting_desc)
-    return render_template('list.html', question_data=question_data, question_headers=question_headers,
-                           current_user_id=current_user_id)
+    return render_template('list.html', question_data=question_data, question_headers=question_headers, logged_in=True, user_email=user_email)
 
 
 @app.route("/question/<question_id>", methods=['POST', 'GET'])

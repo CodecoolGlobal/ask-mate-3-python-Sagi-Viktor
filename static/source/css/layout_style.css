@@ -1,5 +1,15 @@
 /*HTML-BEN <link rel="stylesheet" href="../../../static/source/layout_style.css"> úton lehet elérni> Majd következő TW-héten*/
+        p {
+            color: blue;
+            font-size: 1.25em;
+            font-family: monospace;
+        }
 
+        span {
+            color: purple;
+            font-size: 1.40em;
+            font-family: monospace;
+        }
         .title_link {
             background-color: #24252a;
             color: #1fb7db;
