@@ -282,7 +282,9 @@ def users_list():
 @app.route("/user/<user_id>")
 def profile(user_id):
     current_user_data = data_manager.get_current_user_data(user_id)[0]
-    return render_template('profile.html', user_id=user_id, current_user_data=current_user_data)
+    current_user_questions = data_manager.get_current_user_questions(user_id)
+    return render_template('profile.html', user_id=user_id, current_user_data=current_user_data,
+                           current_user_questions=current_user_questions)
 
 
 if __name__ == "__main__":
