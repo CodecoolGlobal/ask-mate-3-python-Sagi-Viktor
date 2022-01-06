@@ -107,16 +107,13 @@ def check_password(email, plain_text_password):
     return verify_password(plain_text_password, password)
 
 
-def login_validation(email, password):
-    try:
-        users = data_manager.get_users()
-        print(users)
-        for index in users:
-            pass
-    except KeyError:
-        print("error")
-    return verify_password(password, email)
+def login_validation(password):
+    users_data = data_manager.get_users()
+    hashed_password = [[row[item] for item in row if item == 'password_hash'] for row in users_data][2][0]
+    is_password_valid = verify_password(password, hashed_password)
+    return is_password_valid
 
 
 if __name__ == "__main__":
-    login_validation("asdddddddddd", "donut")
+    print(login_validation("test"))
+    print(login_validation("nem test"))
