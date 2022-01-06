@@ -56,8 +56,8 @@ def display_question(question_id):
     nr_of_comments = util.get_comments_by_answer_ids(answer_ids)
     comment_data = data_manager.get_comments_question_id(question_id)
     comment_message = request.form.get('add_comment_to_question')
-    comment_id = 99
     if comment_message:
+        comment_id = util.generate_id('comment')
         submission_time = util.generate_submission_time()
         comment_data = [comment_id, session['user_id'], question_id, comment_message, submission_time, question_id]
         data_manager.add_comment_to_question(comment_data)
@@ -167,7 +167,8 @@ def list_answer_comments(answer_id):
     if request.method == 'POST':
         submission_time = util.generate_submission_time()
         comment_message = request.form.get('write-comment')
-        comment_id =
+        comment_id = util.generate_id('comment')
+        user_id = session['user_id']
         comment_items = [comment_id, user_id, answer_id, comment_message, submission_time]
         data_manager.add_comment_to_answer(comment_items)
         return redirect(f'/answer/{answer_id}/comments')
