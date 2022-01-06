@@ -19,7 +19,6 @@ def main_page():
         password = request.form['password']
         users_data = data_manager.get_users()
         username = [[row[item] for item in row if item == 'username'] for row in users_data][2][0]
-
         if email in username:
             if util.login_validation(password):
                 session['email'] = request.form['email']
