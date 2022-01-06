@@ -78,11 +78,12 @@ def add_answer(question_id):
     user_email = session['email']
     if request.method == 'POST':
         answer_id = util.generate_id('answer')
+        user_id = data_manager.get_current_user_id(user_email)[0]['id']
         submission_time = util.generate_submission_time()
         vote_number = 0
         message = request.form.get('message')
         image = request.form.get('image')
-        answer_data = [answer_id, submission_time, vote_number, question_id, message, image]
+        answer_data = [answer_id, user_id, submission_time, vote_number, question_id, message, image]
         data_manager.add_answer(answer_data)
         return redirect(f'/question/{question_id}')
     return render_template('add_answer.html', question_id=question_id, question_data=question_data,
