@@ -286,14 +286,13 @@ def get_question_detail(cursor, question_id):
 def add_comment_to_question(cursor, comment_data):
     cursor.execute(f"""
         INSERT INTO comment
-        (submission_time, message, question_id)
+        (id, user_id, question_id, message, submission_time, edited_count)
         VALUES ('{comment_data[0]}',
                 '{comment_data[1]}',
                 '{comment_data[2]}',
                 '{comment_data[3]}',
                 '{comment_data[4]}',
-                '{comment_data[5]}',
-                '{comment_data[6]}')
+                '{comment_data[5]}')
                 """)
 
 

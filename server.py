@@ -17,6 +17,7 @@ def main_page():
         if username:
             if util.verify_password(request.form['password'], username['password_hash']):
                 session['email'] = request.form['email']
+                session['user_id'] = data_manager.get_current_user_id(session['email'])[0]['id']
                 return redirect(url_for('get_list'))
         return render_template('login.html', invalid=True)
 
@@ -60,7 +61,7 @@ def display_question(question_id):
     if comment_message:
         comment_id = util.generate_id('comment')
         submission_time = util.generate_submission_time()
-        comment_data = [comment_id, session['user_id'], question_id, comment_message, submission_time, question_id]
+        comment_data = [comment_id, session['user_id'], question_id, comment_message, submission_time, question_id, 0]
         data_manager.add_comment_to_question(comment_data)
         return redirect(f'/question/{question_id}')
     elif request.method == 'POST':
@@ -102,7 +103,7 @@ def add_question():
         question_data = [question_id, session['user_id'], submission_time, view_number, vote_number, title, message, image]
         data_manager.add_question(question_data)
         return redirect("/list")
-    return render_template('add_question.html', logged_in=True, user_email=user_email)
+    return render_template('add_question.html', logged_in=True, user_email=session['email'])
 
 
 @app.route("/question/<question_id>/delete")
@@ -214,7 +215,7 @@ def search_in_question():
 
 @app.route("/comments/<comment_id>/edit", methods=['GET', 'POST'])
 def edit_question_comment(comment_id):
-    question_id_dict = data_manager.get_question_id_by_comment(comment_id)
+    question_id_dict = data_question_id_bymanager.get_question_id_by_comment(comment_id)
     question_id = str([item['question_id'] for item in question_id_dict][0])
     comment_data = data_manager.get_comments_question_id(question_id)
     current_comment_dict = data_manager.get_message_for_comment(comment_id)
