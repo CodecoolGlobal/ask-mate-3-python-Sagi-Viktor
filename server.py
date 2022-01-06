@@ -294,9 +294,10 @@ def profile(user_id):
     current_user_data = data_manager.get_current_user_data(user_id)[0]
     current_user_questions = data_manager.get_current_user_questions(user_id)
     current_user_answers = data_manager.get_current_user_answers(user_id)
+    current_user_comments = data_manager.get_current_user_comments(user_id)
     return render_template('profile.html', user_id=user_id, current_user_data=current_user_data,
                            current_user_questions=current_user_questions, current_user_answers=current_user_answers,
-                           logged_in=True, user_email=user_email)
+                           logged_in=True, user_email=user_email, current_user_comments=current_user_comments)
 
 
 if __name__ == "__main__":

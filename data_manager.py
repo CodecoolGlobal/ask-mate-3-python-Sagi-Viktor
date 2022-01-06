@@ -499,5 +499,18 @@ def get_current_user_answers(cursor, user_id):
                     """);
     return cursor.fetchall()
 
+@connect_database.connection_handler
+def get_current_user_comments(cursor, user_id):
+    cursor.execute(f"""
+                    SELECT comment.submission_time,  comment.message, comment.edited_count
+                    FROM question
+                    JOIN comment
+                    ON comment.question_id=question.id
+                    JOIN users
+                    ON question.user_id=users.id
+                    WHERE users.id = {user_id};
+                    """);
+    return cursor.fetchall()
+
 if __name__ == "__main__":
     print(is_user_in_database)
