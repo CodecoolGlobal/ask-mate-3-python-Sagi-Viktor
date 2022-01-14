@@ -3,76 +3,63 @@
 
 <head>
     {% block page_title %}{% endblock %}
-    <meta charset="UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../static/source/css/navbar_style.css">
-    <link rel="stylesheet" href="../static/source/css/layout_style.css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
-    <title>Forum Loop</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+        crossorigin="anonymous"
+        />
 </head>
 <body>
-    <div id="progressbar"></div>
-    <div id="scrollpath"></div>
-    <div id="percent"></div>
+
 <!---------------------HEADER----------------->
     <header>
-        <nav>
-            <ul class="nav__links">
-                <li><a href="/list">FORUM LOOP Q&A SITE</a></li>
-                <li><a href = "https://telex.hu/">News</a></li>
-                <li><a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a></li>
-                <li><a href="{{ url_for('main') }}">Bonus Questions</a></li>
-                {% if logged_in %}
-                <p>You are logged in as <span>{{ user_email }}</span>.</p>
-                {% else %}
-                    <p>You are not logged in.</p>
-                    <a href="{{ url_for('main_page') }}">Click here to log in!</a>
-                {% endif %}
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="/static/LOOP_logo.png" width="80" height="50">
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" href="/list">Q&A</a>
+                        <a class="nav-link active" href="{{ url_for('main') }}">Bonus Questions</a>
+                        <a class="nav-link active" href = "https://telex.hu/">News</a>
+                        <a class="nav-link active" href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a>
+                    </div>
+                    <div class="navbar-nav ms-auto">
+                        <button id="themeSwitch" class="btn btn-primary" onclick="switchTheme()">
+                            Activate Dark Theme
+                        </button>
+                    </div>
+                </div>
+            </div>
         </nav>
-        <a class="btn-grad" href = "https://codecool.com/hu/kapcsolat/">Contact</a>
-        <p class="menu cta">Menu</p>
     </header>
 
-    <div class="overlay">
-        <a class="close">&times;</a>
-        <div class="overlay__content">
-            <a href = "https://www.google.com">Home</a>
-            <a href = "https://telex.hu/">News</a>
-            <a href = "https://telex.hu/">News</a>
-            <a href = "https://codecool.com/hu/kapcsolat/">Contact</a>
-            <a href = "https://codecool.com/hu/rolunk-kapcsolat/">About</a>
-
-        </div>
-    </div>
-    <script type="text/javascript" src="../static/source/js/mobile.js"></script>
-
 <!---------------------CONTENT----------------->
-<section>
-    {% block content %}
-    {% endblock %}
-</section>
+
+    <section>
+        {% block content %}
+        {% endblock %}
+    </section>
+
 <!---------------------FOOTER----------------->
 
-{% block link_in_footer %}
-    <div class="footer">
-        <a class="footer_link" href="/list">Back to questions list</a>
-    </div>
-{% endblock %}
+    {% block link_in_footer %}
 
-<script type="text/javascript">
-    let progressbar = document.getElementById("progressbar")
-    let percent = document.getElementById("percent");
+    {% endblock %}
 
-    let totalHeight = document.body.scrollHeight = window.innerHeight;
-    window.onscroll = function() {
-        let progress = (window.pageYOffset / totalHeight) * 100;
-        progressbar.style.height = progress = "%";
-        percent.innerHTML = "Page Scrolled" = Math.round(progress) + "%"
-    }
-</script>
 </body>
 </html>

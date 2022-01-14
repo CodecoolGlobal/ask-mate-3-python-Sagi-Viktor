@@ -8,41 +8,23 @@ app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-@app.route('/', methods=['GET', 'POST'])
-def main_page():
-    if request.method == 'GET':
-        return render_template('login.html')
-    else:
-        username = data_manager.is_user_in_database(request.form["email"])
-        if username:
-            if util.verify_password(request.form['password'], username['password_hash']):
-                session['email'] = request.form['email']
-                session['user_id'] = data_manager.get_current_user_id(session['email'])[0]['id']
-                return redirect(url_for('get_list'))
-        return render_template('login.html', invalid=True)
-
-
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    session.pop('email', None)
-    session.pop('questions_answered', None)
-    return redirect(url_for('index'))
+@app.route("/")
+def index():
+    return render_template('indexPage.html')
 
 
 @app.route("/list", methods=['POST', 'GET'])
 def get_list():
     question_data = data_manager.get_question_list()
     question_headers = [keys.capitalize().replace('_', ' ') for keys, values in question_data[0].items()]
-    sorting_asc = request.args.get('status_asc')
     sorting_desc = request.args.get('status_desc')
     user_email = session['email']
     current_user_id = data_manager.get_current_user_id(user_email)[0]['id']
-    if sorting_asc:
-        question_data = data_manager.sort_question_asc(sorting_asc)
-    elif sorting_desc:
-        question_data = data_manager.sort_question_desc(sorting_desc)
-    return render_template('list.html', question_data=question_data, question_headers=question_headers,
+    if sorting_desc:
+        question_data = util.sort_questions(sorting_desc)
+    else:
+        question_data = data_manager.get_question_list()
+    return render_template('listQuestions.html', question_data=question_data, question_headers=question_headers,
                            logged_in=True, user_email=user_email, current_user_id=current_user_id)
 
 
@@ -275,15 +257,37 @@ def main():
 
 @app.route("/registration", methods=["GET", "POST"])
 def registration():
-    user_email = session['email']
     if request.method == 'POST':
         username = request.form['email']
         password = request.form['password']
         session['username'] = username
         util.export_registration_data(username, password)
-        return redirect(url_for('main_page'))
+        return redirect(url_for('get_list'))
     else:
+        user_email = session['email']
         return render_template('registration.html', logged_in=True, user_email=user_email)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    else:
+        username = data_manager.is_user_in_database(request.form["email"])
+        if username:
+            if util.verify_password(request.form['password'], username['password_hash']):
+                session['email'] = request.form['email']
+                session['user_id'] = data_manager.get_current_user_id(session['email'])[0]['id']
+                return redirect(url_for('get_list'))
+        return render_template('login.html', invalid=True)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('email', None)
+    session.pop('questions_answered', None)
+    return redirect(url_for('get_list'))
 
 
 @app.route("/users")
@@ -292,7 +296,7 @@ def users_list():
         users = data_manager.get_users()
         user_email = session["email"]
         return render_template('users_list.html', users=users, logged_in=True, user_email=user_email)
-    return redirect(url_for('main_page'))
+    return redirect(url_for('login'))
 
 
 @app.route("/user/<user_id>")
@@ -305,6 +309,7 @@ def profile(user_id):
     return render_template('profile.html', user_id=user_id, current_user_data=current_user_data,
                            current_user_questions=current_user_questions, current_user_answers=current_user_answers,
                            logged_in=True, user_email=user_email, current_user_comments=current_user_comments)
+
 
 if __name__ == "__main__":
     app.run(port=5000,

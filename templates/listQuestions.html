@@ -1,0 +1,152 @@
+{%extends "/LAYOUT.html" %}
+
+    {%block PAGE_title%}
+        <title>Questions list | FORUM LOOP</title>
+    {%endblock%}
+
+    {% block content %}
+
+    <div class="container mb-5">
+        <div class="row mt-5">
+            <div class="bg-gradient bg-warning col p-2">
+                <h3>Register now!</h3>
+                <form>
+                    <div class="mb-3">
+                        <label for="email" class="form-label"
+                            >Email address</label
+                        >
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            aria-describedby="emailHelp"
+                        />
+                        <div class="form-text">
+                            We'll never share your email with anyone else.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwd" class="form-label"
+                            >Password</label
+                        >
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="passwd"
+                        />
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input
+                            type="checkbox"
+                            class="form-check-input"
+                            id="keep"
+                        />
+                        <label class="form-check-label" for="keep"
+                            >Keep me logged in</label
+                        >
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    <button type="cancel" class="btn btn-outline-danger">
+                        Clear
+                    </button>
+                </form>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="nav-link active" href="/add-question">Ask Question</a>
+                    <a class="nav-link active" href="/user/{{ current_user_id }}">My Profile</a>
+                    <a class="nav-link active" href="/users">List Users</a>
+                </div>
+            </nav>
+            <div class="bg-gradient bg-light col p-2">
+                <h3>Search in questions</h3>
+                <form>
+                    <div class="mb-3">
+                        <form action="/search" method="GET">
+                            <label for="q"></label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="q"
+                                id="q"
+                            />
+                        </form>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Search
+                    </button>
+                </form>
+            </div>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="btn-group">
+                    <form action="/list">
+                        <select onchange='this.form.submit()' name='status_desc' id="cars" class="form-select">
+                            <option disabled selected value>Order By</option>
+                            <option value='submission_time##asc'>Submission Time ▲</option>
+                            <option value='submission_time##desc'>Submission Time ▼</option>
+                            <option value='message##asc'>Message ▲</option>
+                            <option value='message##desc'>Message ▼</option>
+                            <option value='view_number##asc'>Views ▲</option>
+                            <option value='view_number##desc'>Views ▼</option>
+                            <option value='vote_number##asc'>Votes ▲</option>
+                            <option value='vote_number##desc'>Votes ▼</option>
+                            <option value='title##asc'>Title ▲</option>
+                            <option value='title##desc'>Title ▼</option>
+                        </select>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container mb-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    {% for header in question_headers %}
+                        {% if header == 'Image' %}
+                        {% elif header != 'Id' %}
+                            <th>{{ header }}</th>ó
+                        {% endif %}
+                    {% endfor %}
+                    <th colspan="2">Vote</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in question_data %}
+                    <tr>
+                        {% for data in item %}
+                            {% if data != 'id' %}
+                                {% if data == 'title' %}
+                                    <td><a class="btn btn-secondary" href= "/question/{{ item['id'] }}" role="button">{{ item[data] }}</a></td>
+                                {% elif data == 'image' %}
+                                {% elif data != 'message' %}
+                                    <td>{{ item[data] }}</td>
+                                {% else %}
+                                    <td>
+                                        {{ item[data] }}
+                                        <br><br>
+                                        Tags:
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <td>
+                            <a class="btn btn-primary" href="/question/{{ item['id'] }}/vote_up">▲</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="/question/{{ item['id'] }}/vote_down" >▼</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endblock %}
+    {% block link_in_footer %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="btn btn-primary" href="/" role="button">LOGOUT</a>
+            <a class="btn btn-primary" href="/list">questions list</a>
+        </nav>
+    {% endblock %}

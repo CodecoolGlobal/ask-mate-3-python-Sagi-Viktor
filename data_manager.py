@@ -204,21 +204,21 @@ def delete_question_tag(cursor, question_id):
 
 @connect_database.connection_handler
 def sort_question_asc(cursor, sort_by):
-    query = """
+    query = f"""
         SELECT *
         FROM question
-        ORDER BY %(sort_by)s ASC"""
-    cursor.execute(query, {'sort_by': sort_by})
+        ORDER BY {sort_by} ASC"""
+    cursor.execute(query)
     return cursor.fetchall()
 
 
 @connect_database.connection_handler
 def sort_question_desc(cursor, sort_by):
-    query = """
+    query = f"""
         SELECT *
         FROM question
-        ORDER BY %(sort_by)s DESC"""
-    cursor.execute(query, {'sort_by': sort_by})
+        ORDER BY {sort_by} DESC"""
+    cursor.execute(query)
     return cursor.fetchall()
 
 
@@ -240,7 +240,7 @@ def get_comments_by_answer_id(cursor, answer_id):
     query = """
         SELECT id, submission_time, answer_id, message
         FROM comment
-        WHERE answer_id = '{answer_id}'
+        WHERE answer_id = %(answer_id)s
         ORDER BY id"""
     cursor.execute(query, {'answer_id': answer_id})
     return cursor.fetchall()

@@ -108,6 +108,15 @@ def login_validation(password):
     return is_password_valid
 
 
+def sort_questions(sort_by):
+    sort_by = sort_by.split('##')
+    if sort_by[1] == 'asc':
+        return data_manager.sort_question_asc(sort_by[0])
+    else:
+        return data_manager.sort_question_desc(sort_by[0])
+
+
 if __name__ == "__main__":
-    print(login_validation("test"))
-    print(login_validation("nem test"))
+    asdasd = 'title##asc'
+    foo = asdasd.split('##')
+    print(foo[1])
