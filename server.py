@@ -262,6 +262,7 @@ def registration():
         password = request.form['password']
         session['username'] = username
         util.export_registration_data(username, password)
+        print([username, password])
         return redirect(url_for('get_list'))
     else:
         user_email = session['email']

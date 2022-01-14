@@ -423,7 +423,7 @@ def add_user(cursor, user_data):
         INSERT INTO users
         (id, username, password_hash, registration_date)
         VALUES (
-        %(user_data0)s,%(user_data1)s,%(user_data2)s,%(user_data3)s"""
+        %(user_data0)s,%(user_data1)s,%(user_data2)s,%(user_data3)s)"""
     cursor.execute(query, {'user_data0': user_data[0], 'user_data1': user_data[1], 'user_data2': user_data[2], 'user_data3': user_data[3]})
 
 

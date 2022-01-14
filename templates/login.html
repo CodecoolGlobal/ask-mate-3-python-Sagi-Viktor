@@ -1,31 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Main Page</title>
-    <link rel="stylesheet" href="../static/source/css/index.css">
-
-</head>
-<body>
+{%extends "/LAYOUT.html" %}
 
 {% block page_title %}
 <title>Login</title>
 {% endblock %}
 
-
-    <div class="bg-img">
-        <form method="post" class="container">
-            <h1 style="color: white">Welcome on Forum Loop</h1>
-
-            <label style="color: white" for="email"><b>Email</b></label>
+{% block content %}
+    <div class="text-center">
+        <form method="post">
+            <h1 class="display-1">Welcome Back</h1>
             <input type="text" placeholder="Enter Email" name="email" required>
-
-            <label style="color: white" for="password"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
-
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
-
-</body>
-</html>
+{% endblock %}
